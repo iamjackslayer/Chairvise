@@ -1,12 +1,47 @@
 <template>
-  <el-container v-loading.fullscreen.lock="isAppLoading">
-    <el-header style="padding: 0;">
-      <menu-bar style="position: fixed; width: 100vw; z-index: 1;"></menu-bar>
-    </el-header>
-    <transition name="fade">
-      <router-view/>
-    </transition>
-  </el-container>
+  <div class="container-fluid">
+    
+    <div class="row flex-xl-nowrap">
+      <div class="col-12 col-md-3 col-xl-2 bd-sidebar">
+        <div id="logo" class="h3">
+          <span>ChairVise</span>
+        </div>
+        <b-nav class="bd-links" vertical>
+          <b-nav-item  active>
+            <router-link to="home">Home</router-link>
+          </b-nav-item>
+          <b-nav-item>
+            <router-link to="analyze">My Presentations</router-link>
+          </b-nav-item>
+          <b-nav-item>
+            <router-link to="conference">My Conferences</router-link>
+          </b-nav-item>
+        </b-nav>
+        <div class="logout">
+          <b-nav class="bd-links" vertical>
+            <b-nav-item>
+              <router-link to="userGuide">User Guide</router-link>
+            </b-nav-item>
+            <b-nav-item>
+              <router-link to="logout">Logout</router-link>
+            </b-nav-item>
+          </b-nav>
+        </div>
+      </div>
+      
+      <div class="col-12 col-md-9 col-xl-10 py-md-3 pl-md-5 bd-content content">
+        <b-overlay :show="isAppLoading" no-wrap>
+        </b-overlay>
+            <!-- <el-header style="padding: 0;">
+              <menu-bar style="position: fixed; width: 100vw; z-index: 1;"></menu-bar>
+            </el-header> -->
+            <transition name="fade">
+              <router-view/>
+            </transition>
+        
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -42,39 +77,51 @@
   }
 </script>
 
-<style>
-  @import url('https://fonts.googleapis.com/css?family=Montserrat:300,400,500');
+<style lang="scss">
+  @import url('https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700');
 
-  body {
-    font-family: 'Montserrat', sans-serif;
-
-    /* try 1 */ /*
-    background-color: #A8D0e6;
-    color: #ffffff;
-    */
-
-    /* try 2 */ /*
-    background: radial-gradient(#D8F2f2, #88BDBC);
-    color: #ffffff;
-    */
-    
-    /* current */ 
-    /*background: #1e9fc4;*/
-    color: #303133;
-    
-    margin: 0;
+  #logo {
+    font-weight: bold;
   }
 
-  .fade-enter-active, .fade-leave-active {
-    transition-property: opacity;
-    transition-duration: .25s;
-  }
 
-  .fade-enter-active {
-    transition-delay: .5s;
-  }
+// 1. review this ;)
+// 2. Add collapsible toggle
+// 3. Style sidebar and icons
+  .bd-links {
+    display: block !important;
+}
+.bd-links {
+    // flex-wrap: nowrap;
+    max-height: calc(100vh - 5rem);
+    overflow-y: auto;
+    flex-grow: 1;
+}
 
-  .fade-enter, .fade-leave-active {
-    opacity: 0
-  }
+.logout {
+  margin-top: auto;
+}
+
+// // All levels of nav
+.bd-sidebar .nav > li > a {
+  display: block;
+  // @include font-size(110%);
+  color: $gray-100;
+  background-color: $gray-700;
+  // color: rgba(0, 0, 0, .65);
+}
+
+.bd-sidebar .nav > li > a:hover {
+  color: rgba(0, 0, 0, .85);
+  text-decoration: none;
+  background-color: transparent;
+}
+
+.bd-sidebar .nav > .active > a,
+.bd-sidebar .nav > .active:hover > a {
+  font-weight: 600;
+  color: rgba(0, 0, 0, .85);
+  background-color: transparent;
+}
+
 </style>
