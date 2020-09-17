@@ -84,11 +84,34 @@
     font-weight: bold;
   }
 
+// TODO: Move sidebar stylings into own component
+.row .bd-sidebar {
+  order: 0;
+  background-color: $gray-800;
+  color: $gray-100;
+  border-bottom: 1px solid rgba(0, 0, 0, .1);
+  display: flex;
+  flex-direction: column;
 
-// 1. review this ;)
-// 2. Add collapsible toggle
-// 3. Style sidebar and icons
-  .bd-links {
+  padding: 1rem;
+
+  @include media-breakpoint-up(md) {
+    @supports (position: sticky) {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      height: 100vh;
+    }
+    border-right: 1px solid rgba(0, 0, 0, .1);
+  }
+
+  @include media-breakpoint-up(xl) {
+    flex: 0 1 320px;
+  }
+}
+
+
+.bd-links {
     display: block !important;
 }
 .bd-links {
