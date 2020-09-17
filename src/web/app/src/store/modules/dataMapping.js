@@ -1,5 +1,5 @@
-import axios from 'axios'
-import {processMapping} from '@/store/helpers/processor.js'
+import axios from "axios";
+import { processMapping } from "@/store/helpers/processor.js";
 
 export default {
   state: {
@@ -26,7 +26,7 @@ export default {
       hasHeader: null,
       hasPredefined: null, // new
       predefinedMapping: null,
-      predefinedMappingId: null,
+      predefinedMappingId: null
     },
     error: []
   },
@@ -69,7 +69,7 @@ export default {
     },
 
     setTableType(state, selected) {
-      state.data.tableType = selected;  
+      state.data.tableType = selected;
       state.hasTableTypeSelected = true;
     },
 
@@ -133,11 +133,12 @@ export default {
         state.error = [];
         state.data.mappingResult = payload.map;
         state.mappingFinished = true;
-        state.data.processedResult =
-          processMapping(payload.map,
-            state.data.uploadedData,
-            state.data.dbSchema,
-            state.data.hasHeader);
+        state.data.processedResult = processMapping(
+          payload.map,
+          state.data.uploadedData,
+          state.data.dbSchema,
+          state.data.hasHeader
+        );
       } catch (err) {
         state.error.push(err);
         state.mappingFinished = false;
@@ -162,7 +163,7 @@ export default {
   },
 
   actions: {
-    async persistMappingNewVersion({commit, state}) {
+    async persistMappingNewVersion({ commit, state }) {
       commit("setPageLoadingStatus", true);
       let endpoint;
       let fnKeyTable;
@@ -183,28 +184,36 @@ export default {
       var fnKeyEntry = {};
       fnKeyEntry.versionId = state.data.versionId;
       fnKeyEntry.recordType = fnKeyTable;
-      
+
       // add version to end
-      for (var i=0; i<state.data.processedResult.length; i++){
+      for (var i = 0; i < state.data.processedResult.length; i++) {
         var row = state.data.processedResult[i];
         row.versionId = state.data.versionId;
       }
 
-      // concurrent POST data and POST version requests 
-      axios.all([postTable(endpoint, state.data.processedResult), postVersion(fnKeyEntry)])  
-        .then(axios.spread( () => {
-          commit("setPageLoadingStatus", false);
-          commit("setUploadSuccess", true);
-        }))
-        .catch(axios.spread(function (dataErr, verErr) {
-          commit("setPageLoadingStatus", false);
-          commit("setUploadSuccess", false);
-          commit("setDataMappingError", dataErr);
-          commit("setDataMappingError", verErr);
-        }));
+      // concurrent POST data and POST version requests
+      axios
+        .all([
+          postTable(endpoint, state.data.processedResult),
+          postVersion(fnKeyEntry)
+        ])
+        .then(
+          axios.spread(() => {
+            commit("setPageLoadingStatus", false);
+            commit("setUploadSuccess", true);
+          })
+        )
+        .catch(
+          axios.spread(function(dataErr, verErr) {
+            commit("setPageLoadingStatus", false);
+            commit("setUploadSuccess", false);
+            commit("setDataMappingError", dataErr);
+            commit("setDataMappingError", verErr);
+          })
+        );
     },
 
-    async persistMappingOldVersion({commit, state}) {
+    async persistMappingOldVersion({ commit, state }) {
       commit("setPageLoadingStatus", true);
       let endpoint;
       switch (state.data.tableType) {
@@ -219,12 +228,13 @@ export default {
           break;
       }
       // add version to end
-      for (var i=0; i<state.data.processedResult.length; i++){
+      for (var i = 0; i < state.data.processedResult.length; i++) {
         var row = state.data.processedResult[i];
         row.versionId = state.data.versionId;
       }
       //console.log(state.data.processedResult);
-      await axios.post("/api/record/" + endpoint, state.data.processedResult)
+      await axios
+        .post("/api/record/" + endpoint, state.data.processedResult)
         .then(() => {
           commit("setPageLoadingStatus", false);
           commit("setUploadSuccess", true);
@@ -236,7 +246,7 @@ export default {
         });
     }
   }
-}
+};
 function postVersion(fnKeyEntry) {
   return axios.post("/api/version", fnKeyEntry);
 }
