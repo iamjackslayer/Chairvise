@@ -1,5 +1,7 @@
 # Chairvise
 
+[![Build Status](https://travis-ci.com/CS3219-SE-Principles-and-Patterns/cs3219-ay2021-s1-project-2020-s1-g04.svg?token=qrqpXjpcsM9AzUsLvxaA&branch=master)](https://travis-ci.com/CS3219-SE-Principles-and-Patterns/cs3219-ay2021-s1-project-2020-s1-g04)
+
 ## Overview
 This project is a tool to analyze paper submission information for conferences. It is basically a visualization tool combined with a backend query service.
 
