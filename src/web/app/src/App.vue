@@ -1,32 +1,34 @@
 <template>
   <div class="container-fluid">
-    
     <div class="row flex-xl-nowrap">
       <div class="col-12 col-md-3 col-xl-2 bd-sidebar">
-        <div id="logo" class="h3">
-          <span>ChairVise</span>
+        <div class="logo-container h3">
+          <span class="logo">ChairVise</span>
+          <button v-b-toggle.nav-collapse class="d-md-none p-0 ml-3 btn mobile-nav-toggle"><b-icon icon="list" /></button>
         </div>
-        <b-nav class="bd-links" vertical>
-          <b-nav-item  active>
-            <router-link to="home">Home</router-link>
-          </b-nav-item>
-          <b-nav-item>
-            <router-link to="analyze">My Presentations</router-link>
-          </b-nav-item>
-          <b-nav-item>
-            <router-link to="conference">My Conferences</router-link>
-          </b-nav-item>
-        </b-nav>
-        <div class="logout">
+        <b-collapse v-model="collapsed" id="nav-collapse" class="mt-2">
           <b-nav class="bd-links" vertical>
-            <b-nav-item>
-              <router-link to="userGuide">User Guide</router-link>
+            <b-nav-item  active>
+              <router-link to="home">Home</router-link>
             </b-nav-item>
             <b-nav-item>
-              <router-link to="logout">Logout</router-link>
+              <router-link to="analyze">My Presentations</router-link>
+            </b-nav-item>
+            <b-nav-item>
+              <router-link to="conference">My Conferences</router-link>
             </b-nav-item>
           </b-nav>
-        </div>
+          <div class="secondary-actions">
+            <b-nav class="bd-links" vertical>
+              <b-nav-item>
+                <router-link to="userGuide">User Guide</router-link>
+              </b-nav-item>
+              <b-nav-item>
+                <router-link to="logout">Logout</router-link>
+              </b-nav-item>
+            </b-nav>
+          </div>
+        </b-collapse>
       </div>
       
       <div class="col-12 col-md-9 col-xl-10 py-md-3 pl-md-5 bd-content content">
@@ -66,22 +68,55 @@
     components: {
       'menu-bar': MenuBar,
     },
+    data() {
+      return {
+        collapsed: true
+      }
+    },
     computed: {
       isAppLoading() {
         return this.$store.state.isPageLoading
       },
       isFetchUserInfoError() {
         return this.$store.state.userInfo.isApiError
-      }
+      },
     },
   }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
   @import url('https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700');
 
-  #logo {
+  .logo-container {
+    display: flex;
+    margin-bottom: 0;
+  }
+
+  .logo {
     font-weight: bold;
+    display: block;
+    flex: 1;
+  }
+
+  .mobile-nav-toggle {
+    display: flex;
+    align-items: center;
+    color: white;
+  }
+
+  .mobile-nav-toggle svg {
+    height: 30px;
+    width: 30px;
+  }
+
+  #nav-collapse {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+
+  .secondary-actions {
+    margin-top:auto;
   }
 
 // TODO: Move sidebar stylings into own component
