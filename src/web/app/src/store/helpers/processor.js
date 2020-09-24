@@ -1,11 +1,11 @@
-import moment from 'moment';
+import moment from "moment";
 
 function processDouble(raw) {
   if (!isNaN(parseFloat(raw))) {
     return parseFloat(raw);
   }
   // if not even string, return default value 0
-  if (typeof(raw) !== "string") {
+  if (typeof raw !== "string") {
     return 0;
   }
 
@@ -37,12 +37,12 @@ export function processMapping(mapping, data, dbFields, hasLabel) {
   let result = [];
   let map = {};
   for (let i = 0; i < mapping.length; i++) {
-    map[mapping[i][0]] = mapping[mapping[i][1]]
+    map[mapping[i][0]] = mapping[mapping[i][1]];
   }
   let dateField;
   for (let idx in dbFields.fieldMetaDataList) {
     if (dbFields.fieldMetaDataList[idx].type === "Date") {
-      dateField = dbFields.fieldMetaDataList[idx].jsonProperty
+      dateField = dbFields.fieldMetaDataList[idx].jsonProperty;
     }
   }
   // for each row of data
@@ -52,7 +52,8 @@ export function processMapping(mapping, data, dbFields, hasLabel) {
 
     let usingDate = false;
     let isSeparateDate = false;
-    let localDate = null, localTime = null;
+    let localDate = null,
+      localTime = null;
     // for each mapped database fields
     for (let idx in mapping) {
       let rawData = row[mapping[idx][1]];
@@ -84,7 +85,9 @@ export function processMapping(mapping, data, dbFields, hasLabel) {
 
       // then if date is complete, combine then together
       if (!usingDate && fieldType === "LocalDate" && localTime !== null) {
-        rawData = moment(rawData + " " + localTime, "YYYY-M-D H:m").format("YYYY-MM-DD hh:mm:ss");
+        rawData = moment(rawData + " " + localTime, "YYYY-M-D H:m").format(
+          "YYYY-MM-DD hh:mm:ss"
+        );
         if (rawData === "Invalid date") {
           throw "invalid date format";
         }
@@ -92,7 +95,9 @@ export function processMapping(mapping, data, dbFields, hasLabel) {
       }
 
       if (!usingDate && fieldType === "LocalTime" && localDate !== null) {
-        rawData = moment(localDate + " " + rawData, "YYYY-M-D H:m").format("YYYY-MM-DD hh:mm:ss");
+        rawData = moment(localDate + " " + rawData, "YYYY-M-D H:m").format(
+          "YYYY-MM-DD hh:mm:ss"
+        );
         if (rawData === "Invalid date") {
           throw "invalid date format";
         }
@@ -123,31 +128,28 @@ export function processMapping(mapping, data, dbFields, hasLabel) {
         rawData = rawData.map(author => author.trim());
         //console.log(rawData);
 
-
-
-        var convertstring=require("convert-string");
-        for (var key in rawData){
-            var author=rawData[key];
-            let name=author.split(" ");
-            var concatname="";
-            for (var itemkey in name){
-                var conv=convertstring.stringToBytes(name[itemkey]);
-                var itemconv="";
-                for(var a=0;a<conv.length;a++){
-                    itemconv=itemconv.concat(String(conv[a]+18));
-                }
-                name[itemkey]=itemconv;
-                concatname=concatname.concat(itemconv);
-                concatname=concatname.concat(" ");
+        var convertstring = require("convert-string");
+        for (var key in rawData) {
+          var author = rawData[key];
+          let name = author.split(" ");
+          var concatname = "";
+          for (var itemkey in name) {
+            var conv = convertstring.stringToBytes(name[itemkey]);
+            var itemconv = "";
+            for (var a = 0; a < conv.length; a++) {
+              itemconv = itemconv.concat(String(conv[a] + 18));
             }
-            //concatname.trim();
-            //console.log(concatname);
-            rawData[key]=concatname;
-         }
-         rawData = rawData.map(author => author.trim());
+            name[itemkey] = itemconv;
+            concatname = concatname.concat(itemconv);
+            concatname = concatname.concat(" ");
+          }
+          //concatname.trim();
+          //console.log(concatname);
+          rawData[key] = concatname;
+        }
+        rawData = rawData.map(author => author.trim());
 
-         //console.log(rawData);
-
+        //console.log(rawData);
       }
 
       // if is separate date format, assign using date field
@@ -156,7 +158,9 @@ export function processMapping(mapping, data, dbFields, hasLabel) {
         dataObject[dateField] = rawData;
         isSeparateDate = false;
       } else {
-        dataObject[dbFields.fieldMetaDataList[mapping[idx][0]].jsonProperty] = rawData;
+        dataObject[
+          dbFields.fieldMetaDataList[mapping[idx][0]].jsonProperty
+        ] = rawData;
       }
     }
     result.push(dataObject);
@@ -180,10 +184,10 @@ export function dateCheck(mapping, dbFields) {
     }
   }
   if (localDateExists && !localTimeExists) {
-    return "local time not specified when local date exists."
+    return "local time not specified when local date exists.";
   }
 
   if (!localDateExists && localTimeExists) {
-    return "local date not specified when local time exists."
+    return "local date not specified when local time exists.";
   }
 }
