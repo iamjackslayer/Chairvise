@@ -4,77 +4,79 @@
       <menu-bar style="position: fixed; width: 100vw; z-index: 1;"></menu-bar>
     </el-header>
     <transition name="fade">
-      <router-view/>
+      <router-view />
     </transition>
   </el-container>
 </template>
 
 <script>
-  import MenuBar from '@/components/MenuBar.vue'
+import MenuBar from "@/components/MenuBar.vue";
 
-  export default {
-    watch: {
-      '$route'() {
-        this.$store.dispatch('getAuthInfo');
-      },
-      'isFetchUserInfoError'() {
-        if (!this.isFetchUserInfoError) {
-          return
-        }
-        this.$notify.error({
-          title: 'Auth request fail',
-          message: this.$store.state.userInfo.apiErrorMsg,
-          duration: 0
-        });
+export default {
+  watch: {
+    $route() {
+      this.$store.dispatch("getAuthInfo");
+    },
+    isFetchUserInfoError() {
+      if (!this.isFetchUserInfoError) {
+        return;
       }
+      this.$notify.error({
+        title: "Auth request fail",
+        message: this.$store.state.userInfo.apiErrorMsg,
+        duration: 0
+      });
+    }
+  },
+  components: {
+    "menu-bar": MenuBar
+  },
+  computed: {
+    isAppLoading() {
+      return this.$store.state.isPageLoading;
     },
-    components: {
-      'menu-bar': MenuBar,
-    },
-    computed: {
-      isAppLoading() {
-        return this.$store.state.isPageLoading
-      },
-      isFetchUserInfoError() {
-        return this.$store.state.userInfo.isApiError
-      }
-    },
+    isFetchUserInfoError() {
+      return this.$store.state.userInfo.isApiError;
+    }
   }
+};
 </script>
 
 <style>
-  @import url('https://fonts.googleapis.com/css?family=Montserrat:300,400,500');
+@import url("https://fonts.googleapis.com/css?family=Montserrat:300,400,500");
 
-  body {
-    font-family: 'Montserrat', sans-serif;
+body {
+  font-family: "Montserrat", sans-serif;
 
-    /* try 1 */ /*
+  /* try 1 */ /*
     background-color: #A8D0e6;
     color: #ffffff;
     */
 
-    /* try 2 */ /*
+  /* try 2 */ /*
     background: radial-gradient(#D8F2f2, #88BDBC);
     color: #ffffff;
     */
-    
-    /* current */ 
-    /*background: #1e9fc4;*/
-    color: #303133;
-    
-    margin: 0;
-  }
 
-  .fade-enter-active, .fade-leave-active {
-    transition-property: opacity;
-    transition-duration: .25s;
-  }
+  /* current */
+  /*background: #1e9fc4;*/
+  color: #303133;
 
-  .fade-enter-active {
-    transition-delay: .5s;
-  }
+  margin: 0;
+}
 
-  .fade-enter, .fade-leave-active {
-    opacity: 0
-  }
+.fade-enter-active,
+.fade-leave-active {
+  transition-property: opacity;
+  transition-duration: 0.25s;
+}
+
+.fade-enter-active {
+  transition-delay: 0.5s;
+}
+
+.fade-enter,
+.fade-leave-active {
+  opacity: 0;
+}
 </style>

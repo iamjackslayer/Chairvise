@@ -1,16 +1,16 @@
 <template>
   <el-collapse v-model="activeNames">
-    <el-collapse-item title="Importing CSV Data" name="1">      
+    <el-collapse-item title="Importing CSV Data" name="1">
       <ol>
         <li>Log in.</li>
         <li>Click on "Import Data".</li>
-        <li>Fill in the forms. </li>
-        <li>Upload your CSV data. </li>
+        <li>Fill in the forms.</li>
+        <li>Upload your CSV data.</li>
         <li>Map the CSV column headers</li>
         <li>Upload!</li>
-      </ol>      
+      </ol>
     </el-collapse-item>
-    <el-collapse-item title="Make Presentation" name="2">      
+    <el-collapse-item title="Make Presentation" name="2">
       <ol>
         <li>Click on "Analyze".</li>
         <li>Create a new presentation.</li>
@@ -26,15 +26,17 @@
         <li>There is no limit to the number of visualizations!</li>
       </ol>
     </el-collapse-item>
-    <el-collapse-item title="Sharing Presentation" name="3">      
+    <el-collapse-item title="Sharing Presentation" name="3">
       <ol>
         <li>Click on "SHARE"</li>
-        <li>Enter the email address of the person you want to share it with.</li>
-        <li>Change the permission (view or edit) given to the user. </li>        
+        <li>
+          Enter the email address of the person you want to share it with.
+        </li>
+        <li>Change the permission (view or edit) given to the user.</li>
       </ol>
     </el-collapse-item>
-    <el-collapse-item title="Download presentations as PDF" name="4"> 
-      <p> Pre-requisites: You must have create a presentation. </p>
+    <el-collapse-item title="Download presentations as PDF" name="4">
+      <p>Pre-requisites: You must have create a presentation.</p>
       <ol>
         <li>Click on "Analyze".</li>
         <li>Select the presentation that you want to view.</li>
@@ -43,7 +45,7 @@
       </ol>
     </el-collapse-item>
     <el-collapse-item title="Download presentations as Powerpoint" name="5">
-      <p> Pre-requisites: You must have create a presentation. </p>
+      <p>Pre-requisites: You must have create a presentation.</p>
       <ol>
         <li>Click on "Analyze".</li>
         <li>Select the presentation that you want to view.</li>
@@ -60,19 +62,18 @@
         <li>You get the conference details.</li>
       </ol>
     </el-collapse-item>
-  </el-collapse>  
+  </el-collapse>
 </template>
 
 <script>
-  export default {
-    name: "InstructionsGuide",
-    data() {
-      return {
-        activeNames: []
-      };
-    },
+export default {
+  name: "InstructionsGuide",
+  data() {
+    return {
+      activeNames: []
+    };
   }
+};
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

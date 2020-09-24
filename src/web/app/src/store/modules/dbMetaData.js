@@ -1,4 +1,4 @@
-import axios from 'axios'
+import axios from "axios";
 
 export default {
   state: {
@@ -6,7 +6,7 @@ export default {
     entitiesStatus: {
       isLoading: false,
       isApiError: false,
-      apiErrorMsg: '',
+      apiErrorMsg: ""
     }
   },
 
@@ -23,24 +23,24 @@ export default {
 
     setDBMetaDataEntities(state, payload) {
       state.entities = payload;
-    },
-
+    }
   },
 
   actions: {
-    async fetchDBMetaDataEntities({commit}) {
-      commit('setDBMetaDataEntitiesLoading', true);
+    async fetchDBMetaDataEntities({ commit }) {
+      commit("setDBMetaDataEntitiesLoading", true);
 
-      await axios.get('/api/db/entity')
+      await axios
+        .get("/api/db/entity")
         .then(response => {
-          commit('setDBMetaDataEntities', response.data);
+          commit("setDBMetaDataEntities", response.data);
         })
         .catch(e => {
-          commit('setDBMetaDataEntitiesApiError', e.toString());
+          commit("setDBMetaDataEntitiesApiError", e.toString());
         })
         .finally(() => {
-          commit('setDBMetaDataEntitiesLoading', false);
-        })
+          commit("setDBMetaDataEntitiesLoading", false);
+        });
     }
   }
-}
+};

@@ -1,19 +1,16 @@
-import {createLocalVue, shallowMount} from '@vue/test-utils'
-import ElementUI from 'element-ui';
-import VueRouter from 'vue-router'
-import Vuex from 'vuex'
-import App from '../App'
-import VuePageTransition from 'vue-page-transition'
+import { createLocalVue, shallowMount } from "@vue/test-utils";
+import ElementUI from "element-ui";
+import VueRouter from "vue-router";
+import Vuex from "vuex";
+import App from "../App";
 
 const localVue = createLocalVue();
 
 localVue.use(Vuex);
 localVue.use(VueRouter);
 localVue.use(ElementUI);
-localVue.use(VuePageTransition);
 
-describe('App.vue', () => {
-
+describe("App.vue", () => {
   let store;
 
   beforeEach(() => {
@@ -29,11 +26,11 @@ describe('App.vue', () => {
           }
         }
       }
-    })
+    });
   });
 
-  test('App is a vue instance and mounted correctly', () => {
-    const wrapper = shallowMount(App, {store, localVue});
-    expect(wrapper.isVueInstance()).toBeTruthy()
-  })
+  test("App is a vue instance and mounted correctly", () => {
+    const wrapper = shallowMount(App, { store, localVue });
+    expect(wrapper.isVueInstance()).toBeTruthy();
+  });
 });
