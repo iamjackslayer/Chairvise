@@ -30,12 +30,13 @@ public class AuthorRecordDeserializer extends StdDeserializer<AuthorRecord> {
     public AuthorRecord deserialize(JsonParser p, DeserializationContext ctxt) throws IOException, JsonProcessingException {
 
         JsonNode node = p.getCodec().readTree(p);
+
+        // TODO: Remove usage of version, and add usage of conference in the future.
         String versionStr = getStrValueByField(node, "versionId");
         Version version = new Version(new Version.VersionPK(null, null, versionStr));
 
-        //TODO: Check if conference is set correctly
-        Conference conference = new Conference();
-        conference.setId(Long.parseLong(getStrValueByField(node, "conferenceId")));
+//        Conference conference = new Conference();
+//        conference.setId(Long.parseLong(getStrValueByField(node, "conferenceId")));
 
         String submissionId = getStrValueByField(node, "submissionId");
         String firstName = getStrValueByField(node,"firstName");
@@ -47,6 +48,6 @@ public class AuthorRecordDeserializer extends StdDeserializer<AuthorRecord> {
         String personId = getStrValueByField(node, "personId");
         String isCorresponding = getStrValueByField(node, "isCorresponding");
 
-        return new AuthorRecord(version, conference, submissionId, firstName, lastName, email, country, organisation, webPage, personId, isCorresponding);
+        return new AuthorRecord(version, null, submissionId, firstName, lastName, email, country, organisation, webPage, personId, isCorresponding);
     }
 }

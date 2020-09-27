@@ -60,12 +60,13 @@ public class ReviewRecordDeserializer extends StdDeserializer<ReviewRecord> {
     public ReviewRecord deserialize(JsonParser p, DeserializationContext ctxt) throws IOException, JsonProcessingException {
 
         JsonNode node = p.getCodec().readTree(p);
+        // TODO: Remove usage of version, and add usage of conference in the future.
         String versionStr = getStrValueByField(node, "versionId");
         Version version = new Version(new Version.VersionPK(null, null, versionStr));
 
-        //TODO: Check if conference is set correctly
-        Conference conference = new Conference();
-        conference.setId(Long.parseLong(getStrValueByField(node, "conferenceId")));
+
+//        Conference conference = new Conference();
+//        conference.setId(Long.parseLong(getStrValueByField(node, "conferenceId")));
 
         String submissionId = getStrValueByField(node, "submissionId");
         String reviewId = getStrValueByField(node, "reviewId");
@@ -78,7 +79,7 @@ public class ReviewRecordDeserializer extends StdDeserializer<ReviewRecord> {
         Date reviewSubmissionTime = getDateValueByField(node);
         String hasRecommendedForBestPaper = getStrValueByField(node, "hasRecommendedForBestPaper");
 
-        return new ReviewRecord(version, conference, submissionId, reviewId, numReviewAssignment, reviewerName, expertiseLevel,
+        return new ReviewRecord(version, null, submissionId, reviewId, numReviewAssignment, reviewerName, expertiseLevel,
                 confidenceLevel, reviewComment, overallEvaluationScore, reviewSubmissionTime, hasRecommendedForBestPaper);
     }
 }
