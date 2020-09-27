@@ -7,6 +7,9 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+import sg.edu.nus.comp.cs3219.viz.common.entity.Conference;
 import sg.edu.nus.comp.cs3219.viz.common.util.Deserializer.SubmissionRecordDeserializer;
 
 import javax.persistence.*;
@@ -148,6 +151,15 @@ public class SubmissionRecord {
             @JoinColumn(name = "version", referencedColumnName = "version"),
     })
     private Version version;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "conference_id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private Conference conference;
+
+    public Conference getConference(){return conference;}
+    public void setConference(Conference conference){this.conference = conference;}
 
     public Long getId() {
         return id;

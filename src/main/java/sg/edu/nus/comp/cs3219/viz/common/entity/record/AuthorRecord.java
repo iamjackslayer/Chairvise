@@ -5,6 +5,9 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+import sg.edu.nus.comp.cs3219.viz.common.entity.Conference;
 import sg.edu.nus.comp.cs3219.viz.common.util.Deserializer.AuthorRecordDeserializer;
 
 import javax.persistence.*;
@@ -16,9 +19,10 @@ public class AuthorRecord {
 
     public AuthorRecord(){}
 
-    public AuthorRecord(Version v, String submissionId, String firstName, String lastName, String email, String country,
+    public AuthorRecord(Version v, Conference c, String submissionId, String firstName, String lastName, String email, String country,
                         String organisation, String webPage, String personId, String isCorresponding){
         this.id = null;
+        this.conference = c;
         this.version = v;
         this.submissionId = submissionId;
         this.firstName = firstName;
@@ -48,6 +52,15 @@ public class AuthorRecord {
 
     public Version getVersion(){return version;}
     public void setVersion(Version version){this.version = version;}
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "conference_id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private Conference conference;
+
+    public Conference getConference(){return conference;}
+    public void setConference(Conference conference){this.conference = conference;}
 
     @Exportable(name = "Submission Id", nameInDB = "a_submission_id")
     @Column(name = "a_submission_id")

@@ -5,6 +5,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
+import sg.edu.nus.comp.cs3219.viz.common.entity.Conference;
 import sg.edu.nus.comp.cs3219.viz.common.entity.record.AuthorRecord;
 import sg.edu.nus.comp.cs3219.viz.common.entity.record.Version;
 
@@ -32,6 +33,10 @@ public class AuthorRecordDeserializer extends StdDeserializer<AuthorRecord> {
         String versionStr = getStrValueByField(node, "versionId");
         Version version = new Version(new Version.VersionPK(null, null, versionStr));
 
+        //TODO: Check if conference is set correctly
+        Conference conference = new Conference();
+        conference.setId(Long.parseLong(getStrValueByField(node, "conferenceId")));
+
         String submissionId = getStrValueByField(node, "submissionId");
         String firstName = getStrValueByField(node,"firstName");
         String lastName = getStrValueByField(node, "lastName");
@@ -42,6 +47,6 @@ public class AuthorRecordDeserializer extends StdDeserializer<AuthorRecord> {
         String personId = getStrValueByField(node, "personId");
         String isCorresponding = getStrValueByField(node, "isCorresponding");
 
-        return new AuthorRecord(version, submissionId, firstName, lastName, email, country, organisation, webPage, personId, isCorresponding);
+        return new AuthorRecord(version, conference, submissionId, firstName, lastName, email, country, organisation, webPage, personId, isCorresponding);
     }
 }

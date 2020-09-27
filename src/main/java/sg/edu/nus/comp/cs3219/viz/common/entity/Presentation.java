@@ -1,12 +1,18 @@
 package sg.edu.nus.comp.cs3219.viz.common.entity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
 public class Presentation {
@@ -24,6 +30,14 @@ public class Presentation {
     private String description;
 
     private String creatorIdentifier;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "conference_id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private Conference conference;
+
+    private boolean isPublic;
 
     public Long getId() {
         return id;
@@ -64,4 +78,10 @@ public class Presentation {
     public void setCreatorIdentifier(String creatorIdentifier) {
         this.creatorIdentifier = creatorIdentifier;
     }
+
+    public Conference getConference(){return conference;}
+    public void setConference(Conference conference){this.conference = conference;}
+
+    public boolean getIsPublic() {return isPublic;}
+    public void setIsPublic(boolean isPublic) {this.isPublic = isPublic;}
 }
