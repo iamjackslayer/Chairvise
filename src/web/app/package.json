@@ -49,6 +49,8 @@
     "@vue/test-utils": "^1.0.3",
     "babel-core": "7.0.0-bridge.0",
     "babel-jest": "^23.0.1",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-prettier": "^3.1.4",
     "vue-cli-plugin-element": "^1.0.0",
     "vue-template-compiler": "^2.6.11"
   },
@@ -59,6 +61,7 @@
     },
     "extends": [
       "plugin:vue/essential",
+      "plugin:prettier/recommended",
       "eslint:recommended"
     ],
     "rules": {},

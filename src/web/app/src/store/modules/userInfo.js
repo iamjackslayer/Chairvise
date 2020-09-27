@@ -1,14 +1,14 @@
-import axios from 'axios'
+import axios from "axios";
 
 export default {
   state: {
     isApiError: false,
-    apiErrorMsg: '',
+    apiErrorMsg: "",
     isLogin: false,
-    loginUrl: '',
-    logoutUrl: '',
-    userEmail: '',
-    userNickname: '',
+    loginUrl: "",
+    logoutUrl: "",
+    userEmail: "",
+    userNickname: ""
   },
   mutations: {
     setAuthInfoApiRequestFail(state, payload) {
@@ -28,19 +28,20 @@ export default {
     }
   },
   actions: {
-    async getAuthInfo({commit}) {
-      commit('setPageLoadingStatus', true);
+    async getAuthInfo({ commit }) {
+      commit("setPageLoadingStatus", true);
       const urlToGetBack = encodeURI(window.location.href);
-      axios.get('/api/auth?redirectUrl=' + urlToGetBack)
+      axios
+        .get("/api/auth?redirectUrl=" + urlToGetBack)
         .then(response => {
-          commit('setAuthInfo', response.data)
+          commit("setAuthInfo", response.data);
         })
         .catch(e => {
-          commit('setAuthInfoApiRequestFail', e.toString());
+          commit("setAuthInfoApiRequestFail", e.toString());
         })
         .finally(() => {
-          commit('setPageLoadingStatus', false)
-        })
+          commit("setPageLoadingStatus", false);
+        });
     }
   }
 };

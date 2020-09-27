@@ -6,18 +6,18 @@ export default {
     accessControlListStatus: {
       isLoading: false,
       isApiError: false,
-      apiErrorMsg: '',
+      apiErrorMsg: ""
     },
     accessControlForm: {
-      id: '',
-      userIdentifier: '',
-      accessLevel: '',
+      id: "",
+      userIdentifier: "",
+      accessLevel: ""
     },
     accessControlFormStatus: {
       isLoading: false,
       isApiError: false,
-      apiErrorMsg: '',
-    },
+      apiErrorMsg: ""
+    }
   },
 
   mutations: {
@@ -46,11 +46,11 @@ export default {
     },
 
     clearAccessControlList(state) {
-      state.accessControlList = []
+      state.accessControlList = [];
     },
 
-    setAccessControlFormField(state, {field, value}) {
-      state.accessControlForm[field] = value
+    setAccessControlFormField(state, { field, value }) {
+      state.accessControlForm[field] = value;
     },
 
     addAccessControl(state, payload) {
@@ -59,83 +59,92 @@ export default {
 
     deleteAccessControl(state, payload) {
       let index = state.accessControlList.findIndex(s => s.id === payload);
-      state.accessControlList.splice(index, 1)
+      state.accessControlList.splice(index, 1);
     },
 
-    updateAccessControl(state, {id, accessLevel}) {
-      let accessControl = state.accessControlList.find(element => element.id === id);
+    updateAccessControl(state, { id, accessLevel }) {
+      let accessControl = state.accessControlList.find(
+        element => element.id === id
+      );
       accessControl.accessLevel = accessLevel;
     }
   },
 
   actions: {
-    async fetchAccessControlList({commit}, presentationId) {
-      commit('setAccessControlListLoading', true);
+    async fetchAccessControlList({ commit }, presentationId) {
+      commit("setAccessControlListLoading", true);
 
-      await axios.get(`/api/presentations/${presentationId}/accessControl`)
+      await axios
+        .get(`/api/presentations/${presentationId}/accessControl`)
         .then(response => {
-          commit('clearAccessControlList');
+          commit("clearAccessControlList");
           response.data.forEach(ele => {
-            commit('addAccessControl', ele)
+            commit("addAccessControl", ele);
           });
         })
         .catch(e => {
-          commit('setAccessControlListApiError', e.toString())
+          commit("setAccessControlListApiError", e.toString());
         })
         .finally(() => {
-          commit('setAccessControlListLoading', false);
-        })
+          commit("setAccessControlListLoading", false);
+        });
     },
 
-    async addAccessControl({commit}, {presentationId, userIdentifier, accessLevel}) {
-      commit('setAccessControlFormLoading', true);
-      await axios.post(`/api/presentations/${presentationId}/accessControl`, {
-        userIdentifier,
-        accessLevel
-      })
+    async addAccessControl(
+      { commit },
+      { presentationId, userIdentifier, accessLevel }
+    ) {
+      commit("setAccessControlFormLoading", true);
+      await axios
+        .post(`/api/presentations/${presentationId}/accessControl`, {
+          userIdentifier,
+          accessLevel
+        })
         .then(response => {
-          commit('addAccessControl', response.data);
+          commit("addAccessControl", response.data);
         })
         .catch(e => {
-          commit('setAccessControlFormApiError', e.toString());
+          commit("setAccessControlFormApiError", e.toString());
         })
         .finally(() => {
-          commit('setAccessControlFormLoading', false);
-        })
+          commit("setAccessControlFormLoading", false);
+        });
     },
 
-    async deleteAccessControl({commit}, {id, presentationId}) {
-      commit('setAccessControlListLoading', true);
-      await axios.delete(`/api/presentations/${presentationId}/accessControl/${id}`)
+    async deleteAccessControl({ commit }, { id, presentationId }) {
+      commit("setAccessControlListLoading", true);
+      await axios
+        .delete(`/api/presentations/${presentationId}/accessControl/${id}`)
         .then(() => {
-          commit('deleteAccessControl', id);
+          commit("deleteAccessControl", id);
         })
         .catch(e => {
-          commit('setAccessControlListApiError', e.toString());
+          commit("setAccessControlListApiError", e.toString());
         })
         .finally(() => {
-          commit('setAccessControlListLoading', false);
-        })
+          commit("setAccessControlListLoading", false);
+        });
     },
 
-    async updateAccessControl({commit}, {id, presentationId, accessLevel}) {
-      commit('setAccessControlListLoading', true);
-      await axios.put(`/api/presentations/${presentationId}/accessControl/${id}`, {
-        accessLevel
-      })
+    async updateAccessControl({ commit }, { id, presentationId, accessLevel }) {
+      commit("setAccessControlListLoading", true);
+      await axios
+        .put(`/api/presentations/${presentationId}/accessControl/${id}`, {
+          accessLevel
+        })
         .then(response => {
           let accessControl = response.data;
-          commit('updateAccessControl', {
+          commit("updateAccessControl", {
             id: accessControl.id,
             accessLevel: accessControl.accessLevel
           });
         })
         .catch(e => {
-          commit('setAccessControlListApiError', e.toString());
+          commit("setAccessControlListApiError", e.toString());
         })
         .finally(() => {
-          commit('setAccessControlListLoading', false);
-        })
-    },
+          commit("setAccessControlListLoading", false);
+        });
+    }
   }
-}
+};

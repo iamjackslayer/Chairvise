@@ -1,13 +1,13 @@
-import Vue from 'vue'
-import App from './App.vue'
-import ElementUI from 'element-ui';
-import 'element-ui/lib/theme-chalk/index.css';
-import router from './router'
-import store from './store'
-import './plugins/element.js'
+import Vue from "vue";
+import App from "./App.vue";
+import ElementUI from "element-ui";
+import "element-ui/lib/theme-chalk/index.css";
+import router from "./router";
+import store from "./store";
+import "./plugins/element.js";
 //Fade andzoom animation
-import 'element-ui/lib/theme-chalk/base.css';
-import 'fullcalendar/dist/fullcalendar.css'
+import "element-ui/lib/theme-chalk/base.css";
+import "fullcalendar/dist/fullcalendar.css";
 
 Vue.use(ElementUI);
 
@@ -17,9 +17,9 @@ new Vue({
   router,
   store,
   render: h => h(App)
-}).$mount('#app');
+}).$mount("#app");
 
 // change title of page
-router.afterEach((to) => {
+router.afterEach(to => {
   document.title = to.meta.title;
 });

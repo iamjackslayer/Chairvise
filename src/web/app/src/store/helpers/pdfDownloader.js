@@ -22,16 +22,28 @@ export function downloadPDF(presentationFormName) {
 }
 
 function getDescription() {
-  return html2canvas(document.getElementById("presentation-description")).then(element => {
-    let imageData = element.toDataURL("image/png");
-    if (imageData === "data:,") {
-      // according to documentation of toDataURL, if the canvas is of 0 width, 0 height,
-      // the function will return string "data:,". If the canvas is empty, directly return
-      return;
+  return html2canvas(document.getElementById("presentation-description")).then(
+    element => {
+      let imageData = element.toDataURL("image/png");
+      if (imageData === "data:,") {
+        // according to documentation of toDataURL, if the canvas is of 0 width, 0 height,
+        // the function will return string "data:,". If the canvas is empty, directly return
+        return;
+      }
+      let descriptionHeight =
+        (element.height * PDF_CHART_WIDTH) / element.width;
+      doc.addImage(
+        imageData,
+        "PNG",
+        PDF_CHART_MARGIN_LEFT,
+        PDF_DESCRIPTION_MARGIN_TOP,
+        PDF_CHART_WIDTH,
+        descriptionHeight,
+        "",
+        "FAST"
+      );
     }
-    let descriptionHeight = element.height * PDF_CHART_WIDTH / element.width;
-    doc.addImage(imageData, "PNG", PDF_CHART_MARGIN_LEFT, PDF_DESCRIPTION_MARGIN_TOP, PDF_CHART_WIDTH, descriptionHeight, "", "FAST");
-  });
+  );
 }
 
 function getChart(chartElement, idx) {
@@ -41,8 +53,17 @@ function getChart(chartElement, idx) {
       marginTop = PDF_CHART_MARGIN_TOP;
     }
     let imageData = element.toDataURL("image/png");
-    let chartHeight = element.height * PDF_CHART_WIDTH / element.width;
-    doc.addImage(imageData, "PNG", PDF_CHART_MARGIN_LEFT, marginTop, PDF_CHART_WIDTH, chartHeight, "", "FAST");
+    let chartHeight = (element.height * PDF_CHART_WIDTH) / element.width;
+    doc.addImage(
+      imageData,
+      "PNG",
+      PDF_CHART_MARGIN_LEFT,
+      marginTop,
+      PDF_CHART_WIDTH,
+      chartHeight,
+      "",
+      "FAST"
+    );
     marginTop = chartHeight + marginTop * 2;
   });
 }

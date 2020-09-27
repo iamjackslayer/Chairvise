@@ -1,0 +1,24 @@
+{
+  "folders": [
+    {
+      "name": "Frontend",
+      "path": ".",
+    }
+  ],
+  "extensions": {
+    "recommendations": [
+      "esbenp.prettier-vscode",
+      "dbaeumer.vscode-eslint",
+      "octref.vetur"
+    ]
+  },
+  "settings": {
+    "editor.formatOnSave": false,
+    "search.exclude": {
+      "**/node_modules": true
+    },
+    "editor.codeActionsOnSave": {
+      "source.fixAll.eslint": true
+    }
+  }
+}
