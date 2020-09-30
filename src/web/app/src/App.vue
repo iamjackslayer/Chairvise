@@ -11,33 +11,31 @@
             <b-icon icon="list" />
           </button>
         </div>
-        <b-collapse v-model="collapsed" id="nav-collapse" class="mt-2">
+        <b-nav class="bd-links" vertical>
+          <b-nav-item active>
+            <router-link to="/home">Home</router-link>
+          </b-nav-item>
+          <b-nav-item>
+            <router-link to="/analyze">My Presentations</router-link>
+          </b-nav-item>
+          <b-nav-item>
+            <router-link to="/conference">My Conferences</router-link>
+          </b-nav-item>
+        </b-nav>
+        <div class="secondary-actions">
           <b-nav class="bd-links" vertical>
-            <b-nav-item active>
-              <router-link to="home">Home</router-link>
+            <b-nav-item>
+              <router-link to="userGuide">User Guide</router-link>
             </b-nav-item>
             <b-nav-item>
-              <router-link to="analyze">My Presentations</router-link>
-            </b-nav-item>
-            <b-nav-item>
-              <router-link to="conference">My Conferences</router-link>
+              <router-link to="logout">Logout</router-link>
             </b-nav-item>
           </b-nav>
-          <div class="secondary-actions">
-            <b-nav class="bd-links" vertical>
-              <b-nav-item>
-                <router-link to="userGuide">User Guide</router-link>
-              </b-nav-item>
-              <b-nav-item>
-                <router-link to="logout">Logout</router-link>
-              </b-nav-item>
-            </b-nav>
-          </div>
-        </b-collapse>
+        </div>
       </div>
 
       <div class="col-12 col-md-9 col-xl-10 py-md-3 pl-md-5 bd-content content">
-        <b-overlay :show="isAppLoading" no-wrap> </b-overlay>
+        <b-overlay :show="isAppLoading" no-wrap></b-overlay>
         <!-- <el-header style="padding: 0;">
               <menu-bar style="position: fixed; width: 100vw; z-index: 1;"></menu-bar>
             </el-header> -->
