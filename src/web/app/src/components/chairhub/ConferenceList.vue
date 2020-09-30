@@ -74,7 +74,7 @@
   export default {
     methods: {
       onRowSelected(row) {
-        console.log(row[0].conference);
+        // console.log(row[0].conference);
       },
     },
     data() {
