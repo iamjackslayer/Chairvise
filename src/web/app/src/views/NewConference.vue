@@ -1,16 +1,17 @@
 <template>
-  <el-main>
-    <el-card>
+  <!-- need change to b-form -->
+  <div>
+    <b-card>
       <div slot="header" class="clearfix">
         <span> Add New Conference </span>
       </div>
-      <el-alert
+      <b-alert
         v-if="isNewConference && !isLogin"
-        title="Please login to create new conference"
-        type="error"
+        variant="danger"
         show-icon
         class="errorMsg"
-      />
+        >Please login to create new conference</b-alert
+      >
       <el-form
         v-else
         :rules="rules"
@@ -51,24 +52,26 @@
           >
         </el-form-item>
       </el-form>
-    </el-card>
+    </b-card>
 
     <!-- dialogs -->
-    <el-dialog title="Confirm" :visible.sync="hasSubmitted" width="30%" center>
+    <b-modal title="Confirm" :visible.sync="hasSubmitted" width="30%" center>
       <span> Are you sure that the conference details are correct?</span>
       <span slot="footer" class="dialog-footer">
-        <el-button v-on:click="hasSubmitted = false">Cancel</el-button>
-        <el-button type="primary" v-on:click="addConference">Confirm</el-button>
+        <b-button v-on:click="hasSubmitted = false">Cancel</b-button>
+        <b-button variant="primary" v-on:click="addConference"
+          >Confirm</b-button
+        >
       </span>
-    </el-dialog>
-    <el-dialog title="Success" :visible.sync="saveSuccess" width="30%" center>
+    </b-modal>
+    <b-modal title="Success" :visible.sync="saveSuccess" width="30%" center>
       <span>You have successfully added a new conference</span>
       <span slot="footer" class="dialog-footer">
-        <el-button type="primary" v-on:click="closeSuccess">Sure</el-button>
+        <b-button variant="primary" v-on:click="closeSuccess">Sure</b-button>
       </span>
-    </el-dialog>
+    </b-modal>
     <!-- end of dialogs -->
-  </el-main>
+  </div>
 </template>
 
 <script>

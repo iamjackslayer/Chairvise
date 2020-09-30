@@ -1,16 +1,18 @@
 <template>
-  <el-main>
-    <el-card>
+  <!-- need change to b-form -->
+  <div>
+    <b-card>
       <div slot="header" class="clearfix">
         <span> Create New Presentation </span>
       </div>
-      <el-alert
+      <b-alert
         v-if="isNewPresentation && !isLogin"
         title="Please login to create new presentation"
-        type="error"
+        variant="danger"
         show-icon
         class="errorMsg"
-      />
+        >Please login to create new presentation</b-alert
+      >
       <el-form
         v-else
         :rules="rules"
@@ -33,34 +35,31 @@
           </el-col>
         </el-form-item>
         <el-form-item>
-          <el-button
-            type="primary"
-            icon="el-icon-check"
-            @click="uploadClicked()"
-            >Save</el-button
+          <b-button variant="primary" @click="uploadClicked()"
+            ><b-icon icon="check" font-scale="1"></b-icon>Save</b-button
           >
         </el-form-item>
       </el-form>
-    </el-card>
+    </b-card>
 
     <!-- dialogs -->
-    <el-dialog title="Confirm" :visible.sync="hasSubmitted" width="30%" center>
+    <b-modal title="Confirm" :visible.sync="hasSubmitted" width="30%" center>
       <span> Are you sure that the presentation details are correct?</span>
       <span slot="footer" class="dialog-footer">
-        <el-button v-on:click="hasSubmitted = false">Cancel</el-button>
-        <el-button type="primary" v-on:click="addPresentation"
-          >Confirm</el-button
+        <b-button v-on:click="hasSubmitted = false">Cancel</b-button>
+        <b-button variant="primary" v-on:click="addPresentation"
+          >Confirm</b-button
         >
       </span>
-    </el-dialog>
-    <el-dialog title="Success" :visible.sync="saveSuccess" width="30%" center>
+    </b-modal>
+    <b-modal title="Success" :visible.sync="hasSubmitted" width="30%" center>
       <span>You have successfully added a new presentation</span>
       <span slot="footer" class="dialog-footer">
-        <el-button type="primary" v-on:click="closeSuccess">Sure</el-button>
+        <b-button variant="primary" v-on:click="closeSuccess">Sure</b-button>
       </span>
-    </el-dialog>
+    </b-modal>
     <!-- end of dialogs -->
-  </el-main>
+  </div>
 </template>
 
 <script>
@@ -143,6 +142,7 @@ export default {
   data() {
     return {
       hasSubmitted: false,
+      test: true,
       rules: {
         name: [
           {

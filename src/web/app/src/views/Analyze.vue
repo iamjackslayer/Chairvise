@@ -1,20 +1,24 @@
 <template>
-  <el-main>
+  <!-- need to check layout alignment after adding presentations -->
+  <div>
     <h1 class="alignLeft">My Created Presentations</h1>
-    <el-button
+    <b-button
       class="alignRight"
       type="primary"
-      icon="el-icon-plus"
       v-if="!isPresentationListEmpty"
       @click="createPresentation"
-      >Add New Presentation</el-button
+      >Add New Presentation</b-button
     >
     <br />
-    <el-divider></el-divider>
+    <br />
+    <hr />
     <div class="infinite-list-wrapper">
-      <el-card v-if="isPresentationListEmpty">
+      <b-card
+        class="shadow p-3 mb-5 bg-white rounded"
+        v-if="isPresentationListEmpty"
+      >
         <EmptyPresentation />
-      </el-card>
+      </b-card>
       <ul
         class="infinite-list"
         v-infinite-scroll="loadMorePresentation"
@@ -26,31 +30,31 @@
           :key="presentation.id"
         >
           <zoom-center-transition :duration="500" :delay="100 * (index - 1)">
-            <el-card shadow="hover">
-              <el-button
+            <b-card class="shadow p-3 mb-5 bg-white rounded">
+              <b-button
                 type="text"
                 class="presentationCard"
                 v-show="show"
                 @click="viewPresentation(presentation.id)"
               >
-                <el-row>
-                  <el-col class="presentation-id" :span="1">
+                <b-row>
+                  <b-col class="presentation-id" :span="1">
                     <p>#{{ presentation.id }}</p>
-                  </el-col>
-                  <el-col :span="19" :offset="1">
+                  </b-col>
+                  <b-col :span="19" :offset="1">
                     <p>{{ presentation.name }}</p>
-                  </el-col>
-                  <el-col :span="19" :offset="1">
+                  </b-col>
+                  <b-col :span="19" :offset="1">
                     <p>{{ presentation.description }}</p>
-                  </el-col>
-                </el-row>
-              </el-button>
-            </el-card>
+                  </b-col>
+                </b-row>
+              </b-button>
+            </b-card>
           </zoom-center-transition>
         </li>
       </ul>
     </div>
-  </el-main>
+  </div>
 </template>
 
 <script>

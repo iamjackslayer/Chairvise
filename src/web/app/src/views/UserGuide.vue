@@ -1,24 +1,21 @@
 <template>
+<!-- indentation lel -->
   <div>
     <div>
-      <el-container>
-        <el-main>
-          <el-tabs :tab-position="tabPosition">
-            <el-tab-pane label="Overview">
+          <b-tabs :tab-position="tabPosition" active>
+            <b-tab title="Overview">
               <OverviewGuide />
-            </el-tab-pane>
-            <el-tab-pane label="Features">
+            </b-tab>
+            <b-tab title="Features">
               <FeatureGuide />
-            </el-tab-pane>
-            <el-tab-pane label="Instructions">
+            </b-tab>
+            <b-tab title="Instructions">
               <InstructionsGuide />
-            </el-tab-pane>
-            <el-tab-pane label="FAQ">
+            </b-tab>
+            <b-tab title="FAQ">
               <FAQGuide />
-            </el-tab-pane>
-          </el-tabs>
-        </el-main>
-      </el-container>
+            </b-tab>
+          </b-tabs>
     </div>
   </div>
 </template>

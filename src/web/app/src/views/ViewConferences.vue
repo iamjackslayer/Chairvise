@@ -1,17 +1,15 @@
 <template>
-  <el-main>
+  <div>
+    <!-- The button alignment is off abit -->
     <h1 class="alignLeft">My Conferences</h1>
-    <el-button
-      class="alignRight"
-      type="primary"
-      icon="el-icon-plus"
-      @click="createConference"
-      >Add New Conference</el-button
+    <b-button class="alignRight" variant="primary" @click="createConference"
+      ><b-icon icon="plus" font-scale="1"></b-icon>Add New Conference</b-button
     >
     <br />
-    <el-divider></el-divider>
+    <br />
+    <hr />
     <zoom-center-transition :duration="500" :delay="100">
-      <el-card v-show="show">
+      <b-card v-show="show">
         <FullCalendar
           :events="conferences"
           ref="fullCalendar"
@@ -19,9 +17,9 @@
           :config="config"
           @event-selected="eventSelected"
         />
-      </el-card>
+      </b-card>
     </zoom-center-transition>
-  </el-main>
+  </div>
 </template>
 
 <script>
@@ -116,6 +114,7 @@ export default {
   float: left;
   display: inline-block;
   margin: 0;
+  margin-top: 5;
 }
 .alignRight {
   float: right;

@@ -16,6 +16,9 @@
             <b-nav-item active>
               <router-link to="home">Home</router-link>
             </b-nav-item>
+            <b-nav-item active>
+              <router-link to="importData">Import Data</router-link>
+            </b-nav-item>
             <b-nav-item>
               <router-link to="analyze">My Presentations</router-link>
             </b-nav-item>
@@ -50,8 +53,6 @@
 </template>
 
 <script>
-import MenuBar from "@/components/MenuBar.vue";
-
 export default {
   watch: {
     $route() {
