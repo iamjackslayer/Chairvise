@@ -1,18 +1,19 @@
 <template>
-  <el-main>
-    <el-alert
+  <!-- idk why this page doesnt display -->
+  <div>
+    <b-alert
       title="You need to login-in to view the page"
       type="error"
       v-if="!isLogin && !isAppLoading"
     >
-      &nbsp;<el-button
-        type="warning"
+      &nbsp;<b-button
+        variant="danger"
         plain
         size="mini"
         @click="navigateToHomePage"
-        >Return to the Home Page</el-button
+        >Return to the Home Page</b-button
       >
-    </el-alert>
+    </b-alert>
 
     <div v-if="isLogin">
       <mapping-tool v-if="isReadyForMapping" ref="mapTool"></mapping-tool>
@@ -132,7 +133,7 @@
         </div>
       </el-card>
     </div>
-  </el-main>
+  </div>
 </template>
 
 <script>
