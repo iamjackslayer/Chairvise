@@ -40,6 +40,7 @@ public class RecordLogic {
         // remove author entries of indicated version. This should effectively be 'updating' of author entries
         // It is of reasonable assumption that all records within the same upload are of the same version
         AuthorRecord temp = authorRecordList.get(0);
+        // TODO: Change version with conference
         Version v = new Version(new Version.VersionPK(dataSet, "AuthorRecord", temp.getVersion().getId().getVersion()));
         authorRecordRepository.deleteAllByVersionEquals(v);
 
@@ -60,6 +61,7 @@ public class RecordLogic {
             return;
         }
         ReviewRecord temp = reviewRecordList.get(0);
+        // TODO: Change version with conference
         Version v = new Version(new Version.VersionPK(dataSet, "ReviewRecord", temp.getVersion().getId().getVersion()));
         reviewRecordRepository.deleteAllByVersionEquals(v);
 
@@ -82,6 +84,7 @@ public class RecordLogic {
         }
         SubmissionRecord temp = submissionRecordList.get(0);
         System.out.println(temp.getVersion().getId().getVersion());
+        // TODO: Change version with conference
         Version v = new Version(new Version.VersionPK(dataSet, "SubmissionRecord", temp.getVersion().getId().getVersion()));
         submissionRecordRepository.deleteAllByVersionEquals(v);
 

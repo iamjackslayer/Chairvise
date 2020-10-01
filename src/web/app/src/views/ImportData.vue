@@ -1,3 +1,6 @@
+<!--
+TODO: Remove dependency on Version Id
+-->
 <template>
   <el-main>
     <el-alert
@@ -105,6 +108,7 @@
                 Version
               </label>
               <br />
+              <!-- change versionId to conferenceId in the future-->
               <el-autocomplete
                 class="inline-input"
                 v-model="versionId"
@@ -201,6 +205,14 @@ export default {
         this.$store.commit("setVersionId", newValue);
       }
     },
+    conferenceId: {
+      get: function() {
+        return this.$store.state.dataMapping.data.conferenceId;
+      },
+      set: function(newValue) {
+        this.$store.commit("setConferenceId", newValue);
+      }
+    },
     hasHeader: {
       get: function() {
         return this.$store.state.dataMapping.data.hasHeader;
@@ -235,7 +247,9 @@ export default {
         this.$store.state.dataMapping.hasTableTypeSelected &&
         this.$store.state.dataMapping.hasHeaderSpecified &&
         this.$store.state.dataMapping.hasPredefinedSpecified &&
+        // TODO: Change to check with conferenceId rather then versionId
         this.$store.state.dataMapping.hasVersionIdSpecified
+        // this.$store.state.dataMapping.hasConferenceIdSpecified
       );
     },
     uploaded: function() {
@@ -247,7 +261,9 @@ export default {
         this.$store.state.dataMapping.hasTableTypeSelected &&
         this.$store.state.dataMapping.hasHeaderSpecified &&
         this.$store.state.dataMapping.hasPredefinedSwitchSpecified &&
+        // TODO: Change to check with conferenceId rather then versionId
         this.$store.state.dataMapping.hasVersionIdSpecified
+        // this.$store.state.dataMapping.hasConferenceIdSpecified
       );
     },
     isReadyForChoosing: function() {
