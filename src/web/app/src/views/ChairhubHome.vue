@@ -1,11 +1,11 @@
 <template>
   <div>
-    <ConferenceList />
+    <PublicPostList />
   </div>
 </template>
 
 <script>
-  import ConferenceList from "@/components/chairhub/ConferenceList.vue";
+  import PublicPostList from "@/components/chairhub/PublicPostList.vue";
   export default {
     name: "ChairhubHome",
     data() {
@@ -14,10 +14,14 @@
     watch: {},
     computed: {},
     components: {
-      ConferenceList,
+      PublicPostList,
     },
     methods: {},
-    mounted() {},
+    mounted() {
+      // Get all public presentations
+      this.$store.dispatch("getPublicPresentationList");
+      // TODO: fill the ConferenceList table
+    },
   };
 </script>
 

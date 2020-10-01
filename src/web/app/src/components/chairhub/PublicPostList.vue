@@ -74,7 +74,7 @@
   export default {
     methods: {
       onRowSelected(row) {
-        // console.log(row[0].conference);
+        console.log(row[0].conference);
       },
     },
     data() {
@@ -82,7 +82,7 @@
         perPage: 10,
         pageOptions: [10, 20, 50],
         sortBy: "created_on",
-        sorDesc: true,
+        sortDesc: true,
         filter: "",
         fields: [
           { key: "conference" },
