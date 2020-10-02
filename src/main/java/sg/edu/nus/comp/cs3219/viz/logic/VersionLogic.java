@@ -24,6 +24,10 @@ public class VersionLogic {
         return versionRepository.findById_DataSetAndId_RecordType(userInfo.getUserEmail(), recordType);
     }
 
+    public List<Version> findAllForUserWithVersion(UserInfo userInfo, String version){
+        return versionRepository.findById_DataSetAndId_Version(userInfo, version);
+    }
+
     public Version saveForUser(Version version, UserInfo userInfo){
         Version newVersion = new Version();
         Version.VersionPK newVersionID = version.getId();

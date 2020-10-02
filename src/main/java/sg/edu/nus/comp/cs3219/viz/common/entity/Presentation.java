@@ -31,12 +31,6 @@ public class Presentation {
 
     private String creatorIdentifier;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "conference_id")
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private Conference conference;
-
     private boolean isPublic;
 
     public Long getId() {
@@ -78,9 +72,6 @@ public class Presentation {
     public void setCreatorIdentifier(String creatorIdentifier) {
         this.creatorIdentifier = creatorIdentifier;
     }
-
-    public Conference getConference(){return conference;}
-    public void setConference(Conference conference){this.conference = conference;}
 
     public boolean getIsPublic() {return isPublic;}
     public void setIsPublic(boolean isPublic) {this.isPublic = isPublic;}

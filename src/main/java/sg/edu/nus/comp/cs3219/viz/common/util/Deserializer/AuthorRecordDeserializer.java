@@ -35,8 +35,6 @@ public class AuthorRecordDeserializer extends StdDeserializer<AuthorRecord> {
         String versionStr = getStrValueByField(node, "versionId");
         Version version = new Version(new Version.VersionPK(null, null, versionStr));
 
-//        Conference conference = new Conference();
-//        conference.setId(Long.parseLong(getStrValueByField(node, "conferenceId")));
 
         String submissionId = getStrValueByField(node, "submissionId");
         String firstName = getStrValueByField(node,"firstName");
@@ -48,6 +46,6 @@ public class AuthorRecordDeserializer extends StdDeserializer<AuthorRecord> {
         String personId = getStrValueByField(node, "personId");
         String isCorresponding = getStrValueByField(node, "isCorresponding");
 
-        return new AuthorRecord(version, null, submissionId, firstName, lastName, email, country, organisation, webPage, personId, isCorresponding);
+        return new AuthorRecord(version, submissionId, firstName, lastName, email, country, organisation, webPage, personId, isCorresponding);
     }
 }

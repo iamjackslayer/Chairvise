@@ -65,9 +65,6 @@ public class ReviewRecordDeserializer extends StdDeserializer<ReviewRecord> {
         Version version = new Version(new Version.VersionPK(null, null, versionStr));
 
 
-//        Conference conference = new Conference();
-//        conference.setId(Long.parseLong(getStrValueByField(node, "conferenceId")));
-
         String submissionId = getStrValueByField(node, "submissionId");
         String reviewId = getStrValueByField(node, "reviewId");
         int numReviewAssignment = getIntValueByField(node);
@@ -79,7 +76,7 @@ public class ReviewRecordDeserializer extends StdDeserializer<ReviewRecord> {
         Date reviewSubmissionTime = getDateValueByField(node);
         String hasRecommendedForBestPaper = getStrValueByField(node, "hasRecommendedForBestPaper");
 
-        return new ReviewRecord(version, null, submissionId, reviewId, numReviewAssignment, reviewerName, expertiseLevel,
+        return new ReviewRecord(version, submissionId, reviewId, numReviewAssignment, reviewerName, expertiseLevel,
                 confidenceLevel, reviewComment, overallEvaluationScore, reviewSubmissionTime, hasRecommendedForBestPaper);
     }
 }

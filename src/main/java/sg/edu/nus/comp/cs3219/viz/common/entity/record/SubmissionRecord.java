@@ -152,15 +152,6 @@ public class SubmissionRecord {
     })
     private Version version;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "conference_id")
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private Conference conference;
-
-    public Conference getConference(){return conference;}
-    public void setConference(Conference conference){this.conference = conference;}
-
     public Long getId() {
         return id;
     }
@@ -168,8 +159,6 @@ public class SubmissionRecord {
     public void setId(Long id) {
         this.id = id;
     }
-
-
 
     public String getSubmissionId() {
         return submissionId;

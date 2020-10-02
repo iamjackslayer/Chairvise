@@ -19,10 +19,9 @@ public class AuthorRecord {
 
     public AuthorRecord(){}
 
-    public AuthorRecord(Version v, Conference c, String submissionId, String firstName, String lastName, String email, String country,
+    public AuthorRecord(Version v, String submissionId, String firstName, String lastName, String email, String country,
                         String organisation, String webPage, String personId, String isCorresponding){
         this.id = null;
-        this.conference = c;
         this.version = v;
         this.submissionId = submissionId;
         this.firstName = firstName;
@@ -52,15 +51,6 @@ public class AuthorRecord {
 
     public Version getVersion(){return version;}
     public void setVersion(Version version){this.version = version;}
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "conference_id")
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private Conference conference;
-
-    public Conference getConference(){return conference;}
-    public void setConference(Conference conference){this.conference = conference;}
 
     @Exportable(name = "Submission Id", nameInDB = "a_submission_id")
     @Column(name = "a_submission_id")

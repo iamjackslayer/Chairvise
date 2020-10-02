@@ -20,11 +20,10 @@ import java.util.Date;
 public class ReviewRecord {
     public ReviewRecord(){}
 
-    public ReviewRecord(Version v, Conference c, String submissionId, String reviewId, int numReviewAssignment, String reviewerName, double expertiseLevel,
+    public ReviewRecord(Version v, String submissionId, String reviewId, int numReviewAssignment, String reviewerName, double expertiseLevel,
                         double confidenceLevel, String reviewComment, double overallEvaluationScore, Date reviewSubmissionTime, String hasRecommendedForBestPaper){
         this.id = null;
         this.version = v;
-        this.conference = c;
         this.submissionId = submissionId;
         this.reviewId = reviewId;
         this.numReviewAssignment = numReviewAssignment;
@@ -111,15 +110,6 @@ public class ReviewRecord {
             @JoinColumn(name = "version", referencedColumnName = "version"),
     })
     private Version version;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "conference_id")
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private Conference conference;
-
-    public Conference getConference(){return conference;}
-    public void setConference(Conference conference){this.conference = conference;}
 
     public Long getId() {
         return id;

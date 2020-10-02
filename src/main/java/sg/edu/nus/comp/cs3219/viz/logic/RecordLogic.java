@@ -5,6 +5,7 @@ import org.springframework.transaction.annotation.Transactional;
 import sg.edu.nus.comp.cs3219.viz.common.entity.record.*;
 import sg.edu.nus.comp.cs3219.viz.storage.repository.AuthorRecordRepository;
 import sg.edu.nus.comp.cs3219.viz.storage.repository.ReviewRecordRepository;
+import sg.edu.nus.comp.cs3219.viz.storage.repository.VersionRepository;
 import sg.edu.nus.comp.cs3219.viz.storage.repository.SubmissionAuthorRecordRepository;
 import sg.edu.nus.comp.cs3219.viz.storage.repository.SubmissionRecordRepository;
 
@@ -21,14 +22,18 @@ public class RecordLogic {
 
     private ReviewRecordRepository reviewRecordRepository;
 
+    private VersionRepository versionRepository;
+
     public RecordLogic(AuthorRecordRepository authorRecordRepository,
                        SubmissionRecordRepository submissionRecordRepository,
                        SubmissionAuthorRecordRepository submissionAuthorRecordRepository,
-                       ReviewRecordRepository reviewRecordRepository) {
+                       ReviewRecordRepository reviewRecordRepository,
+                       VersionRepository versionRepository) {
         this.authorRecordRepository = authorRecordRepository;
         this.submissionRecordRepository = submissionRecordRepository;
         this.submissionAuthorRecordRepository = submissionAuthorRecordRepository;
         this.reviewRecordRepository = reviewRecordRepository;
+        this.versionRepository = versionRepository;
     }
 
     @Transactional
@@ -41,9 +46,17 @@ public class RecordLogic {
         // It is of reasonable assumption that all records within the same upload are of the same version
         AuthorRecord temp = authorRecordList.get(0);
         // TODO: Change version with conference
-        Version v = new Version(new Version.VersionPK(dataSet, "AuthorRecord", temp.getVersion().getId().getVersion()));
+        // Version v= new Version(new Version.VersionPK(dataSet, "AuthorRecord", temp.getVersion().getId().getVersion()));
+        // Will only have 1 row at most.
+        List<Version> vList = versionRepository.findById_DataSetAndId_Version(dataSet, temp.getVersion().getId().getVersion());
+        Version v;
+        if (vList.size() > 0) {
+            v = vList.get(0);
+            v.setHasAuthorRecord(true);
+        } else {
+            v = new Version(new Version.VersionPK(dataSet, "AuthorRecord", temp.getVersion().getId().getVersion()));
+        }
         authorRecordRepository.deleteAllByVersionEquals(v);
-
         authorRecordRepository.saveAll(authorRecordList.stream().peek(r -> {
             // should not set ID when creating records
             r.setId(null);
