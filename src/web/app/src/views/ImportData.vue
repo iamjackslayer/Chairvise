@@ -1,6 +1,3 @@
-<!--
-TODO: Remove dependency on Version Id
--->
 <template>
   <el-main>
     <el-alert
@@ -247,9 +244,7 @@ export default {
         this.$store.state.dataMapping.hasTableTypeSelected &&
         this.$store.state.dataMapping.hasHeaderSpecified &&
         this.$store.state.dataMapping.hasPredefinedSpecified &&
-        // TODO: Change to check with conferenceId rather then versionId
         this.$store.state.dataMapping.hasVersionIdSpecified
-        // this.$store.state.dataMapping.hasConferenceIdSpecified
       );
     },
     uploaded: function() {
@@ -261,9 +256,7 @@ export default {
         this.$store.state.dataMapping.hasTableTypeSelected &&
         this.$store.state.dataMapping.hasHeaderSpecified &&
         this.$store.state.dataMapping.hasPredefinedSwitchSpecified &&
-        // TODO: Change to check with conferenceId rather then versionId
         this.$store.state.dataMapping.hasVersionIdSpecified
-        // this.$store.state.dataMapping.hasConferenceIdSpecified
       );
     },
     isReadyForChoosing: function() {

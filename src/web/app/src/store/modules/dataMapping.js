@@ -1,7 +1,6 @@
 import axios from "axios";
 import { processMapping } from "@/store/helpers/processor.js";
 
-// TODO: Remove dependency on version
 export default {
   state: {
     hasDBSchemaSet: false,
@@ -9,7 +8,6 @@ export default {
     hasFormatTypeSpecified: false,
     hasTableTypeSelected: false,
     hasVersionIdSpecified: false,
-    hasConferenceIdSpecified: false,
     hasHeaderSpecified: false,
     hasPredefinedSpecified: false,
     hasPredefinedSwitchSpecified: false, // new
@@ -25,7 +23,6 @@ export default {
       tableType: null,
       isNewVersion: null,
       versionId: null,
-      conferenceId: null,
       hasHeader: null,
       hasPredefined: null, // new
       predefinedMapping: null,
@@ -89,16 +86,6 @@ export default {
     clearVersionId(state) {
       state.data.versionId = null;
       state.hasVersionIdSpecified = false;
-    },
-
-    setConferenceId(state, selected) {
-      state.data.conferenceId = selected;
-      state.hasConferenceIdSpecified = true;
-    },
-
-    clearConferenceId(state) {
-      state.data.conferenceId = null;
-      state.hasConferenceIdSpecified = false;
     },
 
     setIsNewVersion(state, selected) {
@@ -201,9 +188,7 @@ export default {
       // add version to end
       for (var i = 0; i < state.data.processedResult.length; i++) {
         var row = state.data.processedResult[i];
-        // TODO: Remove dependency on versionId
         row.versionId = state.data.versionId;
-        row.conferenceId = state.data.conferenceId;
       }
 
       // concurrent POST data and POST version requests
@@ -245,9 +230,7 @@ export default {
       // add version to end
       for (var i = 0; i < state.data.processedResult.length; i++) {
         var row = state.data.processedResult[i];
-        // TODO: Remove dependency on versionId
         row.versionId = state.data.versionId;
-        row.conferenceId = state.data.conferenceId;
       }
       //console.log(state.data.processedResult);
       await axios
