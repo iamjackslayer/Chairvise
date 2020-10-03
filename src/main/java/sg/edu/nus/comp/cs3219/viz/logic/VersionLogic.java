@@ -25,16 +25,19 @@ public class VersionLogic {
     }
 
     public List<Version> findAllForUserWithVersion(UserInfo userInfo, String version){
-        return versionRepository.findById_DataSetAndId_Version(userInfo, version);
+        return versionRepository.findById_DataSetAndId_Version(userInfo.getUserEmail(), version);
     }
 
     public Version saveForUser(Version version, UserInfo userInfo){
-        Version newVersion = new Version();
-        Version.VersionPK newVersionID = version.getId();
-        newVersionID.setDataSet(userInfo.getUserEmail());
-        newVersion.setId(newVersionID);
-
-        return versionRepository.save(newVersion);
+        List<Version> vList = versionRepository.findById_DataSetAndId_Version(userInfo.getUserEmail(), version.getId().getVersion());
+        if (vList.size() == 0) {
+            Version newVersion = new Version();
+            Version.VersionPK newVersionID = version.getId();
+            newVersionID.setDataSet(userInfo.getUserEmail());
+            newVersion.setId(newVersionID);
+            return versionRepository.save(newVersion);
+        }
+        return vList.get(0);
     }
 
 }

@@ -31,14 +31,16 @@ public class Version {
     public Version(VersionPK pk){
         this.creatorIdentifier = pk.dataSet;
         this.name = pk.getVersion();
-        if (pk.getRecordType().equals("AuthorRecord")) {
-            this.hasAuthorRecord = true;
-        }
-        if (pk.getRecordType().equals("ReviewRecord")) {
-            this.hasReviewRecord = true;
-        }
-        if (pk.getRecordType().equals("SubmissionRecord")) {
-            this.hasSubmissionRecord = true;
+        if (pk.getRecordType() != null) {
+            if (pk.getRecordType().equals("AuthorRecord")) {
+                this.hasAuthorRecord = true;
+            }
+            if (pk.getRecordType().equals("ReviewRecord")) {
+                this.hasReviewRecord = true;
+            }
+            if (pk.getRecordType().equals("SubmissionRecord")) {
+                this.hasSubmissionRecord = true;
+            }
         }
 
         pk.recordType = "";

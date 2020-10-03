@@ -55,6 +55,7 @@ public class RecordLogic {
             v.setHasAuthorRecord(true);
         } else {
             v = new Version(new Version.VersionPK(dataSet, "AuthorRecord", temp.getVersion().getId().getVersion()));
+            versionRepository.save(v);
         }
         authorRecordRepository.deleteAllByVersionEquals(v);
         authorRecordRepository.saveAll(authorRecordList.stream().peek(r -> {
@@ -75,7 +76,15 @@ public class RecordLogic {
         }
         ReviewRecord temp = reviewRecordList.get(0);
         // TODO: Change version with conference
-        Version v = new Version(new Version.VersionPK(dataSet, "ReviewRecord", temp.getVersion().getId().getVersion()));
+        List<Version> vList = versionRepository.findById_DataSetAndId_Version(dataSet, temp.getVersion().getId().getVersion());
+        Version v;
+        if (vList.size() > 0) {
+            v = vList.get(0);
+            v.setHasReviewRecord(true);
+        } else {
+            v = new Version(new Version.VersionPK(dataSet, "ReviewRecord", temp.getVersion().getId().getVersion()));
+            versionRepository.save(v);
+        }
         reviewRecordRepository.deleteAllByVersionEquals(v);
 
         reviewRecordRepository.saveAll(reviewRecordList.stream().peek(r -> {
@@ -98,7 +107,15 @@ public class RecordLogic {
         SubmissionRecord temp = submissionRecordList.get(0);
         System.out.println(temp.getVersion().getId().getVersion());
         // TODO: Change version with conference
-        Version v = new Version(new Version.VersionPK(dataSet, "SubmissionRecord", temp.getVersion().getId().getVersion()));
+        List<Version> vList = versionRepository.findById_DataSetAndId_Version(dataSet, temp.getVersion().getId().getVersion());
+        Version v;
+        if (vList.size() > 0) {
+            v = vList.get(0);
+            v.setHasSubmissionRecord(true);
+        } else {
+            v = new Version(new Version.VersionPK(dataSet, "SubmissionRecord", temp.getVersion().getId().getVersion()));
+            versionRepository.save(v);
+        }
         submissionRecordRepository.deleteAllByVersionEquals(v);
 
         submissionRecordRepository.saveAll(submissionRecordList.stream().peek(s -> {
