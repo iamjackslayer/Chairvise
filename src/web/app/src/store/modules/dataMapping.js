@@ -247,9 +247,9 @@ export default {
     }
   }
 };
-function postVersion(fnKeyEntry) {
-  return axios.post("/api/version", fnKeyEntry);
-}
+// function postVersion(fnKeyEntry) {
+//   return axios.post("/api/version", fnKeyEntry);
+// }
 
 function postTable(endpoint, processedResult) {
   return axios.post("/api/record/" + endpoint, processedResult);
