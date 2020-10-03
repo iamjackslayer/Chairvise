@@ -28,22 +28,21 @@ public class Version {
 
     public Version(){}
 
-    public Version(VersionPK pk){
+    public Version(VersionPK pk, String recordType){
         this.creatorIdentifier = pk.dataSet;
         this.name = pk.getVersion();
-        if (pk.getRecordType() != null) {
-            if (pk.getRecordType().equals("AuthorRecord")) {
+        if (recordType != null) {
+            if (recordType.equals("AuthorRecord")) {
                 this.hasAuthorRecord = true;
             }
-            if (pk.getRecordType().equals("ReviewRecord")) {
+            if (recordType.equals("ReviewRecord")) {
                 this.hasReviewRecord = true;
             }
-            if (pk.getRecordType().equals("SubmissionRecord")) {
+            if (recordType.equals("SubmissionRecord")) {
                 this.hasSubmissionRecord = true;
             }
         }
 
-        pk.recordType = "";
         this.id = pk;
     }
 
@@ -104,22 +103,15 @@ public class Version {
 
         @Column(name = "data_set")
         private String dataSet;
-        @Column(name = "record_type")
-        private String recordType;
         @Column(name = "version")
         private String version;
 
         public VersionPK(){}
 
-        public VersionPK(String dataSet, String recordType, String version){
+        public VersionPK(String dataSet, String version){
             this.dataSet = dataSet;
-            this.recordType = recordType;
             this.version = version;
         }
-
-        public String getRecordType(){return recordType;}
-
-        public void setRecordType(String recordType){this.recordType=recordType;}
 
         public String getVersion() {
             return version;
@@ -143,12 +135,12 @@ public class Version {
             if (o == null || getClass() != o.getClass()) return false;
 
             VersionPK that = (VersionPK) o;
-            return this.dataSet.equals(that.dataSet) && this.recordType.equals((that.recordType)) && (this.version == that.version);
+            return this.dataSet.equals(that.dataSet) && (this.version == that.version);
         }
 
         @Override
         public int hashCode(){
-            return Objects.hash(dataSet,recordType,version);
+            return Objects.hash(dataSet,version);
         }
     }
 }

@@ -58,7 +58,7 @@ public class SubmissionRecordDeserializer extends StdDeserializer<SubmissionReco
         System.out.println("called");
         JsonNode node = p.getCodec().readTree(p);
         String versionStr = getStrValueByField(node, "versionId");
-        Version version = new Version(new Version.VersionPK(null, null, versionStr));
+        Version version = new Version(new Version.VersionPK(null, versionStr), null);
 
         String submissionId = getStrValueByField(node, "submissionId");
         String trackId = getStrValueByField(node,"trackId");

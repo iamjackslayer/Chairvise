@@ -54,7 +54,7 @@ public class RecordLogic {
             v = vList.get(0);
             v.setHasAuthorRecord(true);
         } else {
-            v = new Version(new Version.VersionPK(dataSet, "AuthorRecord", temp.getVersion().getId().getVersion()));
+            v = new Version(new Version.VersionPK(dataSet, temp.getVersion().getId().getVersion()), "AuthorRecord");
             versionRepository.save(v);
         }
         authorRecordRepository.deleteAllByVersionEquals(v);
@@ -82,7 +82,7 @@ public class RecordLogic {
             v = vList.get(0);
             v.setHasReviewRecord(true);
         } else {
-            v = new Version(new Version.VersionPK(dataSet, "ReviewRecord", temp.getVersion().getId().getVersion()));
+            v = new Version(new Version.VersionPK(dataSet, temp.getVersion().getId().getVersion()), "ReviewRecord");
             versionRepository.save(v);
         }
         reviewRecordRepository.deleteAllByVersionEquals(v);
@@ -113,7 +113,7 @@ public class RecordLogic {
             v = vList.get(0);
             v.setHasSubmissionRecord(true);
         } else {
-            v = new Version(new Version.VersionPK(dataSet, "SubmissionRecord", temp.getVersion().getId().getVersion()));
+            v = new Version(new Version.VersionPK(dataSet, temp.getVersion().getId().getVersion()), "SubmissionRecord");
             versionRepository.save(v);
         }
         submissionRecordRepository.deleteAllByVersionEquals(v);

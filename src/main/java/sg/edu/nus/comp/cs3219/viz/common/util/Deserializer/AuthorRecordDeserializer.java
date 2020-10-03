@@ -33,7 +33,7 @@ public class AuthorRecordDeserializer extends StdDeserializer<AuthorRecord> {
 
         // TODO: Remove usage of version, and add usage of conference in the future.
         String versionStr = getStrValueByField(node, "versionId");
-        Version version = new Version(new Version.VersionPK(null, null, versionStr));
+        Version version = new Version(new Version.VersionPK(null, versionStr), null);
 
 
         String submissionId = getStrValueByField(node, "submissionId");

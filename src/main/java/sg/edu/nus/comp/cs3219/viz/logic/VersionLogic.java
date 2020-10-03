@@ -21,7 +21,18 @@ public class VersionLogic {
     }
 
     public List<Version> findAllForUserWithRecordType(UserInfo userInfo, String recordType){
-        return versionRepository.findById_DataSetAndId_RecordType(userInfo.getUserEmail(), recordType);
+        if (recordType.equals("AuthorRecord")) {
+            return versionRepository.findById_DataSetAndHasAuthorRecord(userInfo.getUserEmail(), true);
+        }
+        if (recordType.equals("ReviewRecord")) {
+            return versionRepository.findById_DataSetAndHasReviewRecord(userInfo.getUserEmail(), true);
+        }
+        if (recordType.equals("SubmissionRecord")) {
+            return versionRepository.findById_DataSetAndHasSubmissionRecord(userInfo.getUserEmail(), true);
+        } else {
+          return null;
+        }
+//        return versionRepository.findById_DataSetAndId_RecordType(userInfo.getUserEmail(), recordType);
     }
 
     public List<Version> findAllForUserWithVersion(UserInfo userInfo, String version){
