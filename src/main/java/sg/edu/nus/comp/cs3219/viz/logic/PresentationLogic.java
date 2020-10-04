@@ -21,6 +21,10 @@ public class PresentationLogic {
         return presentationRepository.findByCreatorIdentifier(userInfo.getUserEmail());
     }
 
+    public List<Presentation> findAllPublicPresentation() {
+        return presentationRepository.findByIsPublic(true);
+    }
+
     public Optional<Presentation> findById(Long id) {
         return presentationRepository.findById(id);
     }
@@ -31,7 +35,7 @@ public class PresentationLogic {
         newPresentation.setVersion(presentation.getVersion());
         newPresentation.setDescription(presentation.getDescription());
         newPresentation.setCreatorIdentifier(userInfo.getUserEmail());
-
+        newPresentation.setIsPublic(presentation.getIsPublic());
         return presentationRepository.save(newPresentation);
     }
 

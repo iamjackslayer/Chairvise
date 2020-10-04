@@ -33,6 +33,13 @@ public class PresentationController extends BaseRestController {
         return presentationLogic.findAllForUser(currentUser);
     }
 
+    @GetMapping("/presentations/public")
+    public List<Presentation> getAllPublicPresentation() {
+        UserInfo currentUser = gateKeeper.verifyLoginAccess();
+
+        return presentationLogic.findAllPublicPresentation();
+    }
+
     @PostMapping("/presentations")
     public ResponseEntity<?> newPresentation(@RequestBody Presentation presentation) throws URISyntaxException {
         UserInfo currentUser = gateKeeper.verifyLoginAccess();
