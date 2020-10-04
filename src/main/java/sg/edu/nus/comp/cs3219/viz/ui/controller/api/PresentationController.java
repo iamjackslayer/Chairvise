@@ -5,8 +5,10 @@ import org.springframework.web.bind.annotation.*;
 import sg.edu.nus.comp.cs3219.viz.common.datatransfer.AccessLevel;
 import sg.edu.nus.comp.cs3219.viz.common.datatransfer.UserInfo;
 import sg.edu.nus.comp.cs3219.viz.common.entity.Presentation;
+import sg.edu.nus.comp.cs3219.viz.common.entity.PresentationComment;
 import sg.edu.nus.comp.cs3219.viz.common.exception.PresentationNotFoundException;
 import sg.edu.nus.comp.cs3219.viz.logic.GateKeeper;
+import sg.edu.nus.comp.cs3219.viz.logic.PresentationCommentLogic;
 import sg.edu.nus.comp.cs3219.viz.logic.PresentationLogic;
 
 import java.net.URI;
@@ -17,12 +19,14 @@ import java.util.List;
 public class PresentationController extends BaseRestController {
 
     private final PresentationLogic presentationLogic;
+    private final PresentationCommentLogic presentationCommentLogic;
 
     private final GateKeeper gateKeeper;
 
-    public PresentationController(PresentationLogic presentationLogic,
+    public PresentationController(PresentationLogic presentationLogic, PresentationCommentLogic presentationCommentLogic,
                                   GateKeeper gateKeeper) {
         this.presentationLogic = presentationLogic;
+        this.presentationCommentLogic = presentationCommentLogic;
         this.gateKeeper = gateKeeper;
     }
 
@@ -77,11 +81,12 @@ public class PresentationController extends BaseRestController {
     @DeleteMapping("/presentations/{id}")
     public ResponseEntity<?> deletePresentation(@PathVariable Long id) {
         Presentation oldPresentation = presentationLogic.findById(id)
-                .orElseThrow(() -> new PresentationNotFoundException(id));
+            .orElseThrow(() -> new PresentationNotFoundException(id));
         gateKeeper.verifyDeletionAccessForPresentation(oldPresentation);
 
         presentationLogic.deleteById(id);
 
         return ResponseEntity.noContent().build();
     }
+
 }
