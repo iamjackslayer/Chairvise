@@ -130,7 +130,7 @@ export default {
     async getPublicPresentationList({ commit }) {
       commit("setPublicPresentationListLoading", true);
       axios
-        .get("/api/publicPresentation")
+        .get("/api/presentations/public")
         .then(response => {
           commit("setPublicPresentationList", response.data);
         })
