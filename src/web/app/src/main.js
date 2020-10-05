@@ -24,10 +24,10 @@ Vue.config.productionTip = false;
 new Vue({
   router,
   store,
-  render: (h) => h(App),
+  render: h => h(App)
 }).$mount("#app");
 
 // change title of page
-router.afterEach((to) => {
+router.afterEach(to => {
   document.title = to.meta.title;
 });
