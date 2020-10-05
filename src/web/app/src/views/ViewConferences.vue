@@ -108,18 +108,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.title-bar {
-  display: flex;
-  align-items: center;
-  margin-top: 1rem;
-  margin-bottom: 2rem;
-}
-
-.title {
-  font-weight: 700;
-  letter-spacing: -0.025em;
-}
-
 .add-conference {
   margin-left: auto;
 }

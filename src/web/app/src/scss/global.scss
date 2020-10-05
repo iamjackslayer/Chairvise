@@ -10,3 +10,35 @@ $theme-colors: (
 
 @import "node_modules/bootstrap/scss/bootstrap";
 @import "node_modules/bootstrap-vue/src/index";
+
+body {
+  background-color: $gray-100;
+}
+
+.title-bar {
+  display: flex;
+  align-items: center;
+  margin-top: 1rem;
+  margin-bottom: 2rem;
+}
+
+.title {
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  color: $gray-800;
+}
+
+
+// User Guide section styling
+.guide-header {
+  display: flex;
+  align-items: center;
+}
+
+.collapsible-icon {
+  margin-left: auto;
+}
+
+.accordion > .card > .card-header {
+  cursor: pointer;
+}

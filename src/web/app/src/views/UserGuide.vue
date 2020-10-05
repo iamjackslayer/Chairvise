@@ -1,9 +1,8 @@
 <template>
-  <!-- indentation lel -->
-  <div>
-    <div>
-      <b-tabs :tab-position="tabPosition" active>
-        <b-tab title="Overview">
+  <div class="page-container">
+    <b-card class="guide-card" no-body>
+      <b-tabs :tab-position="tabPosition" card>
+        <b-tab title="Overview" active>
           <OverviewGuide />
         </b-tab>
         <b-tab title="Features">
@@ -16,12 +15,11 @@
           <FAQGuide />
         </b-tab>
       </b-tabs>
-    </div>
+    </b-card>
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
 import OverviewGuide from "@/components/userPageDetail/OverviewGuide.vue";
 import FeatureGuide from "@/components/userPageDetail/FeatureGuide.vue";
 import InstructionsGuide from "@/components/userPageDetail/InstructionsGuide.vue";
@@ -42,4 +40,13 @@ export default {
   }
 };
 </script>
-<style scoped></style>
+<style lang="scss" scoped>
+.guide-card {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.guide-card > .tabs > .tab-content > .card-body {
+  padding: 2rem;
+}
+</style>

@@ -76,14 +76,10 @@ export default {
 };
 </script>
 
-<style lang="scss">
-// placeholder to inject global.scss globally
-</style>
-
 <style lang="scss" scoped>
 .logo-container {
   display: flex;
-  margin-bottom: 0;
+  margin-bottom: 1rem;
 }
 
 .logo {
