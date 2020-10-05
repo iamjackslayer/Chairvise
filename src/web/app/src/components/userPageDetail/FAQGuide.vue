@@ -2,7 +2,7 @@
   <div class="accordion" role="tablist">
     <b-card no-body>
       <b-card-header
-        v-b-toggle.1
+        v-b-toggle.faq1
         header-tag="header"
         class="py-2 px-3 guide-header"
         role="tab"
@@ -10,7 +10,7 @@
         How to use our guide?
         <b-icon class="collapsible-icon" icon="chevron-down"></b-icon>
       </b-card-header>
-      <b-collapse id="1" role="tabpanel">
+      <b-collapse id="faq1" role="tabpanel">
         <b-card-body>
           We have provided 4 different panels for our user guide:
           <ol>
@@ -32,7 +32,7 @@
 
     <b-card no-body>
       <b-card-header
-        v-b-toggle.2
+        v-b-toggle.faq2
         header-tag="header"
         class="py-2 px-3 guide-header"
         role="tab"
@@ -40,7 +40,7 @@
         My chart seems to overlapped
         <b-icon class="collapsible-icon" icon="chevron-down"></b-icon>
       </b-card-header>
-      <b-collapse id="2" role="tabpanel">
+      <b-collapse id="faq2" role="tabpanel">
         <b-card-body>
           Scroll all the way to the top and click "PDF" / "Powerpoint" again.
         </b-card-body>
@@ -49,7 +49,7 @@
 
     <b-card no-body>
       <b-card-header
-        v-b-toggle.3
+        v-b-toggle.faq3
         header-tag="header"
         class="py-2 px-3 guide-header"
         role="tab"
@@ -57,7 +57,7 @@
         Cannot upload Review Record with no header for EasyChair
         <b-icon class="collapsible-icon" icon="chevron-down"></b-icon>
       </b-card-header>
-      <b-collapse id="3" role="tabpanel">
+      <b-collapse id="faq3" role="tabpanel">
         <b-card-body>
           Use the with header option.
         </b-card-body>

@@ -2,7 +2,7 @@
   <div class="accordion" role="tablist">
     <b-card no-body>
       <b-card-header
-        v-b-toggle.1
+        v-b-toggle.instruction1
         header-tag="header"
         class="py-2 px-3 guide-header"
         role="tab"
@@ -10,7 +10,7 @@
         Importing CSV Data
         <b-icon class="collapsible-icon" icon="chevron-down"></b-icon>
       </b-card-header>
-      <b-collapse id="1" role="tabpanel">
+      <b-collapse id="instruction1" role="tabpanel">
         <b-card-body>
           <ol>
             <li>Log in.</li>
@@ -26,7 +26,7 @@
 
     <b-card no-body>
       <b-card-header
-        v-b-toggle.2
+        v-b-toggle.instruction2
         header-tag="header"
         class="py-2 px-3 guide-header"
         role="tab"
@@ -34,7 +34,7 @@
         Make Presentation
         <b-icon class="collapsible-icon" icon="chevron-down"></b-icon>
       </b-card-header>
-      <b-collapse id="2" role="tabpanel">
+      <b-collapse id="instruction2" role="tabpanel">
         <b-card-body>
           <ol>
             <li>Click on "Analyze".</li>
@@ -56,7 +56,7 @@
 
     <b-card no-body>
       <b-card-header
-        v-b-toggle.3
+        v-b-toggle.instruction3
         header-tag="header"
         class="py-2 px-3 guide-header"
         role="tab"
@@ -64,7 +64,7 @@
         Sharing Presentation
         <b-icon class="collapsible-icon" icon="chevron-down"></b-icon>
       </b-card-header>
-      <b-collapse id="3" role="tabpanel">
+      <b-collapse id="instruction3" role="tabpanel">
         <b-card-body>
           <ol>
             <li>Click on "SHARE"</li>
@@ -79,7 +79,7 @@
 
     <b-card no-body>
       <b-card-header
-        v-b-toggle.4
+        v-b-toggle.instruction4
         header-tag="header"
         class="py-2 px-3 guide-header"
         role="tab"
@@ -87,7 +87,7 @@
         Download presentations as PDF
         <b-icon class="collapsible-icon" icon="chevron-down"></b-icon>
       </b-card-header>
-      <b-collapse id="4" role="tabpanel">
+      <b-collapse id="instruction4" role="tabpanel">
         <b-card-body>
           <p>Pre-requisites: You must have create a presentation.</p>
           <ol>
@@ -101,7 +101,7 @@
     </b-card>
     <b-card no-body>
       <b-card-header
-        v-b-toggle.5
+        v-b-toggle.instruction5
         header-tag="header"
         class="py-2 px-3 guide-header"
         role="tab"
@@ -109,7 +109,7 @@
         Download presentations as Powerpoint
         <b-icon class="collapsible-icon" icon="chevron-down"></b-icon>
       </b-card-header>
-      <b-collapse id="5" role="tabpanel">
+      <b-collapse id="instruction5" role="tabpanel">
         <b-card-body>
           <p>Pre-requisites: You must have create a presentation.</p>
           <ol>
@@ -125,7 +125,7 @@
     </b-card>
     <b-card no-body>
       <b-card-header
-        v-b-toggle.6
+        v-b-toggle.instruction6
         header-tag="header"
         class="py-2 px-3 guide-header"
         role="tab"
@@ -133,7 +133,7 @@
         Manage Conference
         <b-icon class="collapsible-icon" icon="chevron-down"></b-icon>
       </b-card-header>
-      <b-collapse id="6" role="tabpanel">
+      <b-collapse id="instruction6" role="tabpanel">
         <b-card-body>
           <ol>
             <li>Click on "Track".</li>
