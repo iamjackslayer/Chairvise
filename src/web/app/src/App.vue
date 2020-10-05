@@ -37,7 +37,7 @@
         </div>
       </div>
 
-      <div class="col-12 col-md-9 col-xl-10 py-md-3 pl-md-5 bd-content content">
+      <div class="col-12 col-md-9 col-xl-10 py-md-3 px-md-5 bd-content content">
         <b-overlay :show="isAppLoading" no-wrap></b-overlay>
         <!-- <el-header style="padding: 0;">
               <menu-bar style="position: fixed; width: 100vw; z-index: 1;"></menu-bar>
@@ -76,9 +76,11 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
-@import url("https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700");
+<style lang="scss">
+// placeholder to inject global.scss globally
+</style>
 
+<style lang="scss" scoped>
 .logo-container {
   display: flex;
   margin-bottom: 0;

@@ -1,0 +1,12 @@
+@import url("https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700");
+$font-family-sans-serif: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+$font-family-base: $font-family-sans-serif;
+
+@import "./colors";
+$theme-colors: (
+  "primary": $indigo-500,
+  "danger": $red-600,
+);
+
+@import "node_modules/bootstrap/scss/bootstrap";
+@import "node_modules/bootstrap-vue/src/index";

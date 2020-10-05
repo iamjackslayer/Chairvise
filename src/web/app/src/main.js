@@ -4,8 +4,7 @@ import { BootstrapVue, IconsPlugin } from "bootstrap-vue";
 import router from "./router";
 import store from "./store";
 
-import "bootstrap/dist/css/bootstrap.css";
-import "bootstrap-vue/dist/bootstrap-vue.css";
+import "./scss/global.scss";
 import "fullcalendar/dist/fullcalendar.css";
 
 Vue.use(BootstrapVue);
