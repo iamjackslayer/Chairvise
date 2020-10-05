@@ -34,7 +34,7 @@ public class PresentationCommentLogic {
     newComment.setComment(presentationComment.getComment());
     newComment.setUserIdentifier(userInfo.getUserEmail());
     newComment.setPresentation(presentation);
-    return newComment;
+    return presentationCommentRepository.save(newComment);
   }
 
   public PresentationComment updatePresentationComment(PresentationComment oldPresentationComment, PresentationComment newPresentationComment) {

@@ -44,7 +44,7 @@ public class PresentationComment {
         return userIdentifier;
     }
 
-    public void setUserIdentifier(String name) {
+    public void setUserIdentifier(String userIdentifier) {
         this.userIdentifier = userIdentifier;
     }
 
