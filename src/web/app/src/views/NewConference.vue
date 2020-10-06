@@ -182,8 +182,8 @@ export default {
       });
     },
     updateConferenceForm() {
-      if (this.$refs["conferenceForm"]) {
-        this.$refs["conferenceForm"].clearValidate();
+      if (this.$v) {
+        this.$v.$reset;
       }
       this.$store.commit("resetConferenceForm");
     },
