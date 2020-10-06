@@ -45,6 +45,7 @@ export default {
       if (!this.isError) {
         return;
       }
+
       this.$notify.error({
         title: "Conference list API request fail",
         message: this.$store.state.conference.conferenceListStatus.apiErrorMsg,
