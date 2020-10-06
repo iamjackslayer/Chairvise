@@ -16,7 +16,7 @@
             <router-link to="/home">Home</router-link>
           </b-nav-item>
           <b-nav-item active>
-            <router-link to="importData">Import Data</router-link>
+            <router-link to="/importData">Import Data</router-link>
           </b-nav-item>
           <b-nav-item>
             <router-link to="/analyze">My Presentations</router-link>
@@ -28,7 +28,7 @@
         <div class="secondary-actions">
           <b-nav class="bd-links" vertical>
             <b-nav-item>
-              <router-link to="userGuide">User Guide</router-link>
+              <router-link to="/userGuide">User Guide</router-link>
             </b-nav-item>
             <b-nav-item>
               <router-link to="logout">Logout</router-link>
