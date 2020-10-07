@@ -12,29 +12,27 @@
           </button>
         </div>
         <b-nav class="bd-links" vertical>
-          <b-nav-item active>
-            <router-link to="/home">Home</router-link>
+          <!-- TODO: Add check for login and logout views -->
+          <b-nav-item to="/home">
+            Home
           </b-nav-item>
-          <b-nav-item active>
-            <router-link to="/importData">Import Data</router-link>
+          <b-nav-item to="/importData">
+            Import Data
           </b-nav-item>
-          <b-nav-item>
-            <router-link to="/analyze">My Presentations</router-link>
+          <b-nav-item to="/analyze">
+            My Presentations
           </b-nav-item>
-          <b-nav-item>
-            <router-link to="/conference">My Conferences</router-link>
+          <b-nav-item to="/conference">
+            My Conferences
           </b-nav-item>
         </b-nav>
         <div class="secondary-actions">
           <b-nav class="bd-links" vertical>
-            <b-nav-item>
-              <router-link to="/userGuide">User Guide</router-link>
+            <b-nav-item to="/userGuide">
+              User Guide
             </b-nav-item>
-            <b-nav-item>
-              <router-link to="/logout">Logout</router-link>
-            </b-nav-item>
-            <b-nav-item>
-              <router-link to="/logout">Logout</router-link>
+            <b-nav-item to="/logout">
+              Logout
             </b-nav-item>
           </b-nav>
         </div>
@@ -45,9 +43,9 @@
         <!-- <el-header style="padding: 0;">
               <menu-bar style="position: fixed; width: 100vw; z-index: 1;"></menu-bar>
             </el-header> -->
-        <transition name="fade">
+        <div class="page-container">
           <router-view />
-        </transition>
+        </div>
       </div>
     </div>
   </div>
@@ -87,6 +85,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+// TODO: Move sidebar stylings into own component
 .logo-container {
   display: flex;
   margin-bottom: 1rem;
@@ -119,7 +118,6 @@ export default {
   margin-top: auto;
 }
 
-// TODO: Move sidebar stylings into own component
 .row .bd-sidebar {
   order: 0;
   background-color: $gray-800;
