@@ -3,7 +3,6 @@
     <b-alert
       :show="isNewConference && !isLogin"
       variant="danger"
-      show-icon
       class="errorMsg"
     >
       <b-icon
