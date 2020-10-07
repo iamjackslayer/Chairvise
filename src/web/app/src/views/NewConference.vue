@@ -1,9 +1,13 @@
 <template>
   <div>
+    <div class="title-bar">
+      <h1 class="title">Add New Conference</h1>
+    </div>
     <b-alert
-      :show="isNewConference && !isLogin"
+      v-if="isNewConference && !isLogin"
+      show
       variant="danger"
-      class="errorMsg"
+      class="mb-2"
     >
       <b-icon
         class="alert-icon"
@@ -12,10 +16,7 @@
       />
       Please login to create new conference
     </b-alert>
-    <div class="title-bar">
-      <h1 class="title">Add New Conference</h1>
-    </div>
-    <b-card class="form">
+    <b-card v-else class="form">
       <b-overlay :show="isLoading" no-wrap />
       <div class="form-description">
         <h5>Basic Information</h5>

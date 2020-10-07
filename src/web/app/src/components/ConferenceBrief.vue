@@ -10,7 +10,7 @@
       </div>
       <b-form @submit.stop.prevent>
         <b-overlay :show="isLoading" no-wrap />
-        <b-alert :show="isError" variant="danger" class="mb-4">
+        <b-alert v-if="isError" show variant="danger" class="mb-4">
           <b-icon
             class="alert-icon"
             icon="exclamation-circle-fill"

@@ -5,6 +5,7 @@
       title="You need to login-in to view the page"
       type="error"
       v-if="!isLogin && !isAppLoading"
+      show
     >
       &nbsp;<b-button
         variant="danger"
