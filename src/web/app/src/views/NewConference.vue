@@ -18,59 +18,62 @@
     </b-alert>
     <b-card v-else class="form">
       <b-overlay :show="isLoading" no-wrap />
-      <div class="form-description">
-        <h5>Basic Information</h5>
-        <p class="form-section-description">
-          Having an up-to-date email address attached to your acount is a great
-          step toward improved account security.
-        </p>
-      </div>
-      <div class="form-container">
-        <b-form @submit.stop.prevent="uploadClicked">
-          <b-form-group label="Name" label-for="name">
-            <b-form-input
-              id="name"
-              name="name"
-              v-model="conferenceFormName"
-              :state="validateState('name')"
-              aria-describedby="name-live-feedback"
-            />
-            <b-form-invalid-feedback id="name-live-feedback"
-              >This is a required field and must be at least 3
-              characters.</b-form-invalid-feedback
+
+      <b-form @submit.stop.prevent="uploadClicked">
+        <div class="form-section">
+          <div class="form-description">
+            <h5>Basic Information</h5>
+            <p class="form-section-description">
+              Having an up-to-date email address attached to your acount is a
+              great step toward improved account security.
+            </p>
+          </div>
+          <div class="form-container">
+            <b-form-group label="Name" label-for="name">
+              <b-form-input
+                id="name"
+                name="name"
+                v-model="conferenceFormName"
+                :state="validateState('name')"
+                aria-describedby="name-live-feedback"
+              />
+              <b-form-invalid-feedback id="name-live-feedback"
+                >This is a required field and must be at least 3
+                characters.</b-form-invalid-feedback
+              >
+            </b-form-group>
+
+            <b-form-group label="Description" label-for="description">
+              <b-form-textarea
+                id="description"
+                name="description"
+                rows="3"
+                max-rows="6"
+                :state="validateState('description')"
+                v-model="conferenceFormDescription"
+              />
+            </b-form-group>
+
+            <b-form-group label="Date" label-for="date">
+              <b-form-datepicker
+                id="date"
+                name="date"
+                v-model="conferenceFormDate"
+                :state="validateState('date')"
+                aria-describedby="date-live-feedback"
+              />
+
+              <b-form-invalid-feedback id="date-live-feedback">
+                This is a required field.
+              </b-form-invalid-feedback>
+            </b-form-group>
+
+            <b-button type="submit" class="submit-btn" variant="primary"
+              >Submit</b-button
             >
-          </b-form-group>
-
-          <b-form-group label="Description" label-for="description">
-            <b-form-textarea
-              id="description"
-              name="description"
-              rows="3"
-              max-rows="6"
-              :state="validateState('description')"
-              v-model="conferenceFormDescription"
-            />
-          </b-form-group>
-
-          <b-form-group label="Date" label-for="date">
-            <b-form-datepicker
-              id="date"
-              name="date"
-              v-model="conferenceFormDate"
-              :state="validateState('date')"
-              aria-describedby="date-live-feedback"
-            />
-
-            <b-form-invalid-feedback id="date-live-feedback">
-              This is a required field.
-            </b-form-invalid-feedback>
-          </b-form-group>
-
-          <b-button type="submit" class="submit-btn" variant="primary"
-            >Submit</b-button
-          >
-        </b-form>
-      </div>
+          </div>
+        </div>
+      </b-form>
     </b-card>
 
     <!-- <pre class="temp">{{ $v.conferenceForm }}</pre> -->

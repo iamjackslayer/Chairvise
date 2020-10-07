@@ -54,12 +54,30 @@ body {
   margin-bottom: 8px;
 }
 // Form Styling
-.form > .card-body {
-  display: flex;
+
+.form {
+  padding: 0 0.5rem;
 }
 
-.form > .card-body > * {
-  padding: 1rem;
+.form-section {
+  display: flex;
+  flex-basis: 100%;
+}
+
+
+.form-section > .form-description {
+  padding: 1rem 1rem 1rem 0;
+
+  // TODO: consistent padding on mobile
+}
+
+.form-section > .form-container {
+  padding: 1rem 0 1rem 1rem;
+}
+
+
+.form-section:not(:first-child) {
+  border-top: 1px solid $gray-400;
 }
 
 .form-description {

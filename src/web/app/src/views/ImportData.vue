@@ -1,86 +1,93 @@
 <template>
-  <!-- idk why this page doesnt display -->
   <div>
-    <b-alert
-      title="You need to login-in to view the page"
-      type="error"
-      v-if="!isLogin && !isAppLoading"
-      show
-    >
-      &nbsp;<b-button
+    <div class="title-bar">
+      <h1 class="title">Import Data</h1>
+    </div>
+    <b-alert v-if="!isLogin && !isAppLoading" show variant="danger">
+      <b-icon
+        class="alert-icon"
+        icon="exclamation-circle-fill"
         variant="danger"
-        plain
-        size="mini"
-        @click="navigateToHomePage"
-        >Return to the Home Page</b-button
-      >
+      />
+      You need to login to view this page
     </b-alert>
 
     <div v-if="isLogin">
       <mapping-tool v-if="isReadyForMapping" ref="mapTool"></mapping-tool>
-
-      <el-card v-else>
-        <div slot="header" class="clearfix">
-          <span>Upload Data</span>
-        </div>
-
-        <div class="section">
-          <h2>Record Information</h2>
-          <el-divider></el-divider>
-
-          <div class="form-card">
-            <label class="label"> Conference Type </label>
-            <br />
-            <el-radio-group v-model="formatType" size="medium">
-              <el-radio-button :label="1">EasyChair</el-radio-button>
-              <el-radio-button :label="2">SoftConf</el-radio-button>
-            </el-radio-group>
+      <b-card v-else class="form">
+        <div class="form-section">
+          <div class="form-description">
+            <h5>Record Information</h5>
+            <p class="form-section-description">
+              Information about records and stuff. EasyChair and SoftConf
+              blablabla.
+            </p>
           </div>
+          <div class="form-container">
+            <b-form-group label="Conference Type">
+              <b-form-radio-group
+                id="conference-type"
+                name="conference-type"
+                button-variant="outline-primary"
+                v-model="formatType"
+                :options="[
+                  { text: 'EasyChair', value: '1' },
+                  { text: 'SoftConf', value: '2' }
+                ]"
+                buttons
+              ></b-form-radio-group>
+            </b-form-group>
 
-          <div class="form-card">
-            <label class="label"> Table Type </label>
-            <br />
-            <el-radio-group v-model="tableType" size="medium">
-              <el-radio-button
-                v-for="(schema, idx) in dbSchemas"
-                :label="idx"
-                :key="schema.name"
+            <b-form-group label="Table Type">
+              <b-form-radio-group
+                id="table-type"
+                name="table-type"
+                button-variant="outline-primary"
+                v-model="tableType"
+                buttons
               >
-                {{ schema.name }}
-              </el-radio-button>
-            </el-radio-group>
+                <template v-for="(schema, idx) in dbSchemas">
+                  <b-form-radio :value="idx" :key="schema.name">
+                    {{ schema.name }}
+                  </b-form-radio>
+                </template>
+              </b-form-radio-group>
+            </b-form-group>
           </div>
         </div>
 
-        <div class="section" v-if="isReadyForChoosing">
-          <h2>
-            Mapping Information
-
-            <el-tooltip placement="top">
-              <div slot="content">
-                Optional
-              </div>
-              <el-button type="text" icon="el-icon-info" circle></el-button>
-            </el-tooltip>
-          </h2>
-          <el-divider></el-divider>
-
-          <div class="form-card">
-            <el-switch
-              v-model="hasHeader"
-              active-text="Has Header"
-              inactive-text="No Header"
-            >
-            </el-switch>
+        <div class="form-section" v-if="isReadyForChoosing">
+          <div class="form-description">
+            <h5>Mapping Information</h5>
+            <p class="form-section-description">
+              Mapping information and stuff. wth does has header mean? explain
+              what it means. Also what is predefined mapping come on. This is
+              also optional btw.
+            </p>
           </div>
+          <div class="form-container">
+            <b-form-group label="Has Header">
+              <b-form-checkbox v-model="hasHeader" switch size="lg" />
+            </b-form-group>
 
-          <div class="form-card">
-            <el-switch
-              v-model="hasPredefined"
-              active-text="Predefined Mapping"
-              inactive-text="No Predefined Mapping"
-            >
-            </el-switch>
+            <b-form-group label="Predefined Mapping">
+              <b-form-checkbox v-model="hasPredefined" switch size="lg" />
+            </b-form-group>
+          </div>
+        </div>
+
+        <div class="form-section" v-if="isReadyForChoosing">
+          <div class="form-description">
+            <h5>Version Information</h5>
+            <p class="form-section-description">
+              Some description about version and stuff. If the input version is
+              an existing version, current record will be replaced based on
+              record type. If the input version is a new version, current record
+              will be created based on record type.
+            </p>
+          </div>
+          <div class="form-container">
+            dumb autocomplete
           </div>
         </div>
 
@@ -132,7 +139,7 @@
             </el-upload>
           </div>
         </div>
-      </el-card>
+      </b-card>
     </div>
   </div>
 </template>
