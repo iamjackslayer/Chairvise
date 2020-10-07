@@ -1,14 +1,18 @@
 <template>
   <div>
-    <!-- TODO: This alert doesn't work -->
-    <!-- Fix to disallow users who are not logged in -->
     <b-alert
-      v-if="isNewConference && !isLogin"
+      :show="isNewConference && !isLogin"
       variant="danger"
       show-icon
       class="errorMsg"
-      >Please login to create new conference</b-alert
     >
+      <b-icon
+        class="alert-icon"
+        icon="exclamation-circle-fill"
+        variant="danger"
+      />
+      Please login to create new conference
+    </b-alert>
     <div class="title-bar">
       <h1 class="title">Add New Conference</h1>
     </div>
