@@ -41,9 +41,11 @@
           </b-form-group>
 
           <b-form-group label="Description" label-for="description">
-            <b-form-input
+            <b-form-textarea
               id="description"
               name="description"
+              rows="3"
+              max-rows="6"
               :state="validateState('description')"
               v-model="conferenceFormDescription"
             />
@@ -232,31 +234,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.form > .card-body {
-  display: flex;
-}
-
-.form > .card-body > * {
-  padding: 1rem;
-}
-
-.form-description {
-  flex: 1;
-}
-
-.form-section-description {
-  font-size: 0.9rem;
-  color: $gray-700;
-}
-
-.form-container {
-  flex: 2;
-}
-
-.submit-btn {
-  margin-top: 1rem;
-}
-
 // .temp {
 //   display: block;
 //   background-color: $gray-200;

@@ -1,6 +1,9 @@
 <template>
-  <div class="page-container">
-    <b-card class="guide-card" no-body>
+  <div>
+    <div class="title-bar">
+      <h1 class="title">User Guide</h1>
+    </div>
+    <b-card no-body>
       <b-tabs :tab-position="tabPosition" card>
         <b-tab title="Overview" active>
           <OverviewGuide />
@@ -41,12 +44,7 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.guide-card {
-  max-width: 1000px;
-  margin: 0 auto;
-}
-
-.guide-card > .tabs > .tab-content > .card-body {
+.display-card > .tabs > .tab-content > .card-body {
   padding: 2rem;
 }
 </style>

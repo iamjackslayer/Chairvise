@@ -2,10 +2,7 @@
   <div>
     <div class="title-bar">
       <h1 class="title">My Conferences</h1>
-      <b-button
-        class="add-conference"
-        variant="primary"
-        @click="createConference"
+      <b-button class="title-action" variant="primary" @click="createConference"
         ><b-icon icon="plus" font-scale="1"></b-icon>Add New
         Conference</b-button
       >
@@ -109,10 +106,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.add-conference {
-  margin-left: auto;
-}
-
 .conferenceCard {
   width: 100%;
   height: 100%;

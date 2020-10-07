@@ -1,17 +1,16 @@
 <template>
-  <!-- need to check layout alignment after adding presentations -->
   <div>
-    <h1 class="alignLeft">My Created Presentations</h1>
-    <b-button
-      class="alignRight"
-      type="primary"
-      v-if="!isPresentationListEmpty"
-      @click="createPresentation"
-      >Add New Presentation</b-button
-    >
-    <br />
-    <br />
-    <hr />
+    <div class="title-bar">
+      <h1 class="title">My Presentations</h1>
+      <b-button
+        class="title-action"
+        variant="primary"
+        v-if="!isPresentationListEmpty"
+        @click="createPresentation"
+        ><b-icon icon="plus" font-scale="1"></b-icon>Add New
+        Presentation</b-button
+      >
+    </div>
     <div class="infinite-list-wrapper">
       <b-card
         class="shadow p-3 mb-5 bg-white rounded"
@@ -155,8 +154,6 @@ export default {
   padding: 4px 16px;
 }
 
-.el-card__body {
-}
 .menuCard {
   width: 100%;
   height: 100%;
