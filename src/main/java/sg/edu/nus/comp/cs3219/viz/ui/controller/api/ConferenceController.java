@@ -3,7 +3,7 @@ package sg.edu.nus.comp.cs3219.viz.ui.controller.api;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import sg.edu.nus.comp.cs3219.viz.common.datatransfer.UserInfo;
-import sg.edu.nus.comp.cs3219.viz.common.entity.Conference;
+import sg.edu.nus.comp.cs3219.viz.common.entity.record.Conference;
 import sg.edu.nus.comp.cs3219.viz.common.exception.ConferenceNotFoundException;
 import sg.edu.nus.comp.cs3219.viz.logic.ConferenceLogic;
 import sg.edu.nus.comp.cs3219.viz.logic.GateKeeper;

@@ -266,8 +266,9 @@ export default {
   methods: {
     querySearch(queryString, cb) {
       // convert to array of string
+      // TODO:  change versionList to conferenceList
       var links = this.$store.state.presentation.versionList.map(
-        v => v.versionId
+        v => v.name
       );
       // function to remove duplicate from array of string
       let reduceFunction = links =>

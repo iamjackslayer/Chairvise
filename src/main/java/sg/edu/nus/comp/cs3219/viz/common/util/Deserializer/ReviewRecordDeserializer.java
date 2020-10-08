@@ -5,9 +5,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
-import sg.edu.nus.comp.cs3219.viz.common.entity.Conference;
+import sg.edu.nus.comp.cs3219.viz.common.entity.record.Conference;
 import sg.edu.nus.comp.cs3219.viz.common.entity.record.ReviewRecord;
-import sg.edu.nus.comp.cs3219.viz.common.entity.record.Version;
 
 import java.io.IOException;
 import java.text.ParseException;
@@ -62,7 +61,7 @@ public class ReviewRecordDeserializer extends StdDeserializer<ReviewRecord> {
         JsonNode node = p.getCodec().readTree(p);
         // TODO: Remove usage of version, and add usage of conference in the future.
         String versionStr = getStrValueByField(node, "versionId");
-        Version version = new Version(new Version.VersionPK(null, versionStr), null);
+        Conference conference = new Conference(null, versionStr, null);
 
 
         String submissionId = getStrValueByField(node, "submissionId");
@@ -76,7 +75,7 @@ public class ReviewRecordDeserializer extends StdDeserializer<ReviewRecord> {
         Date reviewSubmissionTime = getDateValueByField(node);
         String hasRecommendedForBestPaper = getStrValueByField(node, "hasRecommendedForBestPaper");
 
-        return new ReviewRecord(version, submissionId, reviewId, numReviewAssignment, reviewerName, expertiseLevel,
+        return new ReviewRecord(conference, submissionId, reviewId, numReviewAssignment, reviewerName, expertiseLevel,
                 confidenceLevel, reviewComment, overallEvaluationScore, reviewSubmissionTime, hasRecommendedForBestPaper);
     }
 }

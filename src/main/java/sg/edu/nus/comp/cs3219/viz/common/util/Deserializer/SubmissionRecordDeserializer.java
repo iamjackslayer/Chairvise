@@ -5,9 +5,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
-import sg.edu.nus.comp.cs3219.viz.common.entity.record.SubmissionAuthorRecord;
+import sg.edu.nus.comp.cs3219.viz.common.entity.record.Conference;
 import sg.edu.nus.comp.cs3219.viz.common.entity.record.SubmissionRecord;
-import sg.edu.nus.comp.cs3219.viz.common.entity.record.Version;
 
 import java.io.IOException;
 import java.text.ParseException;
@@ -58,7 +57,7 @@ public class SubmissionRecordDeserializer extends StdDeserializer<SubmissionReco
         System.out.println("called");
         JsonNode node = p.getCodec().readTree(p);
         String versionStr = getStrValueByField(node, "versionId");
-        Version version = new Version(new Version.VersionPK(null, versionStr), null);
+        Conference conference = new Conference(null, versionStr, null);
 
         String submissionId = getStrValueByField(node, "submissionId");
         String trackId = getStrValueByField(node,"trackId");
@@ -73,7 +72,7 @@ public class SubmissionRecordDeserializer extends StdDeserializer<SubmissionReco
         String isReviewsSent = getStrValueByField(node, "isReviewsSent");
         String submissionAbstract = getStrValueByField(node, "submissionAbstract");
 
-        return new SubmissionRecord(version, submissionId, trackId, trackName, title, authors,
+        return new SubmissionRecord(conference, submissionId, trackId, trackName, title, authors,
                 submissionTime, lastUpdatedTime, keywords, isAccepted,
                 isNotified, isReviewsSent, submissionAbstract);
     }

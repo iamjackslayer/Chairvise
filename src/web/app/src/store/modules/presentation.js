@@ -121,7 +121,7 @@ export default {
     async getVersionList({ commit }) {
       commit("setPresentationListLoading", true);
       axios
-        .get("/api/version")
+        .get("/api/conferences")
         .then(response => {
           commit("setVersionList", response.data);
         })

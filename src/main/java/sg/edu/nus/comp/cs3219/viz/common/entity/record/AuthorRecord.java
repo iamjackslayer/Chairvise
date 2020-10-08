@@ -5,9 +5,6 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
-import sg.edu.nus.comp.cs3219.viz.common.entity.Conference;
 import sg.edu.nus.comp.cs3219.viz.common.util.Deserializer.AuthorRecordDeserializer;
 
 import javax.persistence.*;
@@ -19,10 +16,10 @@ public class AuthorRecord {
 
     public AuthorRecord(){}
 
-    public AuthorRecord(Version v, String submissionId, String firstName, String lastName, String email, String country,
+    public AuthorRecord(Conference c, String submissionId, String firstName, String lastName, String email, String country,
                         String organisation, String webPage, String personId, String isCorresponding){
         this.id = null;
-        this.version = v;
+        this.conference = c;
         this.submissionId = submissionId;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -41,15 +38,16 @@ public class AuthorRecord {
     @Column(name = "a_id")
     private Long id;
 
+    //TODO: Change version to conference
     @ManyToOne
     @JoinColumns({
-            @JoinColumn(name = "data_set", referencedColumnName = "data_set"),
-            @JoinColumn(name = "version", referencedColumnName = "version"),
+        @JoinColumn(name = "data_set", referencedColumnName = "creator_identifier"),
+        @JoinColumn(name = "version", referencedColumnName = "name"),
     })
-    private Version version;
+    private Conference conference;
 
-    public Version getVersion(){return version;}
-    public void setVersion(Version version){this.version = version;}
+    public Conference getConference(){return conference;}
+    public void setConference(Conference conference){this.conference = conference;}
 
     @Exportable(name = "Submission Id", nameInDB = "a_submission_id")
     @Column(name = "a_submission_id")
