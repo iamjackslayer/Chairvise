@@ -1,0 +1,112 @@
+@import url("https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700");
+$font-family-sans-serif: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+$font-family-base: $font-family-sans-serif;
+
+@import "./colors";
+$theme-colors: (
+  "primary": $indigo-500,
+  "danger": $red-600,
+);
+
+@import "node_modules/bootstrap/scss/bootstrap";
+@import "node_modules/bootstrap-vue/src/index";
+
+body {
+  background-color: $gray-100;
+}
+
+.alert-icon {
+  margin-right: 5px;
+}
+
+.title-bar {
+  display: flex;
+  align-items: center;
+  margin-top: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.title {
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  color: $gray-800;
+}
+
+.title-action {
+  margin-left: auto;
+}
+
+.page-container {
+  max-width: 1340px;
+  margin: 0 auto;
+}
+
+// Form Input Styling
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group > label {
+  text-transform: uppercase;
+  color: $gray-600;
+  letter-spacing: -0.025em;
+  font-size: 0.9rem;
+  margin-bottom: 8px;
+}
+// Form Styling
+
+.form {
+  padding: 0 0.5rem;
+}
+
+.form-section {
+  display: flex;
+  flex-basis: 100%;
+}
+
+
+.form-section > .form-description {
+  padding: 1rem 1rem 1rem 0;
+
+  // TODO: consistent padding on mobile
+}
+
+.form-section > .form-container {
+  padding: 1rem 0 1rem 1rem;
+}
+
+
+.form-section:not(:first-child) {
+  border-top: 1px solid $gray-400;
+}
+
+.form-description {
+  flex: 1;
+}
+
+.form-section-description {
+  font-size: 0.9rem;
+  color: $gray-700;
+}
+
+.form-container {
+  flex: 2;
+}
+
+.submit-btn {
+  margin-top: 1rem;
+}
+
+// User Guide section styling
+.guide-header {
+  display: flex;
+  align-items: center;
+}
+
+.collapsible-icon {
+  margin-left: auto;
+}
+
+.accordion > .card > .card-header {
+  cursor: pointer;
+}

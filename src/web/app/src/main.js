@@ -1,14 +1,15 @@
 import Vue from "vue";
-import App from "./App.vue";
 import { BootstrapVue, IconsPlugin } from "bootstrap-vue";
+import Vuelidate from "vuelidate";
+import App from "./App.vue";
 import router from "./router";
 import store from "./store";
 
-import "bootstrap/dist/css/bootstrap.css";
-import "bootstrap-vue/dist/bootstrap-vue.css";
+import "./scss/global.scss";
 import "fullcalendar/dist/fullcalendar.css";
 
 Vue.use(BootstrapVue);
+Vue.use(Vuelidate);
 Vue.use(IconsPlugin);
 
 Vue.config.productionTip = false;
