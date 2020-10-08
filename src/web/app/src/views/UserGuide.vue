@@ -1,21 +1,21 @@
 <template>
-<!-- indentation lel -->
+  <!-- indentation lel -->
   <div>
     <div>
-          <b-tabs :tab-position="tabPosition" active>
-            <b-tab title="Overview">
-              <OverviewGuide />
-            </b-tab>
-            <b-tab title="Features">
-              <FeatureGuide />
-            </b-tab>
-            <b-tab title="Instructions">
-              <InstructionsGuide />
-            </b-tab>
-            <b-tab title="FAQ">
-              <FAQGuide />
-            </b-tab>
-          </b-tabs>
+      <b-tabs :tab-position="tabPosition" active>
+        <b-tab title="Overview">
+          <OverviewGuide />
+        </b-tab>
+        <b-tab title="Features">
+          <FeatureGuide />
+        </b-tab>
+        <b-tab title="Instructions">
+          <InstructionsGuide />
+        </b-tab>
+        <b-tab title="FAQ">
+          <FAQGuide />
+        </b-tab>
+      </b-tabs>
     </div>
   </div>
 </template>
