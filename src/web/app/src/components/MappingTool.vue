@@ -242,6 +242,7 @@ export default {
       this.$store.commit("clearMapping");
       this.$store.commit("clearPredefinedMapping");
       this.$store.commit("clearVersionId");
+      this.$store.commit("clearConferenceId");
       this.$store.commit("clearPredefinedSwitch");
       this.$store.commit("clearIsNewVersion");
     },
@@ -271,6 +272,7 @@ export default {
       this.$store.commit("clearError");
       this.$store.commit("clearPredefinedMapping");
       this.$store.commit("clearVersionId");
+      this.$store.commit("clearConferenceId");
       this.$store.commit("clearPredefinedSwitch");
       this.$store.commit("clearIsNewVersion");
       this.$store.dispatch("getVersionList");

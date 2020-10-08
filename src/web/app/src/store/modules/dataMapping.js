@@ -194,8 +194,8 @@ export default {
       // concurrent POST data and POST version requests
       axios
         .all([
-          postTable(endpoint, state.data.processedResult),
-          postVersion(fnKeyEntry)
+          postTable(endpoint, state.data.processedResult)
+          // postVersion(fnKeyEntry)
         ])
         .then(
           axios.spread(() => {
@@ -247,9 +247,9 @@ export default {
     }
   }
 };
-function postVersion(fnKeyEntry) {
-  return axios.post("/api/version", fnKeyEntry);
-}
+// function postVersion(fnKeyEntry) {
+//   return axios.post("/api/version", fnKeyEntry);
+// }
 
 function postTable(endpoint, processedResult) {
   return axios.post("/api/record/" + endpoint, processedResult);

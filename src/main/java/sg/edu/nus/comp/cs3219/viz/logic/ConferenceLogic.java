@@ -2,7 +2,7 @@ package sg.edu.nus.comp.cs3219.viz.logic;
 
 import org.springframework.stereotype.Component;
 import sg.edu.nus.comp.cs3219.viz.common.datatransfer.UserInfo;
-import sg.edu.nus.comp.cs3219.viz.common.entity.Conference;
+import sg.edu.nus.comp.cs3219.viz.common.entity.record.Conference;
 import sg.edu.nus.comp.cs3219.viz.storage.repository.ConferenceRepository;
 
 import java.util.List;
@@ -18,21 +18,28 @@ public class ConferenceLogic {
     }
 
     public List<Conference> findAllForUser(UserInfo userInfo) {
-        return conferenceRepository.findByCreatorIdentifier(userInfo.getUserEmail());
+        List<Conference> result =  conferenceRepository.findByCreatorIdentifier(userInfo.getUserEmail());
+        return result;
     }
 
     public Optional<Conference> findById(Long id) {
         return conferenceRepository.findById(id);
     }
 
-    public Conference saveForUser(Conference conference, UserInfo userInfo) {
-        Conference newConference = new Conference();
-        newConference.setName(conference.getName());
-        newConference.setDescription(conference.getDescription());
-        newConference.setDate(conference.getDate());
-        newConference.setCreatorIdentifier(userInfo.getUserEmail());
+    public List<Conference> findByUserAndName(UserInfo userInfo, String name) {
+        Optional<Conference> o;
+        return conferenceRepository.findByCreatorIdentifierAndName(userInfo.getUserEmail(), name);
+    }
 
-        return conferenceRepository.save(newConference);
+    public Conference saveForUser(Conference conference, UserInfo userInfo) {
+        List<Conference> cList = conferenceRepository.findByCreatorIdentifierAndName(userInfo.getUserEmail(), conference.getName());
+        if (cList.size() == 0) {
+            Conference newConference = new Conference(userInfo.getUserEmail(), conference.getName());
+            newConference.setDescription(conference.getDescription());
+            newConference.setDate(conference.getDate());
+            return conferenceRepository.save(newConference);
+        }
+        return cList.get(0);
     }
 
     public Conference updateConference(Conference oldConference, Conference newConference) {
@@ -44,5 +51,24 @@ public class ConferenceLogic {
 
     public void deleteById(Long id) {
         conferenceRepository.deleteById(id);
+    }
+
+    public List<Conference> findAllForUserWithRecordType(UserInfo userInfo, String recordType){
+        if (recordType.equals("AuthorRecord")) {
+            return conferenceRepository.findByCreatorIdentifierAndHasAuthorRecord(userInfo.getUserEmail(), true);
+        }
+        if (recordType.equals("ReviewRecord")) {
+            return conferenceRepository.findByCreatorIdentifierAndHasReviewRecord(userInfo.getUserEmail(), true);
+        }
+        if (recordType.equals("SubmissionRecord")) {
+            return conferenceRepository.findByCreatorIdentifierAndHasSubmissionRecord(userInfo.getUserEmail(), true);
+        } else {
+            return null;
+        }
+//        return versionRepository.findById_DataSetAndId_RecordType(userInfo.getUserEmail(), recordType);
+    }
+
+    public List<Conference> findAllForUserWithVersion(UserInfo userInfo, String version){
+        return conferenceRepository.findByCreatorIdentifierAndName(userInfo.getUserEmail(), version);
     }
 }

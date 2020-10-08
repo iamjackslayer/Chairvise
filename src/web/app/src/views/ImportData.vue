@@ -105,6 +105,7 @@
                 Version
               </label>
               <br />
+              <!-- change versionId to conferenceId in the future-->
               <el-autocomplete
                 class="inline-input"
                 v-model="versionId"
@@ -201,6 +202,14 @@ export default {
         this.$store.commit("setVersionId", newValue);
       }
     },
+    conferenceId: {
+      get: function() {
+        return this.$store.state.dataMapping.data.conferenceId;
+      },
+      set: function(newValue) {
+        this.$store.commit("setConferenceId", newValue);
+      }
+    },
     hasHeader: {
       get: function() {
         return this.$store.state.dataMapping.data.hasHeader;
@@ -257,8 +266,9 @@ export default {
   methods: {
     querySearch(queryString, cb) {
       // convert to array of string
+      // TODO:  change versionList to conferenceList
       var links = this.$store.state.presentation.versionList.map(
-        v => v.versionId
+        v => v.name
       );
       // function to remove duplicate from array of string
       let reduceFunction = links =>
