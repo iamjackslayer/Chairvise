@@ -6,7 +6,6 @@ import router from "./router";
 import store from "./store";
 
 import "./scss/global.scss";
-// import "fullcalendar/dist/fullcalendar.css";
 
 Vue.use(BootstrapVue);
 Vue.use(Vuelidate);

@@ -121,39 +121,4 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
-.conferenceCard {
-  width: 100%;
-  height: 100%;
-  margin-bottom: 16px;
-  background-color: white;
-  text-align: left;
-  color: black;
-  padding: 4px 16px;
-}
-
-.menuCard {
-  width: 100%;
-  height: 100%;
-}
-.infinite-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-.conferenceCard .button {
-  color: black;
-  text-align: left;
-}
-.presentation-image {
-  text-align: center;
-  vertical-align: middle;
-  margin-top: 1rem;
-}
-.presentation-id {
-  margin-top: 1.7rem;
-}
-.right {
-  float: right;
-}
-</style>
+<style lang="scss" scoped></style>
