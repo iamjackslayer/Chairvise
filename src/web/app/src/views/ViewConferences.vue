@@ -7,21 +7,20 @@
         Conference</b-button
       >
     </div>
-    <b-card v-show="show">
-      <FullCalendar
-        :events="conferences"
-        ref="fullCalendar"
-        defaultView="month"
-        :config="config"
-        @event-selected="eventSelected"
-      />
+
+    <b-card>
+      <FullCalendar :options="calendarOptions" />
     </b-card>
   </div>
 </template>
 
 <script>
-import { FullCalendar } from "vue-full-calendar";
 import ConferenceBrief from "@/components/ConferenceBrief.vue";
+import FullCalendar from "@fullcalendar/vue";
+import dayGridPlugin from "@fullcalendar/daygrid";
+import timeGridPlugin from "@fullcalendar/timegrid";
+import interactionPlugin from "@fullcalendar/interaction";
+import listPlugin from "@fullcalendar/list";
 
 export default {
   name: "ViewConferences",
@@ -60,8 +59,13 @@ export default {
     isLoading() {
       return this.$store.state.conference.conferenceListStatus.isLoading;
     },
+
+    isError() {
+      return this.$store.state.conference.conferenceListStatus.isApiError;
+    },
     conferences() {
       let list = this.$store.state.conference.conferenceList;
+      // TODO: Review this timezone code, I think it can just be set to UTC
       var tzoffset = new Date().getTimezoneOffset() * 60000; //offset in milliseconds
       let newList = [];
       list.forEach(element => {
@@ -71,13 +75,25 @@ export default {
           id: element.id,
           title: element.name,
           start: date,
-          allDay: false
+          allDay: true
         });
       });
       return newList;
     },
-    isError() {
-      return this.$store.state.conference.conferenceListStatus.isApiError;
+    calendarOptions() {
+      return {
+        themeSystem: "bootstrap",
+        plugins: [dayGridPlugin, timeGridPlugin, listPlugin, interactionPlugin],
+        // initialView: "dayMonthView",
+        events: this.conferences,
+        eventClick: this.eventSelected,
+        selectable: true,
+        headerToolbar: {
+          left: "today prev,next",
+          center: "title",
+          right: "dayGridMonth timeGridWeek timeGridDay listYear"
+        }
+      };
     }
   },
   components: {
@@ -94,7 +110,7 @@ export default {
     viewConference(id) {
       this.$router.push("/conference/" + id);
     },
-    eventSelected(event) {
+    eventSelected({ event }) {
       this.viewConference(event.id);
     }
   },

@@ -87,15 +87,26 @@
             </p>
           </div>
           <div class="form-container">
-            dumb autocomplete
+            <b-form-group label="Version">
+              <b-form-select
+                v-model="versionId"
+                :options="[
+                  { value: null, text: 'Please select an option' },
+                  { value: 'a', text: 'This is First option' },
+                  { value: 'b', text: 'Selected Option' }
+                ]"
+              ></b-form-select>
+            </b-form-group>
+            {{ this.$store.state.presentation.versionList }}
+            {{ querySearch() }}
           </div>
         </div>
 
         <div class="section" v-if="isReadyForChoosing">
           <h2>
-            Version Information
+            <!-- Version Information -->
 
-            <el-tooltip placement="top">
+            <!-- <el-tooltip placement="top">
               <div slot="content">
                 If the input version is an existing version, current record will
                 be replaced based on record type.
@@ -104,7 +115,7 @@
                 created based on record type.
               </div>
               <el-button type="text" icon="el-icon-question" circle></el-button>
-            </el-tooltip>
+            </el-tooltip> -->
           </h2>
           <el-divider></el-divider>
 
@@ -264,7 +275,8 @@ export default {
     }
   },
   methods: {
-    querySearch(queryString, cb) {
+    querySearch(queryString) {
+      // TODO: Fix this for new database changes
       // convert to array of string
       var links = this.$store.state.presentation.versionList.map(
         v => v.versionId
@@ -279,7 +291,11 @@ export default {
       var results = queryString
         ? links.filter(this.createFilter(queryString))
         : links;
-      cb(results);
+
+      console.log(results);
+
+      return results;
+      // cb(results);
     },
     createFilter(queryString) {
       return link => {
