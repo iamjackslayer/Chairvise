@@ -118,22 +118,6 @@
         mapping.</span
       >
     </b-modal>
-    <el-dialog title="Confirm" :visible.sync="hasSubmitted" width="30%" center>
-      <span
-        >After submission, your will not be able to modify your mapping. Are you
-        sure that the columns are correctly mapped?</span
-      >
-      <span slot="footer" class="dialog-footer">
-        <el-button v-on:click="hasSubmitted = false">Cancel</el-button>
-        <el-button type="primary" v-on:click="submitMapping">Confirm</el-button>
-      </span>
-    </el-dialog>
-    <el-dialog title="Success" :visible.sync="uploadSuccess" width="30%" center>
-      <span>You have successfully imported data using the column mapping!</span>
-      <span slot="footer" class="dialog-footer">
-        <el-button type="primary" v-on:click="closeSuccess">Sure</el-button>
-      </span>
-    </el-dialog>
     <!-- end of dialogs -->
   </b-row>
 </template>
