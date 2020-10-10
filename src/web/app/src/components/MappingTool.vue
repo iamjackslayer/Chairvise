@@ -1,42 +1,10 @@
 <template>
-  <el-row :gutter="20" class="map-container">
-    <!-- right part of the page -->
-    <el-col :span="12" class="map-result">
-      <el-card>
-        <h3>Mapping</h3>
-        <transition-group name="map-group" tag="div">
-          <div
-            class="pair-tag"
-            v-for="(item, index) in mappedPairs"
-            v-bind:key="index"
-          >
-            <el-tag size="medium">{{
-              dbList.fieldMetaDataList[item[0]].type
-            }}</el-tag>
-            <p class="pair-info">
-              {{ dbList.fieldMetaDataList[item[0]].name }}
-              <i class="el-icon-caret-right"></i>
-              {{ importList[item[1]] }}
-            </p>
-            <i class="el-icon-close" v-on:click="removeMapClicked(index)"></i
-            ><br />
-          </div>
-        </transition-group>
-        <transition name="fade" mode="out-in">
-          <div class="no-map-info" v-show="mappedPairs.length === 0">
-            <p>No mapping specified!</p>
-          </div>
-        </transition>
-      </el-card>
-    </el-col>
-    <!-- end of right part of the page -->
-
-    <!-- left part of the page -->
-    <el-col :span="10" :offset="1" class="map-area">
-      <el-card>
+  <b-row>
+    <b-col>
+      <b-card>
         <!-- db fields -->
         <div class="db-tags">
-          <h3>Database fields</h3>
+          <h5>Database fields</h5>
           <transition-group name="tags-group" tag="div">
             <div
               class="tag"
@@ -55,8 +23,8 @@
         <!-- end of db fields -->
 
         <!-- imported tags -->
-        <div class="import-tags">
-          <h3>Imported data fields</h3>
+        <div class="import-tags mt-4">
+          <h5>Imported data fields</h5>
           <transition-group name="tags-group" tag="div">
             <div
               class="tag"
@@ -75,30 +43,81 @@
         <!-- end of imported tags -->
 
         <!-- button group -->
-        <el-row class="button-row">
-          <el-col>
-            <el-button
-              class="back-button"
-              icon="el-icon-upload"
-              type="success"
-              v-on:click="uploadClicked"
-              >Upload</el-button
-            >
-            <el-button
-              class="back-button"
-              icon="el-icon-back"
-              type="info"
-              v-on:click="backClicked"
-              >Back</el-button
-            >
-          </el-col>
-        </el-row>
+        <div class="mt-4">
+          <b-button @click="uploadClicked" variant="primary">
+            Submit
+          </b-button>
+          <b-button class="ml-2" @click="backClicked" variant="secondary">
+            Back
+          </b-button>
+        </div>
         <!-- end of button group -->
-      </el-card>
-    </el-col>
-    <!-- end of left part of the page -->
+      </b-card>
+    </b-col>
+
+    <b-col>
+      <b-card>
+        <h5>Mapping</h5>
+        <transition-group name="map-group" tag="div">
+          <div
+            class="pair-tag"
+            v-for="(item, index) in mappedPairs"
+            v-bind:key="index"
+          >
+            <b-badge variant="info">{{
+              dbList.fieldMetaDataList[item[0]].type
+            }}</b-badge>
+            <span class="pair-info">
+              {{ dbList.fieldMetaDataList[item[0]].name }}
+              <b-icon
+                icon="caret-right-square-fill"
+                variant="primary"
+                class="mx-2"
+              />
+              {{ importList[item[1]] }}
+            </span>
+            <b-icon
+              icon="x-square-fill"
+              @click="removeMapClicked(index)"
+              class="remove-mapping"
+            />
+          </div>
+        </transition-group>
+        <transition name="fade" mode="out-in">
+          <div class="no-map-info" v-show="mappedPairs.length === 0">
+            No mapping has been specified.
+          </div>
+        </transition>
+      </b-card>
+    </b-col>
 
     <!-- dialogs -->
+    <b-modal
+      title="Confirm"
+      centered
+      :visible.sync="hasSubmitted"
+      @ok="submitMapping"
+      @hidden="hasSubmitted = false"
+      @cancel="hasSubmitted = false"
+    >
+      <span
+        >After submission, your will not be able to modify your mapping. Are you
+        sure that the columns are correctly mapped?</span
+      >
+    </b-modal>
+    <b-modal
+      title="Success"
+      centered
+      :visible.sync="uploadSuccess"
+      ok-only
+      @ok="closeSuccess"
+      @hidden="closeSuccess"
+    >
+      <span
+        >You have successfully imported data with the specified column
+        mapping.</span
+      >
+    </b-modal>
     <el-dialog title="Confirm" :visible.sync="hasSubmitted" width="30%" center>
       <span
         >After submission, your will not be able to modify your mapping. Are you
@@ -116,7 +135,7 @@
       </span>
     </el-dialog>
     <!-- end of dialogs -->
-  </el-row>
+  </b-row>
 </template>
 
 <script>
@@ -281,7 +300,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 @keyframes pulse {
   from {
     -webkit-transform: scale3d(1, 1, 1);
@@ -297,38 +316,6 @@ export default {
     -webkit-transform: scale3d(1, 1, 1);
     transform: scale3d(1, 1, 1);
   }
-}
-
-.map-container h3 {
-  letter-spacing: 1px;
-}
-
-.tags-group-move {
-  transition: all 300ms ease-in-out 50ms;
-}
-
-.map-group-move {
-  transition: all 600ms ease-in-out 50ms;
-}
-
-/* appearing */
-.map-group-enter-active {
-  transition: all 300ms ease-out;
-}
-
-/* disappearing */
-.map-group-leave-active {
-  transition: all 200ms ease-in;
-}
-
-/* appear at / disappear to */
-.map-group-enter {
-  opacity: 0;
-  transform: translateY(30px);
-}
-
-.map-group-leave-to {
-  opacity: 0;
 }
 
 .fade-enter-active,
@@ -355,14 +342,19 @@ export default {
   min-height: 90px;
 }
 
+.tag:first-child {
+  margin-left: 0px;
+}
+
 .tag {
   display: inline-block;
-  height: 20px;
-  margin: 5px 5px;
+  /* height: 20px; */
+  margin-right: 10px;
+  margin-top: 5px;
   padding: 7px 14px;
   background-color: #ffffff;
-  border: 1px solid #007bff;
-  color: #007bff;
+  border: 1px solid $indigo-600;
+  color: $indigo-600;
   font-size: 14px;
   cursor: pointer;
   opacity: 1;
@@ -378,7 +370,7 @@ export default {
 
 .tag.active {
   animation: pulse 1s infinite;
-  background-color: #007bff;
+  background-color: $indigo-600;
   color: #ffffff;
   transition: 0.3s;
 }
@@ -391,76 +383,40 @@ export default {
 }
 
 .tag:hover {
-  background-color: #007bff;
+  background-color: $indigo-600;
   color: #ffffff;
   transition: 0.2s;
 }
 
-.map-result {
+.pair-tag {
   display: flex;
-  flex-direction: column;
-  /* border: 1px dashed #565656; */
-  border-radius: 5px;
-  min-height: 300px;
-  /* padding: 30px 10px; */
-  transition: all 0.3s ease;
+  align-items: center;
+  padding: 1rem 0;
+  color: $gray-900;
+  font-weight: 600;
 }
 
-.pair-tag {
-  margin: 5px 5px;
-  padding: 15px 14px;
-  letter-spacing: 1px;
-  border-bottom: 1px solid #eee;
-  color: #565656;
+.pair-tag:not(:first-child) {
+  border-top: 1px solid $gray-400;
 }
 
 .pair-tag .pair-info {
   margin-left: 10px;
-  transition: 1s ease;
   font-size: 14px;
   display: inline;
 }
 
-.pair-tag .el-icon-close {
-  margin-top: 4px;
+.pair-tag .remove-mapping {
   cursor: pointer;
-  transition: 0.3s;
-  float: right;
+  margin-left: auto;
 }
 
-.pair-tag .el-icon-caret-right {
-  position: relative;
-  top: 2px;
-}
-
-.pair-tag .el-icon-close:hover {
-  color: crimson;
-  transition: 0.3s;
+.pair-tag .remove-mapping:hover {
+  color: $red-600;
 }
 
 .no-map-info {
   color: #777;
   font-weight: 300;
-  position: absolute;
-  top: 65px;
-  margin-left: 10px;
-}
-
-.el-tag {
-  margin-left: 0;
-  padding: 0;
-  width: 70px;
-  text-align: center;
-  font-size: 9px;
-}
-
-.el-input {
-  margin-left: 78px;
-  margin-top: 8px;
-  width: 185px;
-}
-
-.button-row {
-  margin-top: 40px;
 }
 </style>

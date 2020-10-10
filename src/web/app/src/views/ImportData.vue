@@ -69,7 +69,6 @@
             <b-form-group label="Has Header">
               <b-form-checkbox v-model="hasHeader" switch size="lg" />
             </b-form-group>
-
             <b-form-group label="Predefined Mapping">
               <b-form-checkbox v-model="hasPredefined" switch size="lg" />
             </b-form-group>
@@ -88,66 +87,23 @@
           </div>
           <div class="form-container">
             <b-form-group label="Version">
-              <b-form-select
-                v-model="versionId"
-                :options="[
-                  { value: null, text: 'Please select an option' },
-                  { value: 'a', text: 'This is First option' },
-                  { value: 'b', text: 'Selected Option' }
-                ]"
-              ></b-form-select>
+              <!-- TODO: Add check for when user has no "version" and add link to create new conference -->
+              <b-form-select v-model="versionId" :options="querySearch()"
+                ><template v-slot:first>
+                  <b-form-select-option :value="null" disabled
+                    >Please select an option</b-form-select-option
+                  >
+                </template></b-form-select
+              >
             </b-form-group>
-            {{ this.$store.state.presentation.versionList }}
-            {{ querySearch() }}
-          </div>
-        </div>
 
-        <div class="section" v-if="isReadyForChoosing">
-          <h2>
-            <!-- Version Information -->
-
-            <!-- <el-tooltip placement="top">
-              <div slot="content">
-                If the input version is an existing version, current record will
-                be replaced based on record type.
-                <br />
-                If the input version is a new version, current record will be
-                created based on record type.
-              </div>
-              <el-button type="text" icon="el-icon-question" circle></el-button>
-            </el-tooltip> -->
-          </h2>
-          <el-divider></el-divider>
-
-          <el-row class="form-card">
-            <el-col>
-              <label class="label">
-                Version
-              </label>
-              <br />
-              <el-autocomplete
-                class="inline-input"
-                v-model="versionId"
-                :fetch-suggestions="querySearch"
-                placeholder="Input Version"
-              ></el-autocomplete>
-            </el-col>
-          </el-row>
-          <div class="form-card">
-            <el-upload
-              v-if="isReadyForUpload"
-              drag
-              action=""
-              :auto-upload="false"
-              :show-file-list="false"
-              :multiple="false"
-              :on-change="fileUploadHandler"
-            >
-              <i class="el-icon-upload"></i>
-              <div class="el-upload__text">
-                Drop .csv file here or <em>click to upload</em>
-              </div>
-            </el-upload>
+            <b-form-group label="Upload" v-if="isReadyForUpload">
+              <b-form-file
+                v-model="file"
+                placeholder="Choose a file or drop it here..."
+                drop-placeholder="Drop file here..."
+              ></b-form-file>
+            </b-form-group>
           </div>
         </div>
       </b-card>
@@ -171,8 +127,14 @@ export default {
   name: "ImportData",
   data() {
     return {
-      predefinedMappings: PredefinedMappings
+      predefinedMappings: PredefinedMappings,
+      file: null
     };
+  },
+  watch: {
+    file(val) {
+      this.fileUploadHandler(val);
+    }
   },
   beforeCreate() {
     this.$store.dispatch("fetchDBMetaDataEntities");
@@ -238,6 +200,7 @@ export default {
       }
     },
     predefinedMappingId: {
+      // TODO: Review this. This is never used.
       get: function() {
         return this.$store.state.dataMapping.data.predefinedMappingId;
       },
@@ -253,8 +216,8 @@ export default {
         this.$store.state.dataMapping.hasFileUploaded &&
         this.$store.state.dataMapping.hasFormatTypeSpecified &&
         this.$store.state.dataMapping.hasTableTypeSelected &&
-        this.$store.state.dataMapping.hasHeaderSpecified &&
-        this.$store.state.dataMapping.hasPredefinedSpecified &&
+        // this.$store.state.dataMapping.hasHeaderSpecified &&
+        // this.$store.state.dataMapping.hasPredefinedSpecified &&
         this.$store.state.dataMapping.hasVersionIdSpecified
       );
     },
@@ -265,8 +228,8 @@ export default {
       return (
         this.$store.state.dataMapping.hasFormatTypeSpecified &&
         this.$store.state.dataMapping.hasTableTypeSelected &&
-        this.$store.state.dataMapping.hasHeaderSpecified &&
-        this.$store.state.dataMapping.hasPredefinedSwitchSpecified &&
+        // this.$store.state.dataMapping.hasHeaderSpecified &&
+        // this.$store.state.dataMapping.hasPredefinedSwitchSpecified &&
         this.$store.state.dataMapping.hasVersionIdSpecified
       );
     },
@@ -285,14 +248,12 @@ export default {
       let reduceFunction = links =>
         links.filter((v, i) => links.indexOf(v) === i);
       links = reduceFunction(links);
-      links = links.map(v => {
-        return { value: v };
-      });
+      // links = links.map(v => {
+      //   return { value: v };
+      // });
       var results = queryString
         ? links.filter(this.createFilter(queryString))
         : links;
-
-      console.log(results);
 
       return results;
       // cb(results);
@@ -377,7 +338,7 @@ export default {
         });
       }
 
-      Papa.parse(file.raw, {
+      Papa.parse(file, {
         // ignoring empty lines in csv file
         skipEmptyLines: true,
         complete: function(result) {
@@ -663,53 +624,4 @@ export default {
 };
 </script>
 
-<style scoped>
-.upload-box {
-  /*padding-top: 100px; */
-}
-
-.upload-box .el-select {
-  margin-top: 20px;
-}
-
-.button-row {
-  margin-top: 30px;
-}
-
-.text {
-  font-size: 14px;
-}
-
-.item {
-  margin-bottom: 18px;
-}
-
-.clearfix:before,
-.clearfix:after {
-  display: table;
-  content: "";
-}
-
-.clearfix:after {
-  clear: both;
-}
-
-.box-card {
-  width: 480px;
-  position: relative;
-  left: 50%;
-  margin-left: -240px;
-}
-
-.autocomplete-verid {
-  position: relative;
-}
-
-.form-card {
-  margin: 16px 0px;
-}
-
-.section {
-  padding: 0px 16px 16px 16px;
-}
-</style>
+<style scoped></style>
