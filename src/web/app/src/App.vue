@@ -1,7 +1,7 @@
 <template>
   <div class="container-fluid">
     <div class="row flex-xl-nowrap">
-      <div class="col-12 col-md-3 col-xl-2 bd-sidebar">
+      <div class="col-12 col-md-3 col-xl-2 sidebar">
         <div class="logo-container h3">
           <span class="logo">ChairVise</span>
           <button
@@ -11,42 +11,52 @@
             <b-icon icon="list" />
           </button>
         </div>
-        <b-collapse v-model="collapsed" id="nav-collapse" class="mt-2">
-          <b-nav class="bd-links" vertical>
-            <b-nav-item active>
-              <router-link to="/home">Home</router-link>
+        <b-nav class="sidebar-links" vertical>
+          <!-- TODO: Add check for login and logout views -->
+          <b-nav-item to="/home">
+            <b-icon icon="house-door-fill" class="mr-2"></b-icon>
+            Home
+          </b-nav-item>
+          <b-nav-item to="/importData">
+            <b-icon icon="cloud-arrow-up-fill" class="mr-2"></b-icon>
+            Import Data
+          </b-nav-item>
+          <b-nav-item to="/analyze">
+            <b-icon icon="file-image-fill" class="mr-2"></b-icon>
+            My Presentations
+          </b-nav-item>
+          <b-nav-item to="/conference">
+            <b-icon icon="calendar-week-fill" class="mr-2"></b-icon>
+            My Conferences
+          </b-nav-item>
+          <b-nav-item to="/chairhub/home">
+            <b-icon icon="people-fill" class="mr-2"></b-icon>
+            Chairhub
+          </b-nav-item>
+        </b-nav>
+        <div class="secondary-actions">
+          <b-nav class="sidebar-links" vertical>
+            <b-nav-item to="/userGuide">
+              <b-icon icon="patch-question-fll" class="mr-2"></b-icon>
+              User Guide
             </b-nav-item>
-            <b-nav-item>
-              <router-link to="/analyze">My Presentations</router-link>
-            </b-nav-item>
-            <b-nav-item>
-              <router-link to="/conference">My Conferences</router-link>
-            </b-nav-item>
-            <b-nav-item>
-              <router-link to="/chairhub/home">ChairHub</router-link>
+            <b-nav-item to="/logout">
+              <b-icon icon="arrow-down-right-square-fill" class="mr-2"></b-icon>
+
+              Logout
             </b-nav-item>
           </b-nav>
-          <div class="secondary-actions">
-            <b-nav class="bd-links" vertical>
-              <b-nav-item>
-                <router-link to="/userGuide">User Guide</router-link>
-              </b-nav-item>
-              <b-nav-item>
-                <router-link to="/logout">Logout</router-link>
-              </b-nav-item>
-            </b-nav>
-          </div>
-        </b-collapse>
+        </div>
       </div>
 
-      <div class="col-12 col-md-9 col-xl-10 py-md-3 pl-md-5 bd-content content">
-        <b-overlay :show="isAppLoading" no-wrap> </b-overlay>
+      <div class="col-12 col-md-9 col-xl-10 py-md-3 px-md-5 bd-content content">
+        <b-overlay :show="isAppLoading" no-wrap />
         <!-- <el-header style="padding: 0;">
               <menu-bar style="position: fixed; width: 100vw; z-index: 1;"></menu-bar>
             </el-header> -->
-        <transition name="fade">
+        <div class="page-container">
           <router-view />
-        </transition>
+        </div>
       </div>
     </div>
   </div>
@@ -57,6 +67,16 @@ export default {
   watch: {
     $route() {
       this.$store.dispatch("getAuthInfo");
+    },
+    isFetchUserInfoError() {
+      if (!this.isFetchUserInfoError) {
+        return;
+      }
+      this.$notify.error({
+        title: "Auth request fail",
+        message: this.$store.state.userInfo.apiErrorMsg,
+        duration: 0
+      });
     }
   },
   data() {
@@ -76,11 +96,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import url("https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700");
-
+// TODO: Move sidebar stylings into own component
 .logo-container {
   display: flex;
-  margin-bottom: 0;
+  font-size: 2rem;
+  padding: 0 1rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
 }
 
 .logo {
@@ -110,11 +132,10 @@ export default {
   margin-top: auto;
 }
 
-// TODO: Move sidebar stylings into own component
-.row .bd-sidebar {
+.row .sidebar {
   order: 0;
+  color: $gray-300;
   background-color: $gray-800;
-  color: $gray-100;
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
@@ -136,10 +157,10 @@ export default {
   }
 }
 
-.bd-links {
+.sidebar-links {
   display: block !important;
 }
-.bd-links {
+.sidebar-links {
   // flex-wrap: nowrap;
   max-height: calc(100vh - 5rem);
   overflow-y: auto;
@@ -151,24 +172,25 @@ export default {
 }
 
 // // All levels of nav
-.bd-sidebar .nav > li > a {
+.sidebar .nav > li > a {
   display: block;
-  // @include font-size(110%);
-  color: $gray-100;
-  background-color: $gray-700;
-  // color: rgba(0, 0, 0, .65);
+  color: $gray-300;
+  border-radius: 5px;
+  margin: 5px 0;
+  // outline: 1px solid blue;
+  outline: none;
+  font-size: 0.9rem;
+  // background-color: $gray-700;
 }
 
-.bd-sidebar .nav > li > a:hover {
-  color: rgba(0, 0, 0, 0.85);
+.sidebar .nav > li > a:hover {
   text-decoration: none;
-  background-color: transparent;
+  background-color: $gray-900;
 }
 
-.bd-sidebar .nav > .active > a,
-.bd-sidebar .nav > .active:hover > a {
-  font-weight: 600;
-  color: rgba(0, 0, 0, 0.85);
-  background-color: transparent;
+.sidebar .nav > li > a.router-link-active {
+  background-color: $gray-900;
+  box-shadow: inset 0 2px 2px hsla(0, 0%, 0%, 0.1);
+  // background-color: $teal-400;
 }
 </style>
