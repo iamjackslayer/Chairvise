@@ -3,8 +3,16 @@ import { deepCopy } from "@/common/utility";
 
 export default {
   state: {
+    publicPresentationList: [],
     presentationList: [],
     versionList: [],
+
+    publicPresentationListStatus: {
+      isLoading: true,
+      isApiError: false,
+      apiErrorMsg: ""
+    },
+
     presentationListStatus: {
       isLoading: true,
       isApiError: false,
@@ -27,6 +35,22 @@ export default {
     isPresentationEditable: false
   },
   mutations: {
+    setPublicPresentationListLoading(state, payload) {
+      if (payload) {
+        state.publicPresentationListStatus.isApiError = false;
+      }
+      state.publicPresentationListStatus.isLoading = payload;
+    },
+
+    setPublicPresentationListApiError(state, payload) {
+      state.publicPresentationListStatus.isApiError = true;
+      state.publicPresentationListStatus.apiErrorMsg = payload;
+    },
+
+    setPublicPresentationList(state, payload) {
+      state.publicPresentationList = payload;
+    },
+
     setPresentationListLoading(state, payload) {
       if (payload) {
         state.presentationListStatus.isApiError = false;
@@ -103,6 +127,21 @@ export default {
     }
   },
   actions: {
+    async getPublicPresentationList({ commit }) {
+      commit("setPublicPresentationListLoading", true);
+      axios
+        .get("/api/presentations/public")
+        .then(response => {
+          commit("setPublicPresentationList", response.data);
+        })
+        .catch(e => {
+          commit("setPublicPresentationListApiError", e.toString());
+        })
+        .finally(() => {
+          commit("setPublicPresentationListLoading", false);
+        });
+    },
+
     async getPresentationList({ commit }) {
       commit("setPresentationListLoading", true);
       axios
@@ -121,7 +160,7 @@ export default {
     async getVersionList({ commit }) {
       commit("setPresentationListLoading", true);
       axios
-        .get("/api/conferences")
+        .get("/api/version")
         .then(response => {
           commit("setVersionList", response.data);
         })

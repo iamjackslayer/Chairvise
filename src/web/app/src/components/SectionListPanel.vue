@@ -159,11 +159,9 @@ export default {
       return this.$store.state.dbMetaData.entitiesStatus.isLoading;
     },
     versions() {
-    //TODO: replace version with conference
+      //TODO: replace version with conference
       let list = Array.from(
-        new Set(
-          this.$store.state.presentation.versionList.map(v => v.name)
-        )
+        new Set(this.$store.state.presentation.versionList.map(v => v.name))
       );
       this.setDefaultValueForVersionList(list[0]);
       return list;
