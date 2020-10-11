@@ -63,8 +63,6 @@
       :current-page="currentPage"
       :filter="filter"
       :class="'public-post-list'"
-      primary-key="id"
-      :tbody-transition-props="transProps"
     >
       <template v-slot:cell(post_name)="data">
         <p class="text-info">{{ data.value }}</p>
@@ -85,13 +83,14 @@
           :per-page="perPage"
           align="fill"
           size="md"
-          class="'public-post-list-pagination my-0'"
+          class="my-0"
         ></b-pagination>
       </b-col>
     </b-row>
   </b-container>
 </template>
 <script>
+import dummyList from "../../store/data/dummyPublicPosts";
 export default {
   methods: {
     onRowSelected(row) {
@@ -113,98 +112,13 @@ export default {
       sortBy: "created_on",
       sortDesc: true,
       filter: "",
-      transProps: {
-        name: "flip-list"
-      },
       fields: [
         { key: "id", sortable: true },
         { key: "post_name" },
         { key: "created_by" },
         { key: "created_on", sortable: true }
       ],
-      items: [
-        {
-          id: 1,
-          post_name:
-            "ICCCIT 2020: Computer, Communications and Information Technology post_name",
-          created_by: "Dickerson",
-          created_on: "10/10/2020"
-        },
-        {
-          id: 2,
-          post_name:
-            "ICCITIA 2020: Computer and Information Technologies, Innovations and Applications post_name",
-          created_by: "Larsen",
-          created_on: "1/10/2020"
-        },
-        {
-          id: 3,
-          post_name: "ICCM 2020: Cognitive Modeling post_name",
-          created_by: "Geneva",
-          created_on: "2/10/2020"
-        },
-        {
-          id: 4,
-          post_name:
-            "ICCNSHE 2020: Computer, Network, Software and Hardware Engineering post_name",
-          created_by: "Jami",
-          created_on: "3/10/2020"
-        },
-        {
-          id: 5,
-          post_name:
-            "ICCCIT 2020: Computer, Communications and Information Technology post_name",
-          created_by: "Dickerson",
-          created_on: "31/09/2020"
-        },
-        {
-          id: 6,
-          post_name:
-            "ICCITIA 2020: Computer and Information Technologies, Innovations and Applications post_name",
-          created_by: "Larsen",
-          created_on: "10/10/2020"
-        },
-        {
-          id: 7,
-          post_name: "ICCM 2020: Cognitive Modeling post_name",
-          created_by: "Geneva",
-          created_on: "10/10/2020"
-        },
-        {
-          id: 8,
-          post_name:
-            "ICCNSHE 2020: Computer, Network, Software and Hardware Engineering post_name",
-          created_by: "Jami",
-          created_on: "1/10/2020"
-        },
-        {
-          id: 9,
-          post_name:
-            "ICCCIT 2020: Computer, Communications and Information Technology post_name",
-          created_by: "Dickerson",
-          created_on: "1/12/2019"
-        },
-        {
-          id: 10,
-          post_name:
-            "ICCITIA 2020: Computer and Information Technologies, Innovations and Applications post_name",
-          created_by: "Larsen",
-          created_on: "10/10/2020"
-        },
-        {
-          id: 11,
-          post_name: "ICCM 2020: Cognitive Modeling post_name",
-          created_by: "Geneva",
-          created_on: "10/10/2020"
-        },
-        {
-          id: 12,
-          post_name:
-            "ICCNSHE 2020: Computer, Network, Software and Hardware Engineering post_name",
-          created_by: "Jami",
-          created_on: "10/10/2020"
-        }
-      ]
+      items: dummyList
     };
   },
   mounted() {
@@ -217,26 +131,4 @@ export default {
   height: 500px;
 }
 </style>
-<style lang="scss">
-.public-post-list-pagination {
-  li {
-    color: aqua;
-  }
-  .page-link {
-    color: $gray-800;
-  }
-}
-.public-post-list {
-  .flip-list-move {
-    transition: all 0.5s ease-in-out;
-  }
-  .flip-list-enter {
-    transform: scale(1);
-    transition: all 0.5s ease-in-out;
-  }
-  .flip-list-leave {
-    transform: scale(0);
-    transition: all 0.5s ease-in-out;
-  }
-}
-</style>
+<style lang="scss"></style>
