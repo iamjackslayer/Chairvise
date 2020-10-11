@@ -4,7 +4,7 @@ import { deepCopy } from "@/common/utility";
 export default {
   state: {
     presentationList: [],
-    versionList: [],
+    conferenceList: [],
     presentationListStatus: {
       isLoading: true,
       isApiError: false,
@@ -13,7 +13,7 @@ export default {
     presentationForm: {
       id: "",
       name: "",
-      version: "",
+      conference: "",
       description: "",
       creatorIdentifier: ""
     },
@@ -43,8 +43,8 @@ export default {
       state.presentationList = payload;
     },
 
-    setVersionList(state, payload) {
-      state.versionList = payload;
+    setConferenceList(state, payload) {
+      state.conferenceList = payload;
     },
 
     addToPresentationList(state, payload) {
@@ -83,7 +83,7 @@ export default {
     resetPresentationForm(state) {
       state.presentationForm.id = "";
       state.presentationForm.name = "";
-      state.presentationForm.version = "";
+      state.presentationForm.conference = "";
       state.presentationForm.description = "";
       state.presentationForm.creatorIdentifier = "";
       state.presentationFormStatus.isLoading = false;
@@ -118,12 +118,12 @@ export default {
         });
     },
 
-    async getVersionList({ commit }) {
+    async getConferenceList({ commit }) {
       commit("setPresentationListLoading", true);
       axios
         .get("/api/conferences")
         .then(response => {
-          commit("setVersionList", response.data);
+          commit("setConferenceList", response.data);
         })
         .catch(e => {
           commit("setPresentationListApiError", e.toString());

@@ -7,7 +7,7 @@ export default {
     hasFileUploaded: false,
     hasFormatTypeSpecified: false,
     hasTableTypeSelected: false,
-    hasVersionIdSpecified: false,
+    hasConferenceNameSpecified: false,
     hasHeaderSpecified: false,
     hasPredefinedSpecified: false,
     hasPredefinedSwitchSpecified: false, // new
@@ -21,8 +21,8 @@ export default {
       processedResult: [],
       formatType: null,
       tableType: null,
-      isNewVersion: null,
-      versionId: null,
+      isNewConference: null,
+      conferenceName: null,
       hasHeader: null,
       hasPredefined: null, // new
       predefinedMapping: null,
@@ -78,22 +78,22 @@ export default {
       state.hasTableTypeSelected = false;
     },
 
-    setVersionId(state, selected) {
-      state.data.versionId = selected;
-      state.hasVersionIdSpecified = true;
+    setConferenceName(state, selected) {
+      state.data.conferenceName = selected;
+      state.hasConferenceNameSpecified = true;
     },
 
-    clearVersionId(state) {
-      state.data.versionId = null;
-      state.hasVersionIdSpecified = false;
+    clearConferenceName(state) {
+      state.data.conferenceName = null;
+      state.hasConferenceNameSpecified = false;
     },
 
-    setIsNewVersion(state, selected) {
-      state.data.isNewVersion = selected;
+    setIsNewConference(state, selected) {
+      state.data.isNewConference = selected;
     },
 
-    clearIsNewVersion(state) {
-      state.data.isNewVersion = null;
+    clearIsNewConference(state) {
+      state.data.isNewConference = null;
     },
 
     setHasHeader(state, hasHeader) {
@@ -163,7 +163,7 @@ export default {
   },
 
   actions: {
-    async persistMappingNewVersion({ commit, state }) {
+    async persistMappingNewConference({ commit, state }) {
       commit("setPageLoadingStatus", true);
       let endpoint;
       let fnKeyTable;
@@ -182,20 +182,20 @@ export default {
           break;
       }
       var fnKeyEntry = {};
-      fnKeyEntry.versionId = state.data.versionId;
+      fnKeyEntry.conferenceName = state.data.conferenceName;
       fnKeyEntry.recordType = fnKeyTable;
 
-      // add version to end
+      // add conference to end
       for (var i = 0; i < state.data.processedResult.length; i++) {
         var row = state.data.processedResult[i];
-        row.versionId = state.data.versionId;
+        row.conferenceName = state.data.conferenceName;
       }
 
-      // concurrent POST data and POST version requests
+      // concurrent POST data and POST conference requests
       axios
         .all([
           postTable(endpoint, state.data.processedResult)
-          // postVersion(fnKeyEntry)
+          // postConference(fnKeyEntry)
         ])
         .then(
           axios.spread(() => {
@@ -213,7 +213,7 @@ export default {
         );
     },
 
-    async persistMappingOldVersion({ commit, state }) {
+    async persistMappingOldConference({ commit, state }) {
       commit("setPageLoadingStatus", true);
       let endpoint;
       switch (state.data.tableType) {
@@ -227,10 +227,10 @@ export default {
           endpoint = "submission";
           break;
       }
-      // add version to end
+      // add conference to end
       for (var i = 0; i < state.data.processedResult.length; i++) {
         var row = state.data.processedResult[i];
-        row.versionId = state.data.versionId;
+        row.conferenceName = state.data.conferenceName;
       }
       //console.log(state.data.processedResult);
       await axios
@@ -247,8 +247,8 @@ export default {
     }
   }
 };
-// function postVersion(fnKeyEntry) {
-//   return axios.post("/api/version", fnKeyEntry);
+// function postConference(fnKeyEntry) {
+//   return axios.post("/api/conference", fnKeyEntry);
 // }
 
 function postTable(endpoint, processedResult) {

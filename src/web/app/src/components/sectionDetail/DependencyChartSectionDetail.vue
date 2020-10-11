@@ -3,7 +3,7 @@
     :section-detail="sectionDetail"
     :presentation-id="presentationId"
     :has-data="hasData"
-    :version="version"
+    :conference="conference"
     :edit-form-selections-rule="editFormSelectionsRule"
     :edit-form-involved-records-rule="editFormInvolvedRecordsRule"
     :edit-form-filters-rule="editFormFiltersRule"
@@ -161,7 +161,7 @@ export default {
       type: String,
       required: true
     },
-    version: {
+    conference: {
       type: String,
       required: true
     }

@@ -241,10 +241,9 @@ export default {
       this.$store.commit("clearHasHeader");
       this.$store.commit("clearMapping");
       this.$store.commit("clearPredefinedMapping");
-      this.$store.commit("clearVersionId");
-      this.$store.commit("clearConferenceId");
+      this.$store.commit("clearConferenceName");
       this.$store.commit("clearPredefinedSwitch");
-      this.$store.commit("clearIsNewVersion");
+      this.$store.commit("clearIsNewConference");
     },
     uploadClicked: function() {
       let map = deepCopy(this.mappedPairs);
@@ -255,10 +254,10 @@ export default {
     },
     submitMapping: function() {
       this.hasSubmitted = false;
-      if (this.$store.state.dataMapping.data.isNewVersion) {
-        this.$store.dispatch("persistMappingNewVersion");
+      if (this.$store.state.dataMapping.data.isNewConference) {
+        this.$store.dispatch("persistMappingNewConference");
       } else {
-        this.$store.dispatch("persistMappingOldVersion");
+        this.$store.dispatch("persistMappingOldConference");
       }
     },
     closeSuccess: function() {
@@ -271,11 +270,10 @@ export default {
       this.$store.commit("clearMapping");
       this.$store.commit("clearError");
       this.$store.commit("clearPredefinedMapping");
-      this.$store.commit("clearVersionId");
-      this.$store.commit("clearConferenceId");
+      this.$store.commit("clearConferenceName");
       this.$store.commit("clearPredefinedSwitch");
-      this.$store.commit("clearIsNewVersion");
-      this.$store.dispatch("getVersionList");
+      this.$store.commit("clearIsNewConference");
+      this.$store.dispatch("getConferenceList");
     }
   },
   mounted() {},
@@ -339,7 +337,7 @@ export default {
 }
 
 .fade-enter, .fade-leave-to
-    /* .component-fade-leave-active below version 2.1.8 */
+    /* .component-fade-leave-active below conference 2.1.8 */
  {
   opacity: 0;
 }

@@ -60,8 +60,8 @@ public class ReviewRecordDeserializer extends StdDeserializer<ReviewRecord> {
 
         JsonNode node = p.getCodec().readTree(p);
         // TODO: Remove usage of version, and add usage of conference in the future.
-        String versionStr = getStrValueByField(node, "versionId");
-        Conference conference = new Conference(null, versionStr, null);
+        String conferenceName = getStrValueByField(node, "conferenceName");
+        Conference conference = new Conference(null, conferenceName, null);
 
 
         String submissionId = getStrValueByField(node, "submissionId");

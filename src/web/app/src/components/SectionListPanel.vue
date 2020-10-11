@@ -7,14 +7,14 @@
       <el-aside width="300px" class="addRowRightAlign" v-if="isLogin">
         <el-card v-if="!isSectionListEmpty">
           <div slot="header" class="clearfix">
-            <span> Select version </span>
+            <span> Select conference </span>
           </div>
           <el-select
-            class="versionInput"
-            v-model="presentationFormVersion"
-            placeholder="Please select a version"
+            class="conferenceInput"
+            v-model="presentationFormConference"
+            placeholder="Please select a conference"
           >
-            <el-option v-for="v in versions" :key="v" :label="v" :value="v">
+            <el-option v-for="v in conferences" :key="v" :label="v" :value="v">
             </el-option>
           </el-select>
         </el-card>
@@ -66,7 +66,7 @@
           :sectionDetail="section"
           :key="section.id"
           :presentationId="presentationId"
-          :version="presentationFormVersion"
+          :conference="presentationFormConference"
         />
         <EmptySection v-if="isSectionListEmpty" />
       </el-card>
@@ -86,14 +86,14 @@ export default {
   },
   watch: {
     presentationId: "fetchSectionList",
-    presentationFormVersion() {
-      this.updateVersion();
+    presentationFormConference() {
+      this.updateConference();
     }
   },
   data() {
     return {
       selectedNewSection: "",
-      presentationFormVersion: ""
+      presentationFormConference: ""
     };
   },
   computed: {
@@ -158,14 +158,13 @@ export default {
     isLoadingDBMetaData() {
       return this.$store.state.dbMetaData.entitiesStatus.isLoading;
     },
-    versions() {
-    //TODO: replace version with conference
+    conferences() {
       let list = Array.from(
         new Set(
-          this.$store.state.presentation.versionList.map(v => v.name)
+          this.$store.state.presentation.conferenceList.map(v => v.name)
         )
       );
-      this.setDefaultValueForVersionList(list[0]);
+      this.setDefaultValueForConferenceList(list[0]);
       return list;
     }
   },
@@ -176,22 +175,22 @@ export default {
   mounted() {
     this.fetchSectionList();
     this.$store.dispatch("fetchDBMetaDataEntities");
-    this.$store.dispatch("getVersionList");
+    this.$store.dispatch("getConferenceList");
   },
   methods: {
-    updateVersion() {
-      var value = this.presentationFormVersion;
+    updateConference() {
+      var value = this.presentationFormConference;
       if (value === undefined) {
-        value = this.versions[0];
+        value = this.conferences[0];
       }
       this.$store.commit("setPresentationFormField", {
-        field: "version",
+        field: "conference",
         value
       });
     },
 
-    setDefaultValueForVersionList(value) {
-      this.presentationFormVersion = value;
+    setDefaultValueForConferenceList(value) {
+      this.presentationFormConference = value;
     },
 
     fetchSectionList() {
@@ -228,7 +227,7 @@ export default {
 .textBold {
   font-weight: bold;
 }
-.versionInput {
+.conferenceInput {
   display: inline-block;
   width: 100%;
 }

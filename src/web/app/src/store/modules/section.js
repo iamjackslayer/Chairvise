@@ -238,7 +238,7 @@ export default {
         joiners,
         groupers,
         sorters,
-        versionId
+        conferenceName
       }
     ) {
       commit("setSectionDetailLoading", { id, isLoading: true });
@@ -252,7 +252,7 @@ export default {
           joiners,
           groupers,
           sorters,
-          versionId
+          conferenceName
         })
         .then(response => {
           commit("updateSectionAnalysisPreviewResult", {
@@ -274,7 +274,7 @@ export default {
 
     async sendAnalysisRequest(
       { state, commit },
-      { id, presentationId, version }
+      { id, presentationId, conference }
     ) {
       let sectionToAnalysis = findSectionDetailById(state.sectionList, id);
       commit("setSectionDetailLoading", {
@@ -291,7 +291,7 @@ export default {
           joiners: sectionToAnalysis.joiners,
           groupers: sectionToAnalysis.groupers,
           sorters: sectionToAnalysis.sorters,
-          versionId: version
+          conferenceName: conference
         })
         .then(response => {
           commit("updateSectionAnalysisResult", {

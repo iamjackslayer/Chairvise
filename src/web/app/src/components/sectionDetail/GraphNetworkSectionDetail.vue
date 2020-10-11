@@ -3,7 +3,7 @@
     :section-detail="sectionDetail"
     :presentation-id="presentationId"
     :has-data="hasData"
-    :version="version"
+    :conference="conference"
     :extraFormItemsRules="{}"
     @update-visualisation="updateVisualisation"
   >
@@ -60,7 +60,7 @@ export default {
       type: String,
       required: true
     },
-    version: {
+    conference: {
       type: String,
       required: true
     }
