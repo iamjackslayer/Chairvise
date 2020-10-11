@@ -66,7 +66,7 @@
       primary-key="id"
       :tbody-transition-props="transProps"
     >
-      <template v-slot:cell(conference)="data">
+      <template v-slot:cell(post_name)="data">
         <p class="text-info">{{ data.value }}</p>
       </template>
       <template v-slot:cell(created_by)="data">
@@ -95,7 +95,7 @@
 export default {
   methods: {
     onRowSelected(row) {
-      // console.log(row[0].conference);
+      // console.log(row[0].post_name);
       this.$router.push({
         name: "section",
         params: {
@@ -118,89 +118,89 @@ export default {
       },
       fields: [
         { key: "id", sortable: true },
-        { key: "conference" },
+        { key: "post_name" },
         { key: "created_by" },
         { key: "created_on", sortable: true }
       ],
       items: [
         {
           id: 1,
-          conference:
-            "ICCCIT 2020: Computer, Communications and Information Technology Conference",
+          post_name:
+            "ICCCIT 2020: Computer, Communications and Information Technology post_name",
           created_by: "Dickerson",
           created_on: "10/10/2020"
         },
         {
           id: 2,
-          conference:
-            "ICCITIA 2020: Computer and Information Technologies, Innovations and Applications Conference",
+          post_name:
+            "ICCITIA 2020: Computer and Information Technologies, Innovations and Applications post_name",
           created_by: "Larsen",
           created_on: "1/10/2020"
         },
         {
           id: 3,
-          conference: "ICCM 2020: Cognitive Modeling Conference",
+          post_name: "ICCM 2020: Cognitive Modeling post_name",
           created_by: "Geneva",
           created_on: "2/10/2020"
         },
         {
           id: 4,
-          conference:
-            "ICCNSHE 2020: Computer, Network, Software and Hardware Engineering Conference",
+          post_name:
+            "ICCNSHE 2020: Computer, Network, Software and Hardware Engineering post_name",
           created_by: "Jami",
           created_on: "3/10/2020"
         },
         {
           id: 5,
-          conference:
-            "ICCCIT 2020: Computer, Communications and Information Technology Conference",
+          post_name:
+            "ICCCIT 2020: Computer, Communications and Information Technology post_name",
           created_by: "Dickerson",
           created_on: "31/09/2020"
         },
         {
           id: 6,
-          conference:
-            "ICCITIA 2020: Computer and Information Technologies, Innovations and Applications Conference",
+          post_name:
+            "ICCITIA 2020: Computer and Information Technologies, Innovations and Applications post_name",
           created_by: "Larsen",
           created_on: "10/10/2020"
         },
         {
           id: 7,
-          conference: "ICCM 2020: Cognitive Modeling Conference",
+          post_name: "ICCM 2020: Cognitive Modeling post_name",
           created_by: "Geneva",
           created_on: "10/10/2020"
         },
         {
           id: 8,
-          conference:
-            "ICCNSHE 2020: Computer, Network, Software and Hardware Engineering Conference",
+          post_name:
+            "ICCNSHE 2020: Computer, Network, Software and Hardware Engineering post_name",
           created_by: "Jami",
           created_on: "1/10/2020"
         },
         {
           id: 9,
-          conference:
-            "ICCCIT 2020: Computer, Communications and Information Technology Conference",
+          post_name:
+            "ICCCIT 2020: Computer, Communications and Information Technology post_name",
           created_by: "Dickerson",
           created_on: "1/12/2019"
         },
         {
           id: 10,
-          conference:
-            "ICCITIA 2020: Computer and Information Technologies, Innovations and Applications Conference",
+          post_name:
+            "ICCITIA 2020: Computer and Information Technologies, Innovations and Applications post_name",
           created_by: "Larsen",
           created_on: "10/10/2020"
         },
         {
           id: 11,
-          conference: "ICCM 2020: Cognitive Modeling Conference",
+          post_name: "ICCM 2020: Cognitive Modeling post_name",
           created_by: "Geneva",
           created_on: "10/10/2020"
         },
         {
           id: 12,
-          conference:
-            "ICCNSHE 2020: Computer, Network, Software and Hardware Engineering Conference",
+          post_name:
+            "ICCNSHE 2020: Computer, Network, Software and Hardware Engineering post_name",
           created_by: "Jami",
           created_on: "10/10/2020"
         }
