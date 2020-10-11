@@ -9,48 +9,50 @@
         <b-icon icon="list" />
       </button>
     </div>
-    <b-collapse v-model="visible">
-      <b-nav class="sidebar-links" vertical>
-        <!-- TODO: Add check for login and logout views -->
-        <b-nav-item to="/home">
-          <b-icon icon="house-door-fill" class="mr-2"></b-icon>
-          Home
-        </b-nav-item>
-        <b-nav-item to="/importData">
-          <b-icon icon="cloud-arrow-up-fill" class="mr-2"></b-icon>
-          Import Data
-        </b-nav-item>
-        <b-nav-item to="/analyze">
-          <b-icon icon="file-image-fill" class="mr-2"></b-icon>
-          My Presentations
-        </b-nav-item>
-        <b-nav-item to="/conference">
-          <b-icon icon="calendar-week-fill" class="mr-2"></b-icon>
-          My Conferences
-        </b-nav-item>
-        <b-nav-item to="/chairhub/home">
-          <b-icon icon="people-fill" class="mr-2"></b-icon>
-          Chairhub
-        </b-nav-item>
-      </b-nav>
-      <div class="secondary-actions">
+    <b-collapse v-model="visible" id="nav-collapse">
+      <b-col class="d-flex flex-column p-0 h-100">
         <b-nav class="sidebar-links" vertical>
-          <b-nav-item to="/userGuide">
-            <b-icon icon="patch-question-fll" class="mr-2"></b-icon>
-            User Guide
+          <!-- TODO: Add check for login and logout views -->
+          <b-nav-item to="/home">
+            <b-icon icon="house-door-fill" class="mr-2"></b-icon>
+            Home
           </b-nav-item>
-          <!-- To change to login view route -->
-          <b-nav-item v-if="!isLogin" @click="login">
-            <b-icon icon="arrow-down-right-square-fill" class="mr-2"></b-icon>
-            Login
+          <b-nav-item to="/importData">
+            <b-icon icon="cloud-arrow-up-fill" class="mr-2"></b-icon>
+            Import Data
           </b-nav-item>
-          <!-- To change to logout view route -->
-          <b-nav-item v-if="isLogin" @click="logout">
-            <b-icon icon="arrow-down-right-square-fill" class="mr-2"></b-icon>
-            Logout
+          <b-nav-item to="/analyze">
+            <b-icon icon="file-image-fill" class="mr-2"></b-icon>
+            My Presentations
+          </b-nav-item>
+          <b-nav-item to="/conference">
+            <b-icon icon="calendar-week-fill" class="mr-2"></b-icon>
+            My Conferences
+          </b-nav-item>
+          <b-nav-item to="/chairhub/home">
+            <b-icon icon="people-fill" class="mr-2"></b-icon>
+            Chairhub
           </b-nav-item>
         </b-nav>
-      </div>
+        <div class="secondary-actions">
+          <b-nav class="sidebar-links" vertical>
+            <b-nav-item to="/userGuide">
+              <b-icon icon="patch-question-fll" class="mr-2"></b-icon>
+              User Guide
+            </b-nav-item>
+            <!-- To change to login view route -->
+            <b-nav-item v-if="!isLogin" @click="login">
+              <b-icon icon="arrow-right-square-fill" class="mr-2"></b-icon>
+              Login
+            </b-nav-item>
+            <!-- To change to logout view route -->
+            <b-nav-item v-if="isLogin" @click="logout">
+              <b-icon icon="arrow-down-right-square-fill" class="mr-2"></b-icon>
+              Logout
+            </b-nav-item>
+          </b-nav>
+        </div>
+      </b-col>
     </b-collapse>
   </div>
 </template>
@@ -124,6 +126,7 @@ export default {
   display: flex;
   flex-direction: column;
   flex: 1;
+  height: 100%;
 }
 
 .secondary-actions {
@@ -160,7 +163,6 @@ export default {
 .sidebar-links {
   // flex-wrap: nowrap;
   max-height: calc(100vh - 5rem);
-  overflow-y: auto;
   flex-grow: 1;
 }
 
