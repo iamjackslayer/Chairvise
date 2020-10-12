@@ -84,14 +84,14 @@
 
         <div class="section" v-if="isReadyForChoosing">
           <h2>
-            Version Information
+            Conference Information
 
             <el-tooltip placement="top">
               <div slot="content">
-                If the input version is an existing version, current record will
+                If the input conference is an existing conference, current record will
                 be replaced based on record type.
                 <br />
-                If the input version is a new version, current record will be
+                If the input conference is a new conference, current record will be
                 created based on record type.
               </div>
               <el-button type="text" icon="el-icon-question" circle></el-button>
@@ -102,15 +102,14 @@
           <el-row class="form-card">
             <el-col>
               <label class="label">
-                Version
+                Conference
               </label>
               <br />
-              <!-- change versionId to conferenceId in the future-->
               <el-autocomplete
                 class="inline-input"
-                v-model="versionId"
+                v-model="conferenceName"
                 :fetch-suggestions="querySearch"
-                placeholder="Input Version"
+                placeholder="Input Conference"
               ></el-autocomplete>
             </el-col>
           </el-row>
@@ -157,7 +156,7 @@ export default {
   },
   beforeCreate() {
     this.$store.dispatch("fetchDBMetaDataEntities");
-    this.$store.dispatch("getVersionList");
+    this.$store.dispatch("getConferenceList");
   },
   computed: {
     isLogin() {
@@ -194,12 +193,12 @@ export default {
         this.$store.commit("setDBSchema", dbSchema);
       }
     },
-    versionId: {
+    conferenceName: {
       get: function() {
-        return this.$store.state.dataMapping.data.versionId;
+        return this.$store.state.dataMapping.data.conferenceName;
       },
       set: function(newValue) {
-        this.$store.commit("setVersionId", newValue);
+        this.$store.commit("setConferenceName", newValue);
       }
     },
     conferenceId: {
@@ -244,7 +243,7 @@ export default {
         this.$store.state.dataMapping.hasTableTypeSelected &&
         this.$store.state.dataMapping.hasHeaderSpecified &&
         this.$store.state.dataMapping.hasPredefinedSpecified &&
-        this.$store.state.dataMapping.hasVersionIdSpecified
+        this.$store.state.dataMapping.hasConferenceNameSpecified
       );
     },
     uploaded: function() {
@@ -256,7 +255,7 @@ export default {
         this.$store.state.dataMapping.hasTableTypeSelected &&
         this.$store.state.dataMapping.hasHeaderSpecified &&
         this.$store.state.dataMapping.hasPredefinedSwitchSpecified &&
-        this.$store.state.dataMapping.hasVersionIdSpecified
+        this.$store.state.dataMapping.hasConferenceNameSpecified
       );
     },
     isReadyForChoosing: function() {
@@ -266,8 +265,7 @@ export default {
   methods: {
     querySearch(queryString, cb) {
       // convert to array of string
-      // TODO:  change versionList to conferenceList
-      var links = this.$store.state.presentation.versionList.map(
+      var links = this.$store.state.presentation.conferenceList.map(
         v => v.name
       );
       // function to remove duplicate from array of string
@@ -296,36 +294,36 @@ export default {
       // show loading and go parsing
       this.$store.commit("setPageLoadingStatus", true);
 
-      // if versionList is empty
-      // console.log(this.$store.state.presentation.versionList);
+      // if conferenceList is empty
+      // console.log(this.$store.state.presentation.conferenceList);
       // filter by "AuthorRecord" "ReviewRecord" "SubmissionRecord"
-      if (!this.$store.state.presentation.versionList) {
-        this.$store.commit("setIsNewVersion", false);
+      if (!this.$store.state.presentation.conferenceList) {
+        this.$store.commit("setIsNewConference", false);
       } else {
         // if tabletype 0 author elif 1 review elif 2 sub
         // filter by "AuthorRecord" "ReviewRecord" "SubmissionRecord"
         var verList;
         switch (this.$store.state.dataMapping.data.tableType) {
           case 0:
-            verList = this.$store.state.presentation.versionList
+            verList = this.$store.state.presentation.conferenceList
               .filter(v => v.recordType === "AuthorRecord")
-              .map(v => v.versionId);
+              .map(v => v.conferenceName);
             break;
           case 1:
-            verList = this.$store.state.presentation.versionList
+            verList = this.$store.state.presentation.conferenceList
               .filter(v => v.recordType === "ReviewRecord")
-              .map(v => v.versionId);
+              .map(v => v.conferenceName);
             break;
           case 2:
-            verList = this.$store.state.presentation.versionList
+            verList = this.$store.state.presentation.conferenceList
               .filter(v => v.recordType === "SubmissionRecord")
-              .map(v => v.versionId);
+              .map(v => v.conferenceName);
             break;
           default:
         }
         this.$store.commit(
-          "setIsNewVersion",
-          !verList.includes(this.$store.state.dataMapping.data.versionId)
+          "setIsNewConference",
+          !verList.includes(this.$store.state.dataMapping.data.conferenceName)
         );
       }
 
@@ -368,7 +366,7 @@ export default {
         complete: function(result) {
           var res = result;
           var res2 = res.data;
-          var verId = this.$store.state.dataMapping.data.versionId;
+          var verId = this.$store.state.dataMapping.data.conferenceName;
 
           //author file preprocessing
           if (this.$store.state.dataMapping.data.tableType == "0") {

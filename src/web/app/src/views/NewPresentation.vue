@@ -82,7 +82,7 @@ export default {
   },
   mounted() {
     this.updatePresentationForm();
-    this.$store.dispatch("getVersionList");
+    this.$store.dispatch("getConferenceList");
   },
   computed: {
     isLogin() {
@@ -199,7 +199,7 @@ export default {
           });
         });
       } else {
-        this.$store.dispatch("getVersionList");
+        this.$store.dispatch("getConferenceList");
       }
     },
     uploadClicked() {

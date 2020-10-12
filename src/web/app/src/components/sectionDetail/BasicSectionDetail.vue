@@ -342,7 +342,7 @@ export default {
       type: String,
       required: true
     },
-    version: {
+    conference: {
       type: String,
       required: true
     },
@@ -386,7 +386,7 @@ export default {
     }
   },
   watch: {
-    version() {
+    conference() {
       if (this.isEditing == true) {
         this.previewAnalysisResult("editForm");
       } else {
@@ -600,7 +600,7 @@ export default {
             joiners: this.editForm.joiners.map(j => Object.assign({}, j)),
             groupers: this.editForm.groupers.map(g => ({ field: g })),
             sorters: this.editForm.sorters.map(s => Object.assign({}, s)),
-            versionId: this.version
+            conferenceName: this.conference
           })
           .then(() => {
             this.$emit("update-visualisation", {
@@ -622,7 +622,7 @@ export default {
         .dispatch("sendAnalysisRequest", {
           id: this.sectionDetail.id,
           presentationId: this.presentationId,
-          version: this.version
+          conference: this.conference
         })
         .then(() => {
           this.$emit("update-visualisation", {
@@ -635,7 +635,7 @@ export default {
             groupers: this.sectionDetail.groupers,
             sorters: this.sectionDetail.sorters,
             extraData: this.sectionDetail.extraData,
-            versionId: this.version
+            conferenceName: this.conference
           });
         });
     }

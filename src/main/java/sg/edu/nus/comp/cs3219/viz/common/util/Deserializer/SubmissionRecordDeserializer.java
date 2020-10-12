@@ -56,8 +56,8 @@ public class SubmissionRecordDeserializer extends StdDeserializer<SubmissionReco
     public SubmissionRecord deserialize(JsonParser p, DeserializationContext ctxt) throws IOException, JsonProcessingException {
         System.out.println("called");
         JsonNode node = p.getCodec().readTree(p);
-        String versionStr = getStrValueByField(node, "versionId");
-        Conference conference = new Conference(null, versionStr, null);
+        String conferenceName = getStrValueByField(node, "conferenceName");
+        Conference conference = new Conference(null, conferenceName, null);
 
         String submissionId = getStrValueByField(node, "submissionId");
         String trackId = getStrValueByField(node,"trackId");

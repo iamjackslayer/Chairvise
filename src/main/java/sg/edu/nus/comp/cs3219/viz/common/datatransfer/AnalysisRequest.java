@@ -12,13 +12,13 @@ public class AnalysisRequest {
     private String dataSet;
 
     @NotEmpty
-    private String versionId;
+    private String conferenceName;
 
-    public String getVersionId(){
-        return versionId;
+    public String getConferenceName(){
+        return conferenceName;
     }
 
-    public void setVersionId(String versionId){this.versionId = versionId;}
+    public void setConferenceName(String conferenceName){this.conferenceName = conferenceName;}
 
     private List<PresentationSection.Selection> selections = new ArrayList<>();
 

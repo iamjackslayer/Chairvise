@@ -1,67 +1,67 @@
 <template>
   <el-row class="sectionDetail">
-    <div v-if="version !== undefined && typeof version != 'undefined'">
+    <div v-if="conference !== undefined && typeof conference != 'undefined'">
       <div v-if="sectionDetail.type === WORD_CLOUD">
         <word-cloud-section-detail
           :sectionDetail="sectionDetail"
           :presentationId="presentationId"
-          :version="version"
+          :conference="conference"
         />
       </div>
       <div v-else-if="sectionDetail.type === BAR_CHART">
         <bar-chart-section-detail
           :sectionDetail="sectionDetail"
           :presentationId="presentationId"
-          :version="version"
+          :conference="conference"
         />
       </div>
       <div v-else-if="sectionDetail.type === PIE_CHART">
         <pie-chart-section-detail
           :sectionDetail="sectionDetail"
           :presentationId="presentationId"
-          :version="version"
+          :conference="conference"
         />
       </div>
       <div v-else-if="sectionDetail.type === LINE_CHART">
         <line-chart-section-detail
           :sectionDetail="sectionDetail"
           :presentationId="presentationId"
-          :version="version"
+          :conference="conference"
         />
       </div>
       <div v-else-if="sectionDetail.type === STATS">
         <stats-section-detail
           :sectionDetail="sectionDetail"
           :presentationId="presentationId"
-          :version="version"
+          :conference="conference"
         />
       </div>
       <div v-else-if="sectionDetail.type === SCATTER_CHART">
         <scatter-chart-section-detail
           :sectionDetail="sectionDetail"
           :presentationId="presentationId"
-          :version="version"
+          :conference="conference"
         />
       </div>
       <div v-else-if="sectionDetail.type === GRAPH_NETWORK">
         <graph-network-section-detail
           :sectionDetail="sectionDetail"
           :presentationId="presentationId"
-          :version="version"
+          :conference="conference"
         />
       </div>
       <div v-else-if="sectionDetail.type === RADAR_CHART">
         <radar-chart-section-detail
           :sectionDetail="sectionDetail"
           :presentationId="presentationId"
-          :version="version"
+          :conference="conference"
         />
       </div>
       <div v-else-if="sectionDetail.type === DEPENDENCY_CHART">
         <dependency-chart-section-detail
           :sectionDetail="sectionDetail"
           :presentationId="presentationId"
-          :version="version"
+          :conference="conference"
         />
       </div>
       <div v-else>
@@ -73,7 +73,7 @@
       </div>
     </div>
     <div v-else>
-      <el-alert :title="`Unexpected version`" type="error"> </el-alert>
+      <el-alert :title="`Unexpected conference`" type="error"> </el-alert>
     </div>
   </el-row>
 </template>
@@ -110,7 +110,7 @@ export default {
       type: String,
       required: true
     },
-    version: {
+    conference: {
       type: String
     }
   },
