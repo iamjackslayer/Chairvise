@@ -18,7 +18,7 @@
             Home
           </b-nav-item>
           <b-nav-item to="/importData">
-            <b-icon icon="cloud-upload-fill" class="mr-2"></b-icon>
+            <b-icon icon="cloud-arrow-up-fill" class="mr-2"></b-icon>
             Import Data
           </b-nav-item>
           <b-nav-item to="/analyze">
@@ -96,7 +96,7 @@ export default {
 .logo-container {
   display: flex;
   font-size: 2rem;
-  padding-left: 1rem;
+  padding: 0 1rem;
   margin-top: 1rem;
   margin-bottom: 1rem;
 }

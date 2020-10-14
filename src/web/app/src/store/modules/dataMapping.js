@@ -102,7 +102,9 @@ export default {
     },
 
     clearHasHeader(state) {
-      state.data.hasHeader = null;
+      // Changing this to false by default since it's optional
+      state.data.hasHeader = false;
+      // Shouldn't need this variable since it's an optional field
       state.hasHeaderSpecified = false;
     },
 
@@ -118,13 +120,16 @@ export default {
       state.hasPredefinedSpecified = false;
     },
 
+    // TODO: Review difference between predefined mapping and predefined switch
     setPredefinedSwitch(state, hasPredefined) {
       state.data.hasPredefined = hasPredefined;
       state.hasPredefinedSwitchSpecified = true;
     },
 
     clearPredefinedSwitch(state) {
+      // Changing this to false by default since it's optional
       state.data.hasPredefined = null;
+      // Shouldn't need this variable since it's optional field
       state.hasPredefinedSwitchSpecified = false;
     },
 

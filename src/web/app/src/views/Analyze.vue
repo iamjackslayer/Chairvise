@@ -7,51 +7,35 @@
         variant="primary"
         v-if="!isPresentationListEmpty"
         @click="createPresentation"
-        ><b-icon icon="plus" font-scale="1"></b-icon>Add New
-        Presentation</b-button
       >
+        <b-icon icon="plus"></b-icon>
+        Add New Presentation
+      </b-button>
     </div>
-    <div class="infinite-list-wrapper">
+    <div>
       <b-card
         class="shadow p-3 mb-5 bg-white rounded"
         v-if="isPresentationListEmpty"
       >
+        <!-- TODO: Replace with openpeeps image -->
         <EmptyPresentation />
       </b-card>
-      <ul
-        class="infinite-list"
-        v-infinite-scroll="loadMorePresentation"
-        infinite-scroll-disabled="disabled"
-        v-loading="isLoading"
-      >
-        <li
-          v-for="(presentation, index) in presentations"
+      <div class="presentation-grid">
+        <b-card
+          class="presentation-card p-2 shadow-sm rounded-lg"
+          v-for="presentation in presentations"
           :key="presentation.id"
+          @click="viewPresentation(presentation.id)"
         >
-          <zoom-center-transition :duration="500" :delay="100 * (index - 1)">
-            <b-card class="shadow p-3 mb-5 bg-white rounded">
-              <b-button
-                type="text"
-                class="presentationCard"
-                v-show="show"
-                @click="viewPresentation(presentation.id)"
-              >
-                <b-row>
-                  <b-col class="presentation-id" :span="1">
-                    <p>#{{ presentation.id }}</p>
-                  </b-col>
-                  <b-col :span="19" :offset="1">
-                    <p>{{ presentation.name }}</p>
-                  </b-col>
-                  <b-col :span="19" :offset="1">
-                    <p>{{ presentation.description }}</p>
-                  </b-col>
-                </b-row>
-              </b-button>
-            </b-card>
-          </zoom-center-transition>
-        </li>
-      </ul>
+          <h5 class="presentation-title">{{ presentation.name }}</h5>
+          <div class="presentation-description">
+            {{ presentation.description || "-" }}
+          </div>
+          <div class="privacy-status">
+            <b-icon icon="lock" class="mr-1" />Private
+          </div>
+        </b-card>
+      </div>
     </div>
   </div>
 </template>
@@ -115,6 +99,7 @@ export default {
     loadPresentations() {
       this.show = true;
     },
+    // TODO: Remove the infinite scroll stuff.
     loadMorePresentation() {
       this.count += 5;
     },
@@ -129,50 +114,51 @@ export default {
 };
 </script>
 
-<style scoped>
-.alignLeft {
-  float: left;
-  display: inline-block;
-  margin: 0;
-}
-.alignRight {
-  float: right;
-  display: inline-block;
-  margin: 0;
-}
-.background {
-  background-color: transparent;
-  border-style: hidden;
-}
-.presentationCard {
-  width: 100%;
-  height: 100%;
-  margin-bottom: 16px;
-  background-color: white;
-  text-align: left;
-  color: black;
-  padding: 4px 16px;
+<style lang="scss" scoped>
+@supports (display: grid) {
+  .presentation-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    // TODO: Change to one column for mobile
+    grid-gap: 1.5rem;
+  }
 }
 
-.menuCard {
-  width: 100%;
-  height: 100%;
+.presentation-card {
+  cursor: pointer;
+  height: 200px;
 }
-.infinite-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
+
+.presentation-card:hover {
+  background-color: $indigo-100;
 }
-.presentationCard .button {
-  color: black;
-  text-align: left;
+
+.presentation-card > .card-body {
+  display: flex;
+  flex-direction: column;
 }
-.presentation-image {
-  text-align: center;
-  vertical-align: middle;
-  margin-top: 1rem;
+
+.presentation-description {
+  font-size: 0.95rem;
+  letter-spacing: -0.025em;
+  color: $gray-600;
+  // clamp to 3 lines (restricted to webkit browsers)
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
 }
-.presentation-id {
-  margin-top: 1.7rem;
+
+.privacy-status {
+  margin-top: auto;
+  font-size: 0.95rem;
+  color: $indigo-600;
+  align-self: flex-end;
+}
+
+.presentation-title {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 </style>
