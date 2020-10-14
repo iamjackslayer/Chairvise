@@ -46,7 +46,7 @@ body {
   margin-bottom: 20px;
 }
 
-.form-group > label  {
+.form-group > label, legend  {
   color: $gray-600;
   letter-spacing: -0.025em;
   font-size: 0.9rem;
