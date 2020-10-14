@@ -23,7 +23,8 @@ export default {
       name: "",
       conference: "",
       description: "",
-      creatorIdentifier: ""
+      creatorIdentifier: "",
+      isPublic: false
     },
 
     presentationFormStatus: {
@@ -113,6 +114,7 @@ export default {
       state.presentationFormStatus.isLoading = false;
       state.presentationFormStatus.isApiError = false;
       state.presentationFormStatus.apiErrorMsg = "";
+      state.presentationForm.isPublic = false;
     },
 
     setPresentationFormField(state, { field, value }) {
