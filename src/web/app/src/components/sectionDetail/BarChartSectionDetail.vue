@@ -90,7 +90,7 @@
         :label="'Tooltips ' + index"
         :key="'tooltips' + index"
       >
-        <el-select placeholder="Field" v-model="tooltip.field">
+        <el-select placeholder="Field" v-model="tooltip.field">r
           <el-option
             v-for="selection in slotProps.editForm.selections"
             :key="selection.rename"

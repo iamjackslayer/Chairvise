@@ -10,35 +10,40 @@
     >
       <div class="title" v-if="!isEditing">
         {{ sectionDetail.title }}
-        <el-button
-          type="primary"
+        <b-button
+          variant="primary"
           @click="changeEditMode(true)"
           v-if="isPresentationEditable"
           icon="el-icon-edit"
         >
           Edit
-        </el-button>
-        <el-button
-          type="danger"
+        </b-button>
+        <b-button
+          variant="danger"
           icon="el-icon-delete"
           @click="deleteSectionDetail"
           v-if="isPresentationEditable"
         >
           Delete
-        </el-button>
+        </b-button>
       </div>
       <div class="title" v-else>
-        <el-input v-model="editForm.title"></el-input>
+        <b-input v-model="editForm.title"></b-input>
       </div>
-      <el-alert
+      <b-alert
         v-if="sectionDetail.status.isApiError"
         :title="sectionDetail.status.apiErrorMsg"
-        :description="sectionDetail.status.apiErrorMsgDetail"
         show-icon
         type="error"
         class="errorMessage"
       >
-      </el-alert>
+        <b-icon
+          class="alert-icon"
+          icon="exclamation-circle-fill"
+          variant="danger"
+        />
+        {{ sectionDetail.status.apiErrorMsgDetail }}
+      </b-alert>
       <el-alert
         v-if="!this.hasData"
         title="No Data to display"
