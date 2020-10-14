@@ -36,7 +36,10 @@
               <b-icon icon="patch-question-fll" class="mr-2"></b-icon>
               User Guide
             </b-nav-item>
-            <b-nav-item to="/logout">
+            <b-nav-item to="/login" @click="login">
+              Login
+            </b-nav-item>
+            <b-nav-item to="/logout" @click="logout">
               <b-icon icon="arrow-down-right-square-fill" class="mr-2"></b-icon>
 
               Logout
@@ -79,6 +82,18 @@ export default {
     return {
       collapsed: true
     };
+  },
+  methods: {
+    login() {
+      // enter full screen loading and wait browser to redirect to google login page
+      this.$data.isFullscreenLoading = true;
+      window.location.href = this.$store.state.userInfo.loginUrl;
+    },
+    logout() {
+      // enter full screen loading and wait browser to redirect to google login page
+      this.$data.isFullscreenLoading = true;
+      window.location.href = this.$store.state.userInfo.logoutUrl;
+    }
   },
   computed: {
     isAppLoading() {

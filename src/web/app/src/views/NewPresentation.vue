@@ -32,9 +32,8 @@
                 aria-describedby="name-live-feedback"
               />
               <b-form-invalid-feedback id="name-live-feedback"
-                >This is a required field and must be at least 3
-                characters.</b-form-invalid-feedback
-              >
+                >This is a required field and must be at least 3 characters.
+              </b-form-invalid-feedback>
             </b-form-group>
 
             <b-form-group label="Description" label-for="description">
@@ -201,7 +200,7 @@ export default {
     },
     updatePresentationForm() {
       if (this.$v) {
-        this.$v.$reset;
+        this.$v.$reset();
       }
       this.$store.commit("resetPresentationForm");
       if (this.id !== ID_NEW_PRESENTATION) {
