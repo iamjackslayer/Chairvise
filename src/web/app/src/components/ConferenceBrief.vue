@@ -229,7 +229,7 @@ export default {
     },
     updateConferenceForm() {
       if (this.$v) {
-        this.$v.$reset;
+        this.$v.$reset();
       }
       this.$store.commit("resetConferenceForm");
       if (this.id !== ID_NEW_CONFERENCE) {

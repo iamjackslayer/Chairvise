@@ -200,7 +200,7 @@ export default {
     },
     updatePresentationForm() {
       if (this.$v) {
-        this.$v.$reset;
+        this.$v.$reset();
       }
       this.$store.commit("resetPresentationForm");
       if (this.id !== ID_NEW_PRESENTATION) {

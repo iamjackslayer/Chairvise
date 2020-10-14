@@ -112,6 +112,7 @@
     </b-card>
 
     <b-modal
+      size="xl"
       title="Share with other users"
       centered
       :visible.sync="isAccessControlDialogVisible"
@@ -239,7 +240,6 @@ export default {
         return;
       }
 
-      this.$v.$reset;
       if (this.isNewPresentation) {
         // add
         this.$store.dispatch("savePresentation").then(() => {
@@ -260,6 +260,7 @@ export default {
           if (this.isError) {
             return;
           }
+          this.$v.$reset();
           this.isEditing = false;
         });
       }
