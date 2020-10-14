@@ -65,7 +65,7 @@
         />
       </div>
       <div v-else>
-        <b-alert v-if="isSectionListApiError" show variant="danger">
+        <b-alert show variant="danger">
           <b-icon
             class="alert-icon"
             icon="exclamation-circle-fill"
@@ -76,7 +76,7 @@
       </div>
     </div>
     <div v-else>
-      <b-alert v-if="isSectionListApiError" show variant="danger">
+      <b-alert show variant="danger">
         <b-icon
           class="alert-icon"
           icon="exclamation-circle-fill"
