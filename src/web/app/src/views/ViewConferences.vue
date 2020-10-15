@@ -41,11 +41,15 @@ export default {
         return;
       }
 
-      this.$notify.error({
-        title: "Conference list API request fail",
-        message: this.$store.state.conference.conferenceListStatus.apiErrorMsg,
-        duration: 0
-      });
+      this.$bvToast.toast(
+        this.$store.state.conference.conferenceListStatus.apiErrorMsg || "-",
+        {
+          title: "Conference list API request fail",
+          variant: "danger",
+          solid: true,
+          autoHideDelay: 0
+        }
+      );
     }
   },
   computed: {

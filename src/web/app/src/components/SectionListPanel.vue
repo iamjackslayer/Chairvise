@@ -198,10 +198,15 @@ export default {
 
     addNewSection() {
       if (this.selectedNewSection.length === 0) {
-        this.$notify.error({
-          title: "Error",
-          message: "Please select a section to add into presentation."
-        });
+        this.$bvToast.toast(
+          "Please select a section to add into presentation.",
+          {
+            title: "Error",
+            variant: "danger",
+            solid: true,
+            autoHideDelay: 0
+          }
+        );
         return;
       }
       this.$store
