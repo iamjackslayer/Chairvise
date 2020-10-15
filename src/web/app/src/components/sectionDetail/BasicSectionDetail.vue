@@ -1,337 +1,347 @@
 <template>
-  <el-row v-loading="sectionDetail.status.isLoading">
-    <el-form
-      status-icon
-      ref="editForm"
-      label-position="left"
-      :model="editForm"
-      label-width="170px"
-      :rules="editFormRule"
-    >
-      <div class="title" v-if="!isEditing">
-        {{ sectionDetail.title }}
-        <b-button
-          variant="primary"
-          @click="changeEditMode(true)"
-          v-if="isPresentationEditable"
-          icon="el-icon-edit"
-        >
-          Edit
-        </b-button>
-        <b-button
-          variant="danger"
-          icon="el-icon-delete"
-          @click="deleteSectionDetail"
-          v-if="isPresentationEditable"
-        >
-          Delete
-        </b-button>
-      </div>
-      <div class="title" v-else>
-        <b-input v-model="editForm.title"></b-input>
-      </div>
-      <b-alert
-        v-if="sectionDetail.status.isApiError"
-        :title="sectionDetail.status.apiErrorMsg"
-        show-icon
-        type="error"
-        class="errorMessage"
+  <div>
+    <b-row v-loading="sectionDetail.status.isLoading">
+      <b-form
+        status-icon
+        ref="editForm"
+        label-position="left"
+        :model="editForm"
+        label-width="170px"
+        :rules="editFormRule"
       >
-        <b-icon
-          class="alert-icon"
-          icon="exclamation-circle-fill"
+        <div class="title" v-if="!isEditing">
+          {{ sectionDetail.title }}
+          <b-button
+            variant="primary"
+            @click="changeEditMode(true)"
+            v-if="isPresentationEditable"
+            icon="el-icon-edit"
+          >
+            Edit
+          </b-button>
+          <b-button
+            variant="danger"
+            icon="el-icon-delete"
+            @click="deleteSectionDetail"
+            v-if="isPresentationEditable"
+          >
+            Delete
+          </b-button>
+        </div>
+        <div class="title" v-else>
+          <b-input v-model="editForm.title"></b-input>
+        </div>
+        <b-alert
+          v-if="sectionDetail.status.isApiError"
+          :title="sectionDetail.status.apiErrorMsg"
           variant="danger"
-        />
-        {{ sectionDetail.status.apiErrorMsgDetail }}
-      </b-alert>
-      <el-alert
-        v-if="!this.hasData"
-        title="No Data to display"
-        type="info"
-        class="noDataToDisplay"
-      >
-      </el-alert>
-      <slot v-else></slot>
-      <div v-if="!isEditing" class="description">
-        {{ editForm.description }}
-      </div>
-      <div v-if="isEditing">
-        <el-form-item label="Editing Mode">
-          <el-switch
-            v-model="isInAdvancedMode"
-            active-text="Advanced"
-            inactive-text="Basic"
-          >
-          </el-switch>
-        </el-form-item>
-
-        <el-form-item
-          v-if="isInAdvancedMode"
-          v-for="(selection, index) in editForm.selections"
-          :label="'Selection ' + index"
-          :key="'s' + index"
-          :prop="'selections.' + index"
-          :rules="editFormSelectionsRule"
+          class="errorMessage"
         >
-          <el-input
-            v-model="selection.expression"
-            placeholder="Expression"
-            style="width: 300px"
-          ></el-input
-          >&nbsp;
-          <el-input
-            v-model="selection.rename"
-            placeholder="Rename Field"
-            style="width: 200px"
-          ></el-input
-          >&nbsp;
-          <el-button
-            type="danger"
-            icon="el-icon-delete"
-            @click="removeSelection(selection)"
-          ></el-button>
-        </el-form-item>
-
-        <el-form-item
-          label="Record Involved"
-          prop="involvedRecords"
-          v-if="isInAdvancedMode"
-          key="involvedRecords"
+          <b-icon
+            class="alert-icon"
+            icon="exclamation-circle-fill"
+            variant="danger"
+          />
+          {{ sectionDetail.status.apiErrorMsgDetail }}
+        </b-alert>
+        <b-alert
+          v-if="!this.hasData"
+          title="No Data to display"
+          variant="secondary"
+          class="noDataToDisplay"
         >
-          <el-select
-            v-model="editForm.involvedRecords"
-            multiple
-            placeholder="Please select"
-            filterable
-            allow-create
-          >
-            <el-option
-              v-for="option in involvedRecordsOptions"
-              :key="option.value"
-              :label="option.label"
-              :value="option.value"
-            >
-            </el-option>
-          </el-select>
-        </el-form-item>
+          No Data to display
+        </b-alert>
+        <slot v-else></slot>
+        <div v-if="!isEditing" class="description">
+          {{ editForm.description }}
+        </div>
+        <div v-if="isEditing">
+          <b-form-item>
+            <b-row>
+              <label>Advanced Editing Mode</label>
+              <b-form-checkbox v-model="isInAdvancedMode" switch>
+              </b-form-checkbox>
+            </b-row>
+          </b-form-item>
 
-        <el-form-item
-          v-if="isInAdvancedMode"
-          v-for="(joiner, index) in editForm.joiners"
-          :label="'Joiner ' + index"
-          :key="'j' + index"
-          :prop="'joiners.' + index"
-          :rules="editFormJoinersRule"
-        >
-          On
-          <el-select placeholder="Left" v-model="joiner.left">
-            <el-option-group
-              v-for="group in joinersFieldOptions"
-              :key="group.label"
-              :label="group.label"
-            >
-              <el-option
-                v-for="item in group.options"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
-              >
-              </el-option>
-            </el-option-group>
-          </el-select>
-          Equals
-          <el-select placeholder="Right" v-model="joiner.right">
-            <el-option-group
-              v-for="group in joinersFieldOptions"
-              :key="group.label"
-              :label="group.label"
-            >
-              <el-option
-                v-for="item in group.options"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
-              >
-              </el-option>
-            </el-option-group> </el-select
-          >&nbsp;
-          <el-button
-            type="danger"
-            icon="el-icon-delete"
-            @click="removeJoiner(joiner)"
-          ></el-button>
-        </el-form-item>
-
-        <el-form-item
-          v-for="(filter, index) in editForm.filters"
-          :label="'Filter ' + index"
-          :key="'f' + index"
-          :prop="'filters.' + index"
-          :rules="editFormFiltersRule"
-        >
-          <el-select
-            placeholder="Field"
-            v-model="filter.field"
-            filterable
-            allow-create
-          >
-            <el-option-group
-              v-for="group in filtersFieldOptions"
-              :key="group.label"
-              :label="group.label"
-            >
-              <el-option
-                v-for="item in group.options"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
-              >
-              </el-option>
-            </el-option-group> </el-select
-          >&nbsp;
-          <el-select v-model="filter.comparator" style="width: 80px">
-            <el-option label=">" value=">" />
-            <el-option label="=" value="=" />
-            <el-option label="<" value="<" /> </el-select
-          >&nbsp;
-          <el-input
-            v-model="filter.value"
-            placeholder="Value"
-            style="width: 200px"
-          ></el-input
-          >&nbsp;
-          <el-button
-            type="danger"
-            icon="el-icon-delete"
-            @click="removeFilter(filter)"
-          ></el-button>
-        </el-form-item>
-
-        <el-form-item label="Description for the section">
-          <el-input
-            type="textarea"
-            :autosize="{ minRows: 4 }"
-            placeholder="Please enter description (Leave empty to hide the description part)"
-            v-model="editForm.description"
-          >
-          </el-input>
-        </el-form-item>
-
-        <el-form-item
-          label="Group (Aggregation)"
-          prop="groupers"
-          v-if="isInAdvancedMode"
-          key="groupers"
-        >
-          <el-select
-            placeholder="Groupers"
-            v-model="editForm.groupers"
-            style="width: 100%"
-            multiple
-            filterable
-            allow-create
-          >
-            <el-option-group
-              v-for="group in groupersFieldOptions"
-              :key="group.label"
-              :label="group.label"
-            >
-              <el-option
-                v-for="item in group.options"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
-              >
-              </el-option>
-            </el-option-group> </el-select
-          >&nbsp;
-        </el-form-item>
-
-        <el-form-item
-          v-if="isInAdvancedMode"
-          v-for="(sorter, index) in editForm.sorters"
-          :label="'Sorting ' + index"
-          :key="'sort' + index"
-          :prop="'sorters.' + index"
-          :rules="editFormSortersRule"
-        >
-          <el-input
-            v-model="sorter.field"
-            placeholder="Field to Sort"
-            style="width: 300px"
-          ></el-input
-          >&nbsp;
-          <el-select
-            v-model="sorter.order"
-            style="width: 80px"
-            placeholder="Order"
-          >
-            <el-option label="Big to Small" value="DESC" />
-            <el-option label="Small to Big" value="ASC" /> </el-select
-          >&nbsp;
-          <el-button
-            type="danger"
-            icon="el-icon-delete"
-            @click="removeSorter(sorter)"
-          ></el-button>
-        </el-form-item>
-
-        <slot
-          name="extraFormItems"
-          :editForm="editForm"
-          :extraData="editForm.extraData"
-          :isInAdvancedMode="isInAdvancedMode"
-        ></slot>
-        <el-form-item>
-          <el-button
-            type="success"
-            icon="el-icon-plus"
-            plain
-            @click="addSelection"
+          <b-form-item
             v-if="isInAdvancedMode"
-            >Add selection</el-button
+            v-for="(selection, index) in editForm.selections"
+            :key="'s' + index"
+            :prop="'selections.' + index"
+            :rules="editFormSelectionsRule"
           >
-          <el-button
-            type="success"
-            icon="el-icon-plus"
-            plain
-            @click="addJoiner"
+            <b-row>
+              <label>Selection {{ index }}</label>
+              <b-form-input
+                v-model="selection.expression"
+                id="selection expression"
+                placeholder="Expression"
+                style="width: 30%"
+              ></b-form-input
+              >&nbsp;
+              <b-form-input
+                v-model="selection.rename"
+                placeholder="Rename Field"
+                style="width: 20%"
+              ></b-form-input
+              >&nbsp;
+              <b-button
+                variant="danger"
+                icon="el-icon-delete"
+                @click="removeSelection(selection)"
+                >delete</b-button
+              >
+            </b-row>
+          </b-form-item>
+
+          <b-form-item
+            label="Record Involved"
+            prop="involvedRecords"
             v-if="isInAdvancedMode"
-            >Add joiner</el-button
+            key="involvedRecords"
           >
-          <el-button type="success" icon="el-icon-plus" plain @click="addFilter"
-            >Add filter</el-button
-          >
-          <el-button
-            type="success"
-            icon="el-icon-plus"
-            plain
-            @click="addSorter"
+            <b-form-select
+              v-model="editForm.involvedRecords"
+              multiple
+              placeholder="Please select"
+              filterable
+              allow-create
+            >
+              <b-form-select-option
+                v-for="option in involvedRecordsOptions"
+                :key="option.value"
+                :label="option.label"
+                :value="option.value"
+              >
+              </b-form-select-option>
+            </b-form-select>
+          </b-form-item>
+
+          <b-form-item
             v-if="isInAdvancedMode"
-            >Add sorting</el-button
+            v-for="(joiner, index) in editForm.joiners"
+            :label="'Joiner ' + index"
+            :key="'j' + index"
+            :prop="'joiners.' + index"
+            :rules="editFormJoinersRule"
           >
-        </el-form-item>
-        <el-form-item>
-          <el-button
-            type="primary"
-            icon="el-icon-view"
-            @click="previewAnalysisResult('editForm')"
-            plain
-            >Preview</el-button
+            On
+            <b-form-select placeholder="Left" v-model="joiner.left">
+              <b-form-select-option-group
+                v-for="group in joinersFieldOptions"
+                :key="group.label"
+                :label="group.label"
+              >
+                <b-form-select-option
+                  v-for="item in group.options"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value"
+                >
+                </b-form-select-option>
+              </b-form-select-option-group>
+            </b-form-select>
+            Equals
+            <b-form-select placeholder="Right" v-model="joiner.right">
+              <b-form-select-option-group
+                v-for="group in joinersFieldOptions"
+                :key="group.label"
+                :label="group.label"
+              >
+                <b-form-select-option
+                  v-for="item in group.options"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value"
+                >
+                </b-form-select-option>
+              </b-form-select-option-group> </b-form-select
+            >&nbsp;
+            <b-button
+              variant="danger"
+              icon="el-icon-delete"
+              @click="removeJoiner(joiner)"
+            ></b-button>
+          </b-form-item>
+
+          <b-form-item
+            v-for="(filter, index) in editForm.filters"
+            :label="'Filter ' + index"
+            :key="'f' + index"
+            :prop="'filters.' + index"
+            :rules="editFormFiltersRule"
           >
-          <el-button
-            type="success"
-            icon="el-icon-check"
-            @click="saveSectionDetail('editForm')"
-            >Save</el-button
+            <b-form-select
+              placeholder="Field"
+              v-model="filter.field"
+              filterable
+              allow-create
+            >
+              <b-form-select-option-group
+                v-for="group in filtersFieldOptions"
+                :key="group.label"
+                :label="group.label"
+              >
+                <b-form-select-option
+                  v-for="item in group.options"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value"
+                >
+                </b-form-select-option>
+              </b-form-select-option-group> </b-form-select
+            >&nbsp;
+            <b-form-select v-model="filter.comparator" style="width: 80px">
+              <b-form-select-option label=">" value=">" />
+              <b-form-select-option label="=" value="=" />
+              <b-form-select-option label="<" value="<" /> </b-form-select
+            >&nbsp;
+            <b-form-input
+              v-model="filter.value"
+              placeholder="Value"
+              style="width: 200px"
+            ></b-form-input
+            >&nbsp;
+            <b-button
+              variant="danger"
+              icon="el-icon-delete"
+              @click="removeFilter(filter)"
+              >Delete</b-button
+            >
+          </b-form-item>
+
+          <b-form-item label="Description for the section">
+            <b-form-input
+              type="textarea"
+              :autosize="{ minRows: 4 }"
+              placeholder="Please enter description (Leave empty to hide the description part)"
+              v-model="editForm.description"
+            >
+            </b-form-input>
+          </b-form-item>
+
+          <b-form-item
+            label="Group (Aggregation)"
+            prop="groupers"
+            v-if="isInAdvancedMode"
+            key="groupers"
           >
-          <el-button icon="el-icon-close" @click="cancelEditing"
-            >Cancel</el-button
+            <b-form-select
+              placeholder="Groupers"
+              v-model="editForm.groupers"
+              style="width: 100%"
+              multiple
+              filterable
+              allow-create
+            >
+              <b-form-select-option-group
+                v-for="group in groupersFieldOptions"
+                :key="group.label"
+                :label="group.label"
+              >
+                <b-form-select-option
+                  v-for="item in group.options"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value"
+                >
+                </b-form-select-option>
+              </b-form-select-option-group> </b-form-select
+            >&nbsp;
+          </b-form-item>
+
+          <b-form-item
+            v-if="isInAdvancedMode"
+            v-for="(sorter, index) in editForm.sorters"
+            :label="'Sorting ' + index"
+            :key="'sort' + index"
+            :prop="'sorters.' + index"
+            :rules="editFormSortersRule"
           >
-        </el-form-item>
-      </div>
-    </el-form>
-  </el-row>
+            <b-form-input
+              v-model="sorter.field"
+              placeholder="Field to Sort"
+              style="width: 300px"
+            ></b-form-input
+            >&nbsp;
+            <b-form-select
+              v-model="sorter.order"
+              style="width: 80px"
+              placeholder="Order"
+            >
+              <el-option label="Big to Small" value="DESC" />
+              <el-option label="Small to Big" value="ASC" /> </b-form-select
+            >&nbsp;
+            <el-button
+              type="danger"
+              icon="el-icon-delete"
+              @click="removeSorter(sorter)"
+            ></el-button>
+          </b-form-item>
+
+          <slot
+            name="extraFormItems"
+            :editForm="editForm"
+            :extraData="editForm.extraData"
+            :isInAdvancedMode="isInAdvancedMode"
+          ></slot>
+          <b-form-item>
+            <b-button
+              type="success"
+              icon="el-icon-plus"
+              plain
+              @click="addSelection"
+              v-if="isInAdvancedMode"
+              >Add selection</b-button
+            >
+            <b-button
+              type="success"
+              icon="el-icon-plus"
+              plain
+              @click="addJoiner"
+              v-if="isInAdvancedMode"
+              >Add joiner</b-button
+            >
+            <b-button
+              variant="success"
+              icon="el-icon-plus"
+              plain
+              @click="addFilter"
+              >Add filter</b-button
+            >
+            <b-button
+              variant="success"
+              icon="el-icon-plus"
+              plain
+              @click="addSorter"
+              v-if="isInAdvancedMode"
+              >Add sorting</b-button
+            >
+          </b-form-item>
+          <b-form-item>
+            <b-button
+              type="primary"
+              icon="el-icon-view"
+              @click="previewAnalysisResult('editForm')"
+              plain
+              >Preview</b-button
+            >
+            <b-button
+              type="success"
+              icon="el-icon-check"
+              @click="saveSectionDetail('editForm')"
+              >Save</b-button
+            >
+            <b-button icon="el-icon-close" @click="cancelEditing"
+              >Cancel</b-button
+            >
+          </b-form-item>
+        </div>
+      </b-form>
+    </b-row>
+  </div>
 </template>
 
 <script>

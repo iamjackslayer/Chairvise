@@ -1,14 +1,14 @@
 <template>
   <div class="emptySection">
-    <el-row>
-      <el-col>
+    <b-row>
+      <b-col>
         <div class="icon">
           <img src="@/assets/businessman.png" />
         </div>
-      </el-col>
-    </el-row>
-    <el-row>
-      <el-col>
+      </b-col>
+    </b-row>
+    <b-row>
+      <b-col>
         <p>
           <i> No section found. Want to visualise data? </i>
         </p>
@@ -16,8 +16,8 @@
           Let's get started by adding a new section on the right side of the
           panel.
         </p>
-      </el-col>
-    </el-row>
+      </b-col>
+    </b-row>
   </div>
 </template>
 

@@ -4,62 +4,73 @@
       v-loading="isLoadingDBMetaData || isLoadingSectionList"
       v-if="!isNewPresentation"
     >
-      <el-aside width="300px" class="addRowRightAlign" v-if="isLogin">
-        <el-card v-if="!isSectionListEmpty">
+      <aside class="addRowRightAlign" v-if="isLogin">
+        <br />
+        <b-card v-if="!isSectionListEmpty">
           <div slot="header" class="clearfix">
             <span> Select version </span>
           </div>
-          <el-select
+          <b-form-select
             class="versionInput"
             v-model="presentationFormVersion"
             placeholder="Please select a version"
           >
-            <el-option v-for="v in versions" :key="v" :label="v" :value="v">
-            </el-option>
-          </el-select>
-        </el-card>
-        <el-card>
+            <b-form-select-option
+              v-for="v in versions"
+              :key="v"
+              :label="v"
+              :value="v"
+            >
+            </b-form-select-option>
+          </b-form-select>
+        </b-card>
+        <b-card>
           <div slot="header" class="clearfix">
             <span> Add section </span>
           </div>
-          <el-select
+          <b-form-select
             class="selectionInput"
             v-model="selectedNewSection"
             placeholder="Please select a section to add"
             filterable
           >
-            <el-option-group
+            <b-form-select-option-group
               v-for="group in predefinedSections"
               :key="group.label"
               :label="group.label"
             >
-              <el-option
+              <b-form-select-option
                 v-for="item in group.options"
                 :key="item.value"
                 :label="item.label"
                 :value="item.value"
               >
-              </el-option>
-            </el-option-group>
-          </el-select>
-          <el-button
+              </b-form-select-option>
+            </b-form-select-option-group>
+          </b-form-select>
+          <b-button
             class="selectionInputButton"
             icon="el-icon-plus"
             type="success"
             @click="addNewSection"
-            >Add New Section</el-button
+            >Add New Section</b-button
           >
-        </el-card>
-      </el-aside>
+        </b-card>
+      </aside>
       <br />
-      <el-alert
+      <b-alert
         v-if="isSectionListApiError"
         :title="sectionListApiErrorMsg"
-        type="error"
-        show-icon
+        variant="danger"
       >
-      </el-alert>
-      <el-card shadow="hover">
+        <b-icon
+          class="alert-icon"
+          icon="exclamation-circle-fill"
+          variant="danger"
+        />
+        {{ sectionListApiErrorMsg }}
+      </b-alert>
+      <b-card shadow="hover">
         <abstract-section-detail
           class="presentation-section"
           v-for="section in sectionList"
@@ -69,7 +80,7 @@
           :version="presentationFormVersion"
         />
         <EmptySection v-if="isSectionListEmpty" />
-      </el-card>
+      </b-card>
     </div>
   </div>
 </template>
@@ -242,7 +253,7 @@ export default {
 }
 .addRowRightAlign {
   float: right;
-  margin-top: 18px;
+  width: 30%;
   margin-left: 16px;
 }
 .addRowRightAlign .el-card {

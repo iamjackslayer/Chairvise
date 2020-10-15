@@ -1,5 +1,5 @@
 <template>
-  <el-row class="sectionDetail">
+  <b-row class="sectionDetail">
     <div v-if="version !== undefined && typeof version != 'undefined'">
       <div v-if="sectionDetail.type === WORD_CLOUD">
         <word-cloud-section-detail
@@ -65,17 +65,20 @@
         />
       </div>
       <div v-else>
-        <el-alert
+        <b-alert
           :title="`Unexpected Section Detail Type: ${sectionDetail.type}`"
-          type="error"
+          variant="danger"
         >
-        </el-alert>
+          Unexpected Section Detail Type: ${sectionDetail.type}
+        </b-alert>
       </div>
     </div>
     <div v-else>
-      <el-alert :title="`Unexpected version`" type="error"> </el-alert>
+      <b-alert :title="`Unexpected version`" variant="danger">
+        Unexpected Version
+      </b-alert>
     </div>
-  </el-row>
+  </b-row>
 </template>
 
 <script>
