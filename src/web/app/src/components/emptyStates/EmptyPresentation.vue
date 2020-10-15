@@ -1,14 +1,14 @@
 <template>
   <div class="emptySection">
-    <el-row>
-      <el-col>
+    <b-row>
+      <b-col>
         <div class="icon">
           <img src="@/assets/businessman.png" />
         </div>
-      </el-col>
-    </el-row>
-    <el-row>
-      <el-col>
+      </b-col>
+    </b-row>
+    <b-row>
+      <b-col>
         <p>
           <i>
             No presentation found. Want to generate presentation for a
@@ -18,14 +18,12 @@
         <p>
           Let's get started by adding a new presentation.
         </p>
-        <el-button
-          type="primary"
-          icon="el-icon-plus"
-          @click="createPresentation"
-          >Add New Presentation</el-button
+        <b-button variant="primary" @click="createPresentation">
+          <b-icon icon="plus" font-scale="1"></b-icon>Add New
+          Presentation</b-button
         >
-      </el-col>
-    </el-row>
+      </b-col>
+    </b-row>
   </div>
 </template>
 

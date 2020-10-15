@@ -1,69 +1,87 @@
 <template>
-  <el-main>
-    <el-card>
-      <div slot="header" class="clearfix">
-        <span> Create New Presentation </span>
-      </div>
-      <el-alert
-        v-if="isNewPresentation && !isLogin"
-        title="Please login to create new presentation"
-        type="error"
-        show-icon
-        class="errorMsg"
+  <div>
+    <div class="title-bar">
+      <h1 class="title">Add New Presentation</h1>
+    </div>
+
+    <b-alert v-if="isNewPresentation && !isLogin" show variant="danger">
+      <b-icon
+        class="alert-icon"
+        icon="exclamation-circle-fill"
+        variant="danger"
       />
-      <el-form
-        v-else
-        :rules="rules"
-        ref="presentationForm"
-        :model="presentationForm"
-        v-loading="isLoading"
-      >
-        <el-form-item label="Name" :prop="'name'">
-          <el-col>
-            <el-input v-model="presentationFormName" placeholder="Enter name" />
-          </el-col>
-        </el-form-item>
-        <el-form-item label="Description">
-          <el-col>
-            <el-input
-              type="textarea"
-              v-model="presentationFormDescription"
-              placeholder="Enter description"
-            />
-          </el-col>
-        </el-form-item>
-        <el-form-item>
-          <el-button
-            type="primary"
-            icon="el-icon-check"
-            @click="uploadClicked()"
-            >Save</el-button
-          >
-        </el-form-item>
-      </el-form>
-    </el-card>
+      Please login to create new presentation
+    </b-alert>
+    <b-card v-else class="form">
+      <b-form @submit.stop.prevent="uploadClicked">
+        <div class="form-section">
+          <div class="form-description">
+            <h5>Basic Information</h5>
+            <p class="form-section-description">
+              Having an up-to-date email address attached to your acount is a
+              great step toward improved account security.
+            </p>
+          </div>
+          <div class="form-container">
+            <b-form-group label="Name" label-for="name">
+              <b-form-input
+                id="name"
+                name="name"
+                v-model="presentationFormName"
+                :state="validateState('name')"
+                aria-describedby="name-live-feedback"
+              />
+              <b-form-invalid-feedback id="name-live-feedback"
+                >This is a required field and must be at least 3 characters.
+              </b-form-invalid-feedback>
+            </b-form-group>
+
+            <b-form-group label="Description" label-for="description">
+              <b-form-textarea
+                id="description"
+                name="description"
+                rows="3"
+                max-rows="6"
+                :state="validateState('description')"
+                v-model="presentationFormDescription"
+              />
+            </b-form-group>
+
+            <b-button type="submit" class="submit-btn" variant="primary"
+              >Submit</b-button
+            >
+          </div>
+        </div>
+      </b-form>
+    </b-card>
 
     <!-- dialogs -->
-    <el-dialog title="Confirm" :visible.sync="hasSubmitted" width="30%" center>
-      <span> Are you sure that the presentation details are correct?</span>
-      <span slot="footer" class="dialog-footer">
-        <el-button v-on:click="hasSubmitted = false">Cancel</el-button>
-        <el-button type="primary" v-on:click="addPresentation"
-          >Confirm</el-button
-        >
-      </span>
-    </el-dialog>
-    <el-dialog title="Success" :visible.sync="saveSuccess" width="30%" center>
-      <span>You have successfully added a new presentation</span>
-      <span slot="footer" class="dialog-footer">
-        <el-button type="primary" v-on:click="closeSuccess">Sure</el-button>
-      </span>
-    </el-dialog>
+    <b-modal
+      title="Confirm"
+      centered
+      :visible.sync="hasSubmitted"
+      @ok="addPresentation"
+      @hidden="hasSubmitted = false"
+      @cancel="hasSubmitted = false"
+    >
+      <span> Are you sure that the conference details are correct?</span>
+    </b-modal>
+    <b-modal
+      title="Success"
+      centered
+      :visible.sync="saveSuccess"
+      ok-only
+      @ok="closeSuccess"
+      @hidden="closeSuccess"
+    >
+      <span>You have successfully added a new conference</span>
+    </b-modal>
     <!-- end of dialogs -->
-  </el-main>
+  </div>
 </template>
 
 <script>
+import { required, minLength } from "vuelidate/lib/validators";
 import {
   AccessLevel,
   ID_NEW_PRESENTATION,
@@ -140,9 +158,21 @@ export default {
       return this.$store.state.presentation.presentationFormStatus.apiErrorMsg;
     }
   },
+  validations: {
+    presentationForm: {
+      name: {
+        required,
+        minLength: minLength(3)
+      },
+      description: {
+        alphaNum: true
+      }
+    }
+  },
   data() {
     return {
       hasSubmitted: false,
+      test: true,
       rules: {
         name: [
           {
@@ -169,11 +199,12 @@ export default {
       });
     },
     updatePresentationForm() {
-      if (this.$refs["presentationForm"]) {
-        this.$refs["presentationForm"].clearValidate();
+      if (this.$v) {
+        this.$v.$reset();
       }
       this.$store.commit("resetPresentationForm");
       if (this.id !== ID_NEW_PRESENTATION) {
+        // TODO: Review when this is used
         this.$store.dispatch("getPresentation", this.id).then(() => {
           // check writable or not
           this.$store.dispatch("fetchAccessControlList", this.id).then(() => {
@@ -203,33 +234,26 @@ export default {
       }
     },
     uploadClicked() {
-      this.$refs["presentationForm"].validate((valid, object) => {
-        if (!valid) {
-          if ("name" in object) {
-            this.$notify.error({
-              title: "Error",
-              message: object.name[0].message
-            });
-          }
-          return;
-        }
-        this.$refs["presentationForm"].clearValidate();
-        this.hasSubmitted = true;
-      });
+      this.$v.presentationForm.$touch();
+      if (this.$v.presentationForm.$anyError) {
+        return;
+      }
+
+      this.hasSubmitted = true;
     },
     closeSuccess() {
       this.$store.commit("setSaveSuccess", false);
       this.$router.push({
         name: "analyze"
       });
+    },
+    validateState(name) {
+      const { $dirty, $error } = this.$v.presentationForm[name];
+      return $dirty ? !$error : null;
     }
   },
   components: {}
 };
 </script>
 
-<style scoped>
-.errorMsg {
-  margin-bottom: 18px;
-}
-</style>
+<style lang="scss" scoped></style>

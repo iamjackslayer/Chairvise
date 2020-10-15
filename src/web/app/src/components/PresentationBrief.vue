@@ -1,139 +1,131 @@
 <template>
   <div>
-    <el-card class="details-card">
-      <div slot="header" class="clearfix">
+    <b-breadcrumb>
+      <b-breadcrumb-item to="/analyze">My Presentations</b-breadcrumb-item>
+      <b-breadcrumb-item active>Presentation Details</b-breadcrumb-item>
+    </b-breadcrumb>
+    <b-card>
+      <div slot="header" class="presentation-header">
         <span> Presentation Details </span>
-      </div>
-      <el-row>
-        <el-col :span="18">
-          <el-form
-            label-position="left"
-            ref="presentationForm"
-            label-width="150px"
-            :rules="rules"
-            :model="presentationForm"
-            v-loading="isLoading"
-          >
-            <el-alert
-              v-if="isError"
-              :title="apiErrorMsg"
-              type="error"
-              show-icon
-              class="errorMsg"
-            />
-
-            <el-form-item label="Name: " v-show="isInEditMode" :prop="'name'">
-              <div v-if="!isInEditMode">{{ presentationForm.name }}</div>
-              <el-input v-model="presentationFormName" v-if="isInEditMode" />
-            </el-form-item>
-            <el-form-item label="Name: " v-show="!isInEditMode">
-              <div v-if="!isInEditMode">{{ presentationForm.name }}</div>
-              <el-input v-model="presentationFormName" v-if="isInEditMode" />
-            </el-form-item>
-            <el-form-item label="Access Control: " v-if="!isNewPresentation">
-              <el-tag
-                >Created by {{ presentationForm.creatorIdentifier }}</el-tag
-              >
-            </el-form-item>
-            <el-form-item label="Description: ">
-              <div v-if="!isInEditMode" id="presentation-description">
-                {{ presentationForm.description }}
-              </div>
-              <el-input
-                type="textarea"
-                autosize
-                v-model="presentationFormDescription"
-                v-if="isInEditMode"
-              />
-            </el-form-item>
-            <el-form-item v-if="isInEditMode">
-              <el-button-group>
-                <el-button
-                  type="primary"
-                  icon="el-icon-check"
-                  @click="addPresentation()"
-                  v-if="isInEditMode"
-                  >Save</el-button
-                >
-                <el-button
-                  type="info"
-                  icon="el-icon-close"
-                  @click="changeEditMode(false)"
-                  v-if="isInEditMode && !isNewPresentation"
-                  >Cancel</el-button
-                >
-              </el-button-group>
-            </el-form-item>
-          </el-form>
-        </el-col>
-      </el-row>
-      <el-divider v-if="!isInEditMode"></el-divider>
-      <el-row v-if="!isInEditMode">
-        <el-col class="download-section" :span="12">
-          <el-button-group>
-            <el-button
-              type="primary"
+        <b-button-toolbar v-if="!isInEditMode">
+          <b-button-group class="mr-2">
+            <b-button
+              title="Download PDF"
+              variant="outline-secondary"
               @click="downloadPDF()"
-              v-if="!isInEditMode && !isNewPresentation"
-              icon="el-icon-document"
             >
-              PDF
-            </el-button>
-            <el-button
-              type="danger"
+              <b-icon icon="file-earmark-text-fill" aria-hidden="true" />
+            </b-button>
+            <b-button
+              title="Download Powerpoint"
+              variant="outline-secondary"
               @click="downloadPPTX()"
-              v-if="!isInEditMode && !isNewPresentation"
-              icon="el-icon-data-board"
             >
-              Powerpoint
-            </el-button>
-          </el-button-group>
-        </el-col>
-        <el-col class="options-section" :span="12">
-          <el-divider direction="vertical" class="v-divide"></el-divider>
-          <el-button-group>
-            <el-button
-              type="success"
-              class="share_button_left_margin"
-              icon="el-icon-share"
+              <b-icon icon="file-earmark-slides-fill" aria-hidden="true" />
+            </b-button>
+          </b-button-group>
+          <b-button-group>
+            <b-button
+              title="Share"
+              variant="primary"
               @click="openAccessControlPanel()"
               v-if="isLogin && isPresentationEditable"
             >
-              Share
-            </el-button>
-            <el-button
-              type="primary"
+              <b-icon icon="share-fill" aria-hidden="true"></b-icon>
+            </b-button>
+            <b-button
+              title="Edit"
+              variant="primary"
               @click="changeEditMode(true)"
-              icon="el-icon-edit"
               v-if="!isInEditMode && isPresentationEditable"
             >
-              Edit
-            </el-button>
-            <el-button
-              type="danger"
-              v-if="!isNewPresentation && isLogin && isPresentationEditable"
-              icon="el-icon-delete"
+              <b-icon icon="pencil-square" aria-hidden="true"></b-icon>
+            </b-button>
+            <b-button
+              title="Delete"
+              variant="primary"
               @click="deletePresentation()"
+              v-if="!isNewPresentation && isLogin && isPresentationEditable"
             >
-              Delete
-            </el-button>
-          </el-button-group>
-        </el-col>
-      </el-row>
-    </el-card>
+              <b-icon icon="trash-fill" aria-hidden="true"></b-icon>
+            </b-button>
+          </b-button-group>
+        </b-button-toolbar>
+      </div>
+      <b-form @submit.stop.prevent>
+        <b-overlay :show="isLoading" no-wrap />
+        <b-alert v-if="isError" show variant="danger" class="mb-4">
+          <b-icon
+            class="alert-icon"
+            icon="exclamation-circle-fill"
+            variant="danger"
+          />
+          {{ apiErrorMsg }}
+        </b-alert>
 
-    <el-dialog
-      title="Share with other users:"
+        <b-form-group label="Name" label-for="name">
+          <div v-if="!isInEditMode">{{ presentationFormName }}</div>
+          <b-form-input
+            id="name"
+            name="name"
+            v-if="isInEditMode"
+            v-model="presentationFormName"
+            :state="validateState('name')"
+            aria-describedby="name-live-feedback"
+          />
+          <b-form-invalid-feedback id="name-live-feedback"
+            >This is a required field and must be at least 3 characters.
+          </b-form-invalid-feedback>
+        </b-form-group>
+
+        <b-form-group label="Access Control" label-for="access-control">
+          <b-badge variant="info">
+            Created by {{ presentationForm.creatorIdentifier }}
+          </b-badge>
+        </b-form-group>
+
+        <b-form-group label="Description" label-for="description">
+          <div v-if="!isInEditMode">
+            {{ presentationFormDescription || "-" }}
+          </div>
+          <b-form-textarea
+            id="description"
+            name="description"
+            v-if="isInEditMode"
+            :state="validateState('description')"
+            v-model="presentationFormDescription"
+          />
+        </b-form-group>
+        <div class="mt-4" v-if="isInEditMode">
+          <b-button @click="addPresentation()" variant="primary">
+            Submit
+          </b-button>
+          <b-button
+            class="ml-2"
+            @click="changeEditMode(false)"
+            variant="secondary"
+          >
+            Cancel
+          </b-button>
+        </div>
+      </b-form>
+    </b-card>
+
+    <b-modal
+      size="xl"
+      title="Share with other users"
+      centered
       :visible.sync="isAccessControlDialogVisible"
-      width="70%"
-      :close-on-click-modal="false"
+      hide-footer
+      @hidden="isAccessControlDialogVisible = false"
     >
       <access-control-panel :presentationId="id"></access-control-panel>
-    </el-dialog>
+    </b-modal>
   </div>
 </template>
 
 <script>
+import { required, minLength } from "vuelidate/lib/validators";
 import AccessControlPanel from "@/components/AccessControlPanel";
 import { downloadPDF } from "@/store/helpers/pdfDownloader";
 import { downloadPPTX } from "@/store/helpers/pptxDownloader";
@@ -213,24 +205,21 @@ export default {
       return this.$store.state.presentation.presentationFormStatus.apiErrorMsg;
     }
   },
+  validations: {
+    presentationForm: {
+      name: {
+        required,
+        minLength: minLength(3)
+      },
+      description: {
+        alphaNum: true
+      }
+    }
+  },
   data() {
     return {
       isEditing: false,
-      isAccessControlDialogVisible: false,
-      rules: {
-        name: [
-          {
-            required: true,
-            message: "Please enter presentation name",
-            trigger: "blur"
-          },
-          {
-            min: 3,
-            message: "The length should be more than 3 character",
-            trigger: "blur"
-          }
-        ]
-      }
+      isAccessControlDialogVisible: false
     };
   },
   methods: {
@@ -246,41 +235,35 @@ export default {
     },
 
     addPresentation() {
-      this.$refs["presentationForm"].validate((valid, object) => {
-        if (!valid) {
-          if ("name" in object) {
-            this.$notify.error({
-              title: "Error",
-              message: object.name[0].message
-            });
+      this.$v.presentationForm.$touch();
+      if (this.$v.presentationForm.$anyError) {
+        return;
+      }
+
+      if (this.isNewPresentation) {
+        // add
+        this.$store.dispatch("savePresentation").then(() => {
+          if (this.isError) {
+            return;
           }
-          return;
-        }
-        this.$refs["presentationForm"].clearValidate();
-        if (this.isNewPresentation) {
-          // add
-          this.$store.dispatch("savePresentation").then(() => {
-            if (this.isError) {
-              return;
+          // redirect to the newly added presentation
+          this.$router.push({
+            name: "analyze",
+            params: {
+              id: this.$store.state.presentation.presentationForm.id
             }
-            // redirect to the newly added presentation
-            this.$router.push({
-              name: "analyze",
-              params: {
-                id: this.$store.state.presentation.presentationForm.id
-              }
-            });
           });
-        } else {
-          // edit
-          this.$store.dispatch("updatePresentation").then(() => {
-            if (this.isError) {
-              return;
-            }
-            this.isEditing = false;
-          });
-        }
-      });
+        });
+      } else {
+        // edit
+        this.$store.dispatch("updatePresentation").then(() => {
+          if (this.isError) {
+            return;
+          }
+          this.$v.$reset();
+          this.isEditing = false;
+        });
+      }
     },
     deletePresentation() {
       this.$store.dispatch("deletePresentation", this.id).then(() => {
@@ -361,6 +344,10 @@ export default {
           vm.$store.commit("setPageLoadingStatus", false);
         });
       });
+    },
+    validateState(name) {
+      const { $dirty, $error } = this.$v.presentationForm[name];
+      return $dirty ? !$error : null;
     }
   },
 
@@ -370,37 +357,10 @@ export default {
 };
 </script>
 
-<style scoped>
-.formStyle {
-  display: inline-block;
-  text-align: left;
-  margin-right: 8px;
-}
-ß .errorMsg {
-  margin-bottom: 18px;
-}
-.el-form-item__label {
-  font-weight: bold;
-}
-.el-card {
-  margin-bottom: 10px;
-}
-.details-card {
-  overflow-x: auto;
-}
-.download-section {
-  text-align: center;
-  vertical-align: middle;
-  margin-top: 1.5rem;
-}
-.options-section {
-  text-align: center;
-  vertical-align: middle;
-  margin-top: 1.5rem;
-}
-.v-divide {
-  float: left;
-  height: 6rem;
-  margin-top: -1.5rem;
+<style lang="scss" scoped>
+.presentation-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 </style>

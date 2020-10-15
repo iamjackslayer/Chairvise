@@ -1,81 +1,89 @@
 <template>
-  <el-row class="sectionDetail">
-    <div v-if="conference !== undefined && typeof conference != 'undefined'">
-      <div v-if="sectionDetail.type === WORD_CLOUD">
-        <word-cloud-section-detail
-          :sectionDetail="sectionDetail"
-          :presentationId="presentationId"
-          :conference="conference"
-        />
-      </div>
-      <div v-else-if="sectionDetail.type === BAR_CHART">
-        <bar-chart-section-detail
-          :sectionDetail="sectionDetail"
-          :presentationId="presentationId"
-          :conference="conference"
-        />
-      </div>
-      <div v-else-if="sectionDetail.type === PIE_CHART">
-        <pie-chart-section-detail
-          :sectionDetail="sectionDetail"
-          :presentationId="presentationId"
-          :conference="conference"
-        />
-      </div>
-      <div v-else-if="sectionDetail.type === LINE_CHART">
-        <line-chart-section-detail
-          :sectionDetail="sectionDetail"
-          :presentationId="presentationId"
-          :conference="conference"
-        />
-      </div>
-      <div v-else-if="sectionDetail.type === STATS">
-        <stats-section-detail
-          :sectionDetail="sectionDetail"
-          :presentationId="presentationId"
-          :conference="conference"
-        />
-      </div>
-      <div v-else-if="sectionDetail.type === SCATTER_CHART">
-        <scatter-chart-section-detail
-          :sectionDetail="sectionDetail"
-          :presentationId="presentationId"
-          :conference="conference"
-        />
-      </div>
-      <div v-else-if="sectionDetail.type === GRAPH_NETWORK">
-        <graph-network-section-detail
-          :sectionDetail="sectionDetail"
-          :presentationId="presentationId"
-          :conference="conference"
-        />
-      </div>
-      <div v-else-if="sectionDetail.type === RADAR_CHART">
-        <radar-chart-section-detail
-          :sectionDetail="sectionDetail"
-          :presentationId="presentationId"
-          :conference="conference"
-        />
-      </div>
-      <div v-else-if="sectionDetail.type === DEPENDENCY_CHART">
-        <dependency-chart-section-detail
-          :sectionDetail="sectionDetail"
-          :presentationId="presentationId"
-          :conference="conference"
-        />
-      </div>
-      <div v-else>
-        <el-alert
-          :title="`Unexpected Section Detail Type: ${sectionDetail.type}`"
-          type="error"
-        >
-        </el-alert>
-      </div>
+  <div v-if="conference !== undefined && typeof conference != 'undefined'">
+    <div v-if="sectionDetail.type === WORD_CLOUD">
+      <word-cloud-section-detail
+        :sectionDetail="sectionDetail"
+        :presentationId="presentationId"
+        :conference="conference"
+      />
+    </div>
+    <div v-else-if="sectionDetail.type === BAR_CHART">
+      <bar-chart-section-detail
+        :sectionDetail="sectionDetail"
+        :presentationId="presentationId"
+        :conference="conference"
+      />
+    </div>
+    <div v-else-if="sectionDetail.type === PIE_CHART">
+      <pie-chart-section-detail
+        :sectionDetail="sectionDetail"
+        :presentationId="presentationId"
+        :conference="conference"
+      />
+    </div>
+    <div v-else-if="sectionDetail.type === LINE_CHART">
+      <line-chart-section-detail
+        :sectionDetail="sectionDetail"
+        :presentationId="presentationId"
+        :conference="conference"
+      />
+    </div>
+    <div v-else-if="sectionDetail.type === STATS">
+      <stats-section-detail
+        :sectionDetail="sectionDetail"
+        :presentationId="presentationId"
+        :conference="conference"
+      />
+    </div>
+    <div v-else-if="sectionDetail.type === SCATTER_CHART">
+      <scatter-chart-section-detail
+        :sectionDetail="sectionDetail"
+        :presentationId="presentationId"
+        :conference="conference"
+      />
+    </div>
+    <div v-else-if="sectionDetail.type === GRAPH_NETWORK">
+      <graph-network-section-detail
+        :sectionDetail="sectionDetail"
+        :presentationId="presentationId"
+        :conference="conference"
+      />
+    </div>
+    <div v-else-if="sectionDetail.type === RADAR_CHART">
+      <radar-chart-section-detail
+        :sectionDetail="sectionDetail"
+        :presentationId="presentationId"
+        :conference="conference"
+      />
+    </div>
+    <div v-else-if="sectionDetail.type === DEPENDENCY_CHART">
+      <dependency-chart-section-detail
+        :sectionDetail="sectionDetail"
+        :presentationId="presentationId"
+        :conference="conference"
+      />
     </div>
     <div v-else>
-      <el-alert :title="`Unexpected conference`" type="error"> </el-alert>
+      <b-alert show variant="danger">
+        <b-icon
+          class="alert-icon"
+          icon="exclamation-circle-fill"
+          variant="danger"
+        />
+        Unexpected Section Detail Type: {{ sectionDetail.type }}
+      </b-alert>
     </div>
-  </el-row>
+  </div>
+  <div v-else>
+    <b-alert show variant="danger">
+      <b-icon
+        class="alert-icon"
+        icon="exclamation-circle-fill"
+        variant="danger"
+      />
+      Unexpected Conference
+    </b-alert>
+  </div>
 </template>
 
 <script>

@@ -1,18 +1,19 @@
 <template>
-  <div>
+  <div
+    class="jumbotron jumbotron-fluid"
+    style="background:linear-gradient(to bottom, #add8e6, #fafafa)"
+  >
     <zoom-center-transition :duration="500">
-      <el-row>
-        <div v-show="show">
-          <el-col :span="6">
-            <img alt="Vue logo" src="@/assets/chair2.png" />
-          </el-col>
-          <el-col :span="18">
-            <h2>
-              ChairVisE -- The Conference Data Visualisation Management System
-            </h2>
-          </el-col>
-        </div>
-      </el-row>
+      <b-row style="text-align:center">
+        <b-col>
+          <img alt="Vue logo" src="@/assets/chair2.png" />
+        </b-col>
+        <b-col>
+          <h2>
+            ChairVisE -- The Conference Data Visualisation Management System
+          </h2>
+        </b-col>
+      </b-row>
     </zoom-center-transition>
   </div>
 </template>
@@ -43,6 +44,9 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+h2 {
+  font-family: Garamond;
+}
 img {
   width: 250px;
   height: 300px;

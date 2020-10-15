@@ -1,138 +1,114 @@
 <template>
-  <el-main>
-    <el-alert
-      title="You need to login-in to view the page"
-      type="error"
-      v-if="!isLogin && !isAppLoading"
-    >
-      &nbsp;<el-button
-        type="warning"
-        plain
-        size="mini"
-        @click="navigateToHomePage"
-        >Return to the Home Page</el-button
-      >
-    </el-alert>
+  <div>
+    <div class="title-bar">
+      <h1 class="title">Import Data</h1>
+    </div>
+    <b-alert v-if="!isLogin && !isAppLoading" show variant="danger">
+      <b-icon
+        class="alert-icon"
+        icon="exclamation-circle-fill"
+        variant="danger"
+      />
+      You need to login to view this page
+    </b-alert>
 
     <div v-if="isLogin">
       <mapping-tool v-if="isReadyForMapping" ref="mapTool"></mapping-tool>
-
-      <el-card v-else>
-        <div slot="header" class="clearfix">
-          <span>Upload Data</span>
-        </div>
-
-        <div class="section">
-          <h2>Record Information</h2>
-          <el-divider></el-divider>
-
-          <div class="form-card">
-            <label class="label"> Conference Type </label>
-            <br />
-            <el-radio-group v-model="formatType" size="medium">
-              <el-radio-button :label="1">EasyChair</el-radio-button>
-              <el-radio-button :label="2">SoftConf</el-radio-button>
-            </el-radio-group>
+      <b-card v-else class="form">
+        <div class="form-section">
+          <div class="form-description">
+            <h5>Record Information</h5>
+            <p class="form-section-description">
+              Information about records and stuff. EasyChair and SoftConf
+              blablabla.
+            </p>
           </div>
+          <div class="form-container">
+            <b-form-group label="Conference Type">
+              <b-form-radio-group
+                id="conference-type"
+                name="conference-type"
+                button-variant="outline-primary"
+                v-model="formatType"
+                :options="[
+                  { text: 'EasyChair', value: '1' },
+                  { text: 'SoftConf', value: '2' }
+                ]"
+                buttons
+              ></b-form-radio-group>
+            </b-form-group>
 
-          <div class="form-card">
-            <label class="label"> Table Type </label>
-            <br />
-            <el-radio-group v-model="tableType" size="medium">
-              <el-radio-button
-                v-for="(schema, idx) in dbSchemas"
-                :label="idx"
-                :key="schema.name"
+            <b-form-group label="Table Type">
+              <b-form-radio-group
+                id="table-type"
+                name="table-type"
+                button-variant="outline-primary"
+                v-model="tableType"
+                buttons
               >
-                {{ schema.name }}
-              </el-radio-button>
-            </el-radio-group>
+                <template v-for="(schema, idx) in dbSchemas">
+                  <b-form-radio :value="idx" :key="schema.name">
+                    {{ schema.name }}
+                  </b-form-radio>
+                </template>
+              </b-form-radio-group>
+            </b-form-group>
           </div>
         </div>
 
-        <div class="section" v-if="isReadyForChoosing">
-          <h2>
-            Mapping Information
-
-            <el-tooltip placement="top">
-              <div slot="content">
-                Optional
-              </div>
-              <el-button type="text" icon="el-icon-info" circle></el-button>
-            </el-tooltip>
-          </h2>
-          <el-divider></el-divider>
-
-          <div class="form-card">
-            <el-switch
-              v-model="hasHeader"
-              active-text="Has Header"
-              inactive-text="No Header"
-            >
-            </el-switch>
+        <div class="form-section" v-if="isReadyForChoosing">
+          <div class="form-description">
+            <h5>Mapping Information</h5>
+            <p class="form-section-description">
+              Mapping information and stuff. wth does has header mean? explain
+              what it means. Also what is predefined mapping come on. This is
+              also optional btw.
+            </p>
           </div>
-
-          <div class="form-card">
-            <el-switch
-              v-model="hasPredefined"
-              active-text="Predefined Mapping"
-              inactive-text="No Predefined Mapping"
-            >
-            </el-switch>
+          <div class="form-container">
+            <b-form-group label="Has Header">
+              <b-form-checkbox v-model="hasHeader" switch size="lg" />
+            </b-form-group>
+            <b-form-group label="Predefined Mapping">
+              <b-form-checkbox v-model="hasPredefined" switch size="lg" />
+            </b-form-group>
           </div>
         </div>
 
-        <div class="section" v-if="isReadyForChoosing">
-          <h2>
-            Conference Information
+        <div class="form-section" v-if="isReadyForChoosing">
+          <div class="form-description">
+            <h5>Conference Information</h5>
+            <p class="form-section-description">
+              If the input conference is an existing conference, current record
+              will be replaced based on record type. If the input conference is
+              a new conference, current record will be created based on record
+              type.
+            </p>
+          </div>
+          <div class="form-container">
+            <b-form-group label="Conference">
+              <!-- TODO: Add check for when user has no "version" and add link to create new conference -->
+              <b-form-select v-model="conferenceName" :options="querySearch()"
+                ><template v-slot:first>
+                  <b-form-select-option :value="null" disabled
+                    >Please select an option</b-form-select-option
+                  >
+                </template></b-form-select
+              >
+            </b-form-group>
 
-            <el-tooltip placement="top">
-              <div slot="content">
-                If the input conference is an existing conference, current record will
-                be replaced based on record type.
-                <br />
-                If the input conference is a new conference, current record will be
-                created based on record type.
-              </div>
-              <el-button type="text" icon="el-icon-question" circle></el-button>
-            </el-tooltip>
-          </h2>
-          <el-divider></el-divider>
-
-          <el-row class="form-card">
-            <el-col>
-              <label class="label">
-                Conference
-              </label>
-              <br />
-              <el-autocomplete
-                class="inline-input"
-                v-model="conferenceName"
-                :fetch-suggestions="querySearch"
-                placeholder="Input Conference"
-              ></el-autocomplete>
-            </el-col>
-          </el-row>
-          <div class="form-card">
-            <el-upload
-              v-if="isReadyForUpload"
-              drag
-              action=""
-              :auto-upload="false"
-              :show-file-list="false"
-              :multiple="false"
-              :on-change="fileUploadHandler"
-            >
-              <i class="el-icon-upload"></i>
-              <div class="el-upload__text">
-                Drop .csv file here or <em>click to upload</em>
-              </div>
-            </el-upload>
+            <b-form-group label="Upload" v-if="isReadyForUpload">
+              <b-form-file
+                v-model="file"
+                placeholder="Choose a file or drop it here..."
+                drop-placeholder="Drop file here..."
+              ></b-form-file>
+            </b-form-group>
           </div>
         </div>
-      </el-card>
+      </b-card>
     </div>
-  </el-main>
+  </div>
 </template>
 
 <script>
@@ -151,8 +127,14 @@ export default {
   name: "ImportData",
   data() {
     return {
-      predefinedMappings: PredefinedMappings
+      predefinedMappings: PredefinedMappings,
+      file: null
     };
+  },
+  watch: {
+    file(val) {
+      this.fileUploadHandler(val);
+    }
   },
   beforeCreate() {
     this.$store.dispatch("fetchDBMetaDataEntities");
@@ -226,6 +208,7 @@ export default {
       }
     },
     predefinedMappingId: {
+      // TODO: Review this. This is never used.
       get: function() {
         return this.$store.state.dataMapping.data.predefinedMappingId;
       },
@@ -241,8 +224,8 @@ export default {
         this.$store.state.dataMapping.hasFileUploaded &&
         this.$store.state.dataMapping.hasFormatTypeSpecified &&
         this.$store.state.dataMapping.hasTableTypeSelected &&
-        this.$store.state.dataMapping.hasHeaderSpecified &&
-        this.$store.state.dataMapping.hasPredefinedSpecified &&
+        // this.$store.state.dataMapping.hasHeaderSpecified &&
+        // this.$store.state.dataMapping.hasPredefinedSpecified &&
         this.$store.state.dataMapping.hasConferenceNameSpecified
       );
     },
@@ -253,8 +236,8 @@ export default {
       return (
         this.$store.state.dataMapping.hasFormatTypeSpecified &&
         this.$store.state.dataMapping.hasTableTypeSelected &&
-        this.$store.state.dataMapping.hasHeaderSpecified &&
-        this.$store.state.dataMapping.hasPredefinedSwitchSpecified &&
+        // this.$store.state.dataMapping.hasHeaderSpecified &&
+        // this.$store.state.dataMapping.hasPredefinedSwitchSpecified &&
         this.$store.state.dataMapping.hasConferenceNameSpecified
       );
     },
@@ -263,7 +246,8 @@ export default {
     }
   },
   methods: {
-    querySearch(queryString, cb) {
+    querySearch(queryString) {
+      // TODO: Fix this for new database changes
       // convert to array of string
       var links = this.$store.state.presentation.conferenceList.map(
         v => v.name
@@ -272,13 +256,15 @@ export default {
       let reduceFunction = links =>
         links.filter((v, i) => links.indexOf(v) === i);
       links = reduceFunction(links);
-      links = links.map(v => {
-        return { value: v };
-      });
+      // links = links.map(v => {
+      //   return { value: v };
+      // });
       var results = queryString
         ? links.filter(this.createFilter(queryString))
         : links;
-      cb(results);
+
+      return results;
+      // cb(results);
     },
     createFilter(queryString) {
       return link => {
@@ -360,7 +346,7 @@ export default {
         });
       }
 
-      Papa.parse(file.raw, {
+      Papa.parse(file, {
         // ignoring empty lines in csv file
         skipEmptyLines: true,
         complete: function(result) {
@@ -646,53 +632,4 @@ export default {
 };
 </script>
 
-<style scoped>
-.upload-box {
-  /*padding-top: 100px; */
-}
-
-.upload-box .el-select {
-  margin-top: 20px;
-}
-
-.button-row {
-  margin-top: 30px;
-}
-
-.text {
-  font-size: 14px;
-}
-
-.item {
-  margin-bottom: 18px;
-}
-
-.clearfix:before,
-.clearfix:after {
-  display: table;
-  content: "";
-}
-
-.clearfix:after {
-  clear: both;
-}
-
-.box-card {
-  width: 480px;
-  position: relative;
-  left: 50%;
-  margin-left: -240px;
-}
-
-.autocomplete-verid {
-  position: relative;
-}
-
-.form-card {
-  margin: 16px 0px;
-}
-
-.section {
-  padding: 0px 16px 16px 16px;
-}
-</style>
+<style scoped></style>

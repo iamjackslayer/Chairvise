@@ -1,75 +1,71 @@
 <template>
-  <div>
-    <el-card class="details-card">
-      <div slot="header" class="clearfix">
-        <span> Conference Details </span>
+  <div class="page-container">
+    <b-breadcrumb>
+      <b-breadcrumb-item to="/conference">My Conferences</b-breadcrumb-item>
+      <b-breadcrumb-item active>Conference Details</b-breadcrumb-item>
+    </b-breadcrumb>
+    <b-card class="details-with-form">
+      <div slot="header">
+        <span>Conference Details</span>
       </div>
-      <el-row>
-        <el-col :span="18">
-          <el-form
-            class="formStyle"
-            label-position="left"
-            ref="conferenceForm"
-            label-width="150px"
-            :rules="rules"
-            :model="conferenceForm"
-            v-loading="isLoading"
-          >
-            <el-alert
-              v-if="isError"
-              :title="apiErrorMsg"
-              type="error"
-              show-icon
-              class="errorMsg"
-            />
+      <b-form @submit.stop.prevent>
+        <b-overlay :show="isLoading" no-wrap />
+        <b-alert v-if="isError" show variant="danger" class="mb-4">
+          <b-icon
+            class="alert-icon"
+            icon="exclamation-circle-fill"
+            variant="danger"
+          />
+          {{ apiErrorMsg }}
+        </b-alert>
+        <b-form-group label="Name" label-for="name">
+          <div v-if="!isInEditMode">{{ conferenceFormName }}</div>
+          <b-form-input
+            id="name"
+            name="name"
+            v-if="isInEditMode"
+            v-model="conferenceFormName"
+          />
+        </b-form-group>
 
-            <el-form-item label="Name: " :prop="isInEditMode ? 'name' : ''">
-              <div v-if="!isInEditMode">{{ conferenceForm.name }}</div>
-              <el-input v-model="conferenceFormName" v-if="isInEditMode" />
-            </el-form-item>
-            <el-form-item label="Description: ">
-              <div v-if="!isInEditMode" id="conference-description">
-                {{ conferenceForm.description }}
-              </div>
-              <el-input
-                type="textarea"
-                autosize
-                v-model="conferenceFormDescription"
-                v-if="isInEditMode"
-              />
-            </el-form-item>
-            <el-form-item label="Date: ">
-              <el-col>
-                <div v-if="!isInEditMode" id="conference-date">
-                  {{
-                    conferenceForm.date.slice(0, 10) +
-                      "  " +
-                      conferenceForm.date.slice(11, 19)
-                  }}
-                </div>
-                <el-input v-model="conferenceFormDate" v-if="isInEditMode" />
-              </el-col>
-            </el-form-item>
-          </el-form>
-        </el-col>
-      </el-row>
-      <el-divider></el-divider>
-      <div class="options-section">
-        <el-button-group>
-          <el-button
-            type="danger"
-            v-if="!isNewConference && isLogin"
-            @click="deleteConference()"
-          >
-            <i class="el-icon-delete"> Delete </i>
-          </el-button>
-        </el-button-group>
-      </div>
-    </el-card>
+        <b-form-group label="Description" label-for="description">
+          <div v-if="!isInEditMode">
+            {{ conferenceFormDescription || "-" }}
+          </div>
+          <b-form-textarea
+            id="description"
+            name="description"
+            v-if="isInEditMode"
+            v-model="conferenceFormDescription"
+          />
+        </b-form-group>
+
+        <b-form-group label="Date" label-for="date">
+          <div v-if="!isInEditMode" id="conference-date">
+            {{ dayjs(conferenceFormDate) }}
+          </div>
+          <b-form-datepicker
+            id="date"
+            name="date"
+            v-if="isInEditMode"
+            v-model="conferenceFormDate"
+          />
+        </b-form-group>
+      </b-form>
+      <b-button
+        variant="outline-danger"
+        v-if="!isNewConference && isLogin"
+        @click="deleteConference()"
+      >
+        <b-icon icon="trash-fill" aria-hidden="true"></b-icon>
+        Delete Conference
+      </b-button>
+    </b-card>
   </div>
 </template>
 
 <script>
+import dayjs from "dayjs";
 import { ID_NEW_CONFERENCE } from "@/common/const";
 
 export default {
@@ -89,18 +85,19 @@ export default {
     isLogin() {
       return this.$store.state.userInfo.isLogin;
     },
-    conferenceForm() {
-      var tzoffset = new Date().getTimezoneOffset() * 60000; //offset in milliseconds
-      var date = new Date(new Date(this.conferenceFormDate) - tzoffset)
-        .toISOString()
-        .slice(0, -1);
-      return {
-        name: this.conferenceFormName,
-        creatorIdentifier: this.conferenceFormCreatorIdentifier,
-        description: this.conferenceFormDescription,
-        date: date
-      };
-    },
+    // conferenceForm() {
+    //   // TODO: Review the date time formatting
+    //   // var tzoffset = new Date().getTimezoneOffset() * 60000; //offset in milliseconds
+    //   // var date = new Date(new Date(this.conferenceFormDate) - tzoffset)
+    //   //   .toISOString()
+    //   //   .slice(0, -1);
+    //   return {
+    //     name: this.conferenceFormName,
+    //     creatorIdentifier: this.conferenceFormCreatorIdentifier,
+    //     description: this.conferenceFormDescription,
+    //     date: date
+    //   };
+    // },
     conferenceFormName: {
       get() {
         return this.$store.state.conference.conferenceForm.name;
@@ -173,19 +170,24 @@ export default {
     };
   },
   methods: {
+    dayjs(date) {
+      return dayjs(date).format("dddd, MMMM D, YYYY");
+    },
     changeEditMode(isEditing) {
       if (isEditing === false) {
         this.updateConferenceForm();
       }
       this.isEditing = isEditing;
     },
-
+    // TODO: Remove this. This is unused
     addConference() {
       this.$refs["conferenceForm"].validate(valid => {
         if (!valid) {
           return;
         }
         this.$refs["conferenceForm"].clearValidate();
+        // Note: Seems like this page wants to be merged with NewConference or something
+        // Get rid of this.
         if (this.isNewConference) {
           // add
           this.$store.dispatch("saveConference").then(() => {
@@ -201,7 +203,7 @@ export default {
             });
           });
         } else {
-          // edit
+          // TODO Repurpose this for for updateConferenceForm?
           this.$store.dispatch("updateConference").then(() => {
             if (this.isError) {
               return;
@@ -226,8 +228,8 @@ export default {
       });
     },
     updateConferenceForm() {
-      if (this.$refs["conferenceForm"]) {
-        this.$refs["conferenceForm"].clearValidate();
+      if (this.$v) {
+        this.$v.$reset();
       }
       this.$store.commit("resetConferenceForm");
       if (this.id !== ID_NEW_CONFERENCE) {
@@ -240,35 +242,4 @@ export default {
 };
 </script>
 
-<style scoped>
-.formStyle {
-  display: inline-block;
-  text-align: left;
-  margin-right: 8px;
-}
-ß .errorMsg {
-  margin-bottom: 18px;
-}
-.el-form-item__label {
-  font-weight: bold;
-}
-.el-card {
-  margin-bottom: 10px;
-}
-.details-card {
-  overflow-x: auto;
-}
-.download-section {
-  text-align: center;
-  vertical-align: middle;
-}
-.options-section {
-  text-align: center;
-  vertical-align: middle;
-  margin-top: 2rem;
-}
-.v-divide {
-  float: left;
-  height: 6rem;
-}
-</style>
+<style scoped></style>
