@@ -115,6 +115,11 @@ public class GateKeeper {
             return;
         }
 
+        // allow access if presentation is public
+        if(presentation.getIsPublic()) {
+            return;
+        }
+
         throw new UnauthorisedException();
     }
 
