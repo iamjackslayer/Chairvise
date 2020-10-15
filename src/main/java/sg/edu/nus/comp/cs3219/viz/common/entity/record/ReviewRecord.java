@@ -16,10 +16,10 @@ import java.util.Date;
 public class ReviewRecord {
     public ReviewRecord(){}
 
-    public ReviewRecord(Version v, String submissionId, String reviewId, int numReviewAssignment, String reviewerName, double expertiseLevel,
+    public ReviewRecord(Conference c, String submissionId, String reviewId, int numReviewAssignment, String reviewerName, double expertiseLevel,
                         double confidenceLevel, String reviewComment, double overallEvaluationScore, Date reviewSubmissionTime, String hasRecommendedForBestPaper){
         this.id = null;
-        this.version = v;
+        this.conference = c;
         this.submissionId = submissionId;
         this.reviewId = reviewId;
         this.numReviewAssignment = numReviewAssignment;
@@ -52,8 +52,8 @@ public class ReviewRecord {
     }
     */
 
-    public Version getVersion(){return version;}
-    public void setVersion(Version version){this.version = version;}
+    public Conference getConference(){return conference;}
+    public void setConference(Conference conference){this.conference = conference;}
 
     @Exportable(name = "Submission Id", nameInDB = "r_submission_id")
     @Column(name = "r_submission_id")
@@ -99,13 +99,13 @@ public class ReviewRecord {
     @Column(name = "r_has_recommended_for_best_paper")
     private String hasRecommendedForBestPaper;
 
+    //TODO: Change version to conference
     @ManyToOne
     @JoinColumns({
-            @JoinColumn(name = "data_set", referencedColumnName = "data_set"),
-            @JoinColumn(name = "record_type", referencedColumnName = "record_type"),
-            @JoinColumn(name = "version", referencedColumnName = "version"),
+        @JoinColumn(name = "data_set", referencedColumnName = "creator_identifier"),
+        @JoinColumn(name = "version", referencedColumnName = "name"),
     })
-    private Version version;
+    private Conference conference;
 
     public Long getId() {
         return id;

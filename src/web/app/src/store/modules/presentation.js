@@ -3,8 +3,16 @@ import { deepCopy } from "@/common/utility";
 
 export default {
   state: {
+    publicPresentationList: [],
     presentationList: [],
-    versionList: [],
+    conferenceList: [],
+
+    publicPresentationListStatus: {
+      isLoading: true,
+      isApiError: false,
+      apiErrorMsg: ""
+    },
+
     presentationListStatus: {
       isLoading: true,
       isApiError: false,
@@ -13,9 +21,10 @@ export default {
     presentationForm: {
       id: "",
       name: "",
-      version: "",
+      conference: "",
       description: "",
-      creatorIdentifier: ""
+      creatorIdentifier: "",
+      isPublic: false
     },
 
     presentationFormStatus: {
@@ -27,6 +36,22 @@ export default {
     isPresentationEditable: false
   },
   mutations: {
+    setPublicPresentationListLoading(state, payload) {
+      if (payload) {
+        state.publicPresentationListStatus.isApiError = false;
+      }
+      state.publicPresentationListStatus.isLoading = payload;
+    },
+
+    setPublicPresentationListApiError(state, payload) {
+      state.publicPresentationListStatus.isApiError = true;
+      state.publicPresentationListStatus.apiErrorMsg = payload;
+    },
+
+    setPublicPresentationList(state, payload) {
+      state.publicPresentationList = payload;
+    },
+
     setPresentationListLoading(state, payload) {
       if (payload) {
         state.presentationListStatus.isApiError = false;
@@ -43,8 +68,8 @@ export default {
       state.presentationList = payload;
     },
 
-    setVersionList(state, payload) {
-      state.versionList = payload;
+    setConferenceList(state, payload) {
+      state.conferenceList = payload;
     },
 
     addToPresentationList(state, payload) {
@@ -83,12 +108,13 @@ export default {
     resetPresentationForm(state) {
       state.presentationForm.id = "";
       state.presentationForm.name = "";
-      state.presentationForm.version = "";
+      state.presentationForm.conference = "";
       state.presentationForm.description = "";
       state.presentationForm.creatorIdentifier = "";
       state.presentationFormStatus.isLoading = false;
       state.presentationFormStatus.isApiError = false;
       state.presentationFormStatus.apiErrorMsg = "";
+      state.presentationForm.isPublic = false;
     },
 
     setPresentationFormField(state, { field, value }) {
@@ -103,6 +129,21 @@ export default {
     }
   },
   actions: {
+    async getPublicPresentationList({ commit }) {
+      commit("setPublicPresentationListLoading", true);
+      axios
+        .get("/api/presentations/public")
+        .then(response => {
+          commit("setPublicPresentationList", response.data);
+        })
+        .catch(e => {
+          commit("setPublicPresentationListApiError", e.toString());
+        })
+        .finally(() => {
+          commit("setPublicPresentationListLoading", false);
+        });
+    },
+
     async getPresentationList({ commit }) {
       commit("setPresentationListLoading", true);
       axios
@@ -118,12 +159,12 @@ export default {
         });
     },
 
-    async getVersionList({ commit }) {
+    async getConferenceList({ commit }) {
       commit("setPresentationListLoading", true);
       axios
-        .get("/api/version")
+        .get("/api/conferences")
         .then(response => {
-          commit("setVersionList", response.data);
+          commit("setConferenceList", response.data);
         })
         .catch(e => {
           commit("setPresentationListApiError", e.toString());

@@ -19,11 +19,11 @@ import java.util.List;
 public class SubmissionRecord {
     public SubmissionRecord(){}
 
-    public SubmissionRecord(Version v, String submissionId, String trackId, String trackName, String title, List<String> authors,
+    public SubmissionRecord(Conference c, String submissionId, String trackId, String trackName, String title, List<String> authors,
                             Date submissionTime, Date lastUpdatedTime, String keywords, String isAccepted,
                             String isNotified, String isReviewsSent, String submissionAbstract) {
         this.id = null;
-        this.version = v;
+        this.conference = c;
         this.submissionId = submissionId;
         this.trackId = trackId;
         this.trackName = trackName;
@@ -57,8 +57,8 @@ public class SubmissionRecord {
     }
 */
 
-    public Version getVersion(){return version;}
-    public void setVersion(Version version){this.version = version;}
+    public Conference getConference(){return conference;}
+    public void setConference(Conference conference){this.conference = conference;}
 
     @Exportable(name = "Submission Id", nameInDB = "s_submission_id")
     @Column(name = "s_submission_id")
@@ -141,13 +141,13 @@ public class SubmissionRecord {
     @Column(name = "s_submission_abstract", columnDefinition = "TEXT")
     private String submissionAbstract;
 
+    //TODO: Change version to conference
     @ManyToOne
     @JoinColumns({
-            @JoinColumn(name = "data_set", referencedColumnName = "data_set"),
-            @JoinColumn(name = "record_type", referencedColumnName = "record_type"),
-            @JoinColumn(name = "version", referencedColumnName = "version"),
+        @JoinColumn(name = "data_set", referencedColumnName = "creator_identifier"),
+        @JoinColumn(name = "version", referencedColumnName = "name"),
     })
-    private Version version;
+    private Conference conference;
 
     public Long getId() {
         return id;
@@ -156,8 +156,6 @@ public class SubmissionRecord {
     public void setId(Long id) {
         this.id = id;
     }
-
-
 
     public String getSubmissionId() {
         return submissionId;

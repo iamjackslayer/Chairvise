@@ -69,7 +69,7 @@ public class AnalysisLogic {
 
         String tablesStr = analysisRequest.getInvolvedRecords().stream()
                 // band-aid fix. Total fix is too length
-                .map(x -> addVersionToNestedQuery(x, analysisRequest.getVersionId()))
+                .map(x -> addVersionToNestedQuery(x, analysisRequest.getConferenceName()))
                 .collect(Collectors.joining(","));
 
         String joinersStr = analysisRequest.getJoiners().stream()
@@ -84,7 +84,7 @@ public class AnalysisLogic {
                 .filter(r -> !r.isCustomized())
                 .map(t -> String.format("%s.data_set = '%s' AND %s.version = '%s'",
                         t.getName(), analysisRequest.getDataSet(),
-                        t.getName(), analysisRequest.getVersionId()))
+                        t.getName(), analysisRequest.getConferenceName()))
                 .collect(Collectors.joining(" AND "));
 
         String groupersStr = analysisRequest.getGroupers().stream()

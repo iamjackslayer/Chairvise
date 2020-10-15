@@ -8,4 +8,5 @@ import java.util.List;
 public interface PresentationRepository extends JpaRepository<Presentation, Long> {
 
     List<Presentation> findByCreatorIdentifier(String creatorIdentifier);
+    List<Presentation> findByIsPublic(boolean p);
 }

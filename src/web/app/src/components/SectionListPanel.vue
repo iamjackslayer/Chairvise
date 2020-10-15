@@ -5,12 +5,12 @@
         <div v-if="isLogin">
           <b-card v-if="!isSectionListEmpty" class="mt-4">
             <div slot="header">
-              <span> Select Version </span>
+              <span> Select Conference </span>
             </div>
             <!-- TODO: Add link the create conference if no conferences -->
             <b-form-select
-              v-model="presentationFormVersion"
-              :options="versions"
+              v-model="presentationFormConference"
+              :options="conferences"
             >
               <template v-slot:first>
                 <b-form-select-option :value="null" disabled>
@@ -60,7 +60,7 @@
             :sectionDetail="section"
             :key="section.id"
             :presentationId="presentationId"
-            :version="presentationFormVersion"
+            :conference="presentationFormConference"
           />
           <EmptySection v-if="isSectionListEmpty" />
         </b-card>
@@ -81,14 +81,14 @@ export default {
   },
   watch: {
     presentationId: "fetchSectionList",
-    presentationFormVersion() {
-      this.updateVersion();
+    presentationFormConference() {
+      this.updateConference();
     }
   },
   data() {
     return {
       selectedNewSection: null,
-      presentationFormVersion: null
+      presentationFormConference: null
     };
   },
   computed: {
@@ -153,13 +153,11 @@ export default {
     isLoadingDBMetaData() {
       return this.$store.state.dbMetaData.entitiesStatus.isLoading;
     },
-    versions() {
+    conferences() {
       let list = Array.from(
-        new Set(
-          this.$store.state.presentation.versionList.map(v => v.versionId)
-        )
+        new Set(this.$store.state.presentation.conferenceList.map(v => v.name))
       );
-      this.setDefaultValueForVersionList(list[0]);
+      this.setDefaultValueForConferenceList(list[0]);
       return list;
     }
   },
@@ -170,22 +168,22 @@ export default {
   mounted() {
     this.fetchSectionList();
     this.$store.dispatch("fetchDBMetaDataEntities");
-    this.$store.dispatch("getVersionList");
+    this.$store.dispatch("getConferenceList");
   },
   methods: {
-    updateVersion() {
-      var value = this.presentationFormVersion;
+    updateConference() {
+      var value = this.presentationFormConference;
       if (value === undefined) {
-        value = this.versions[0];
+        value = this.conferences[0];
       }
       this.$store.commit("setPresentationFormField", {
-        field: "version",
+        field: "conference",
         value
       });
     },
 
-    setDefaultValueForVersionList(value) {
-      this.presentationFormVersion = value;
+    setDefaultValueForConferenceList(value) {
+      this.presentationFormConference = value;
     },
 
     fetchSectionList() {
