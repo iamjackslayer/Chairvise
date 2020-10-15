@@ -211,7 +211,9 @@ export default {
         .dispatch("addSectionDetail", {
           presentationId: this.presentationId,
           selectedNewSection: this.selectedNewSection,
-          dataSet: this.$store.state.userInfo.userEmail
+          // (JIAN YU) This change is done to ensure modification by other user is still using
+          // presentation creator's data.
+          dataSet: this.$store.state.presentation.presentationForm.creatorIdentifier
         })
         .then(() => {
           this.selectedNewSection = "";
