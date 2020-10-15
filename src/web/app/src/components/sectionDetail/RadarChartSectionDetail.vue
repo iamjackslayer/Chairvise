@@ -57,6 +57,7 @@
         ></b-form-input>
       </b-form-group>
 
+      <!-- TODO: Review. This is bugged, tooltip doesn't reflect in chart -->
       <div v-if="slotProps.isInAdvancedMode">
         <b-form-group
           v-for="(tooltip, index) in slotProps.extraData.fieldsShownInToolTips"
