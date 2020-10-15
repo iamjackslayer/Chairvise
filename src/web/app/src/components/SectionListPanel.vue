@@ -160,9 +160,7 @@ export default {
     },
     conferences() {
       let list = Array.from(
-        new Set(
-          this.$store.state.presentation.conferenceList.map(v => v.name)
-        )
+        new Set(this.$store.state.presentation.conferenceList.map(v => v.name))
       );
       this.setDefaultValueForConferenceList(list[0]);
       return list;

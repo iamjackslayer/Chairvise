@@ -111,10 +111,10 @@ export default {
       state.presentationForm.conference = "";
       state.presentationForm.description = "";
       state.presentationForm.creatorIdentifier = "";
+      state.presentationForm.isPublic = false;
       state.presentationFormStatus.isLoading = false;
       state.presentationFormStatus.isApiError = false;
       state.presentationFormStatus.apiErrorMsg = "";
-      state.presentationForm.isPublic = false;
     },
 
     setPresentationFormField(state, { field, value }) {

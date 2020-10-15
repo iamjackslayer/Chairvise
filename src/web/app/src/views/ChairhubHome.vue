@@ -1,20 +1,32 @@
 <template>
   <div>
-    <PublicPostList />
+    <EmptyPublicPostList v-if="isPublicPostListEmpty" />
+    <PublicPostList v-if="!fetchingPublicPostList" />
   </div>
 </template>
 
 <script>
 import PublicPostList from "@/components/chairhub/PublicPostList.vue";
+import EmptyPublicPostList from "@/components/chairhub/EmptyPublicPostList.vue";
+
 export default {
   name: "ChairhubHome",
   data() {
     return {};
   },
   watch: {},
-  computed: {},
+  computed: {
+    fetchingPublicPostList() {
+      return this.$store.state.presentation.publicPresentationListStatus
+        .isLoading;
+    },
+    isPublicPostListEmpty() {
+      return this.$store.state.presentation.publicPresentationList.length === 0;
+    }
+  },
   components: {
-    PublicPostList
+    PublicPostList,
+    EmptyPublicPostList
   },
   methods: {},
   mounted() {
