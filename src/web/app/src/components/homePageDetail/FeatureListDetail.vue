@@ -6,7 +6,7 @@
         <b-row type="flex" :gutter="16" align="middle" justify="center">
           <zoom-x-transition :duration="500" :delay="600">
             <b-col :sm="24" :md="8" :lg="8" :xl="8" v-show="show">
-              <b-card shadow="hover" class="feature-card">
+              <b-card class="bcard">
                 <img src="@/assets/upload.png" />
                 <p>Upload all your conference data</p>
               </b-card>
@@ -14,7 +14,7 @@
           </zoom-x-transition>
           <zoom-x-transition :duration="500" :delay="600">
             <b-col :sm="24" :md="8" :lg="8" :xl="8" v-show="show">
-              <b-card shadow="hover" class="feature-card">
+              <b-card class="bcard">
                 <img src="@/assets/collaboration.png" />
                 <p>Create and share presentation with others</p>
               </b-card>
@@ -22,7 +22,7 @@
           </zoom-x-transition>
           <zoom-x-transition :duration="500" :delay="600">
             <b-col :sm="24" :md="8" :lg="8" :xl="8" v-show="show">
-              <b-card shadow="hover" class="feature-card">
+              <b-card class="bcard">
                 <img src="@/assets/presentation.png" />
                 <p>Generate various visualisation</p>
               </b-card>
