@@ -1,7 +1,7 @@
 <template>
   <b-overlay :show="sectionDetail.status.isLoading">
     <b-form>
-      <div class="title" v-if="!isEditing">
+      <div class="title mb-2" v-if="!isEditing">
         <span class="title-text">{{ sectionDetail.title }}</span>
         <div class="ml-auto">
           <b-button
