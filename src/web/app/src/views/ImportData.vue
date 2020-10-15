@@ -77,7 +77,7 @@
 
         <div class="form-section" v-if="isReadyForChoosing">
           <div class="form-description">
-            <h5>Version Information</h5>
+            <h5>Conference Information</h5>
             <p class="form-section-description">
               If the input conference is an existing conference, current record
               will be replaced based on record type. If the input conference is
@@ -88,7 +88,7 @@
           <div class="form-container">
             <b-form-group label="Conference">
               <!-- TODO: Add check for when user has no "version" and add link to create new conference -->
-              <b-form-select v-model="conferenceName" :options="querySearch"
+              <b-form-select v-model="conferenceName" :options="querySearch()"
                 ><template v-slot:first>
                   <b-form-select-option :value="null" disabled
                     >Please select an option</b-form-select-option

@@ -5,7 +5,6 @@
 
       <div class="col-12 col-md-9 col-xl-10 py-md-3 px-md-5 bd-content content">
         <b-overlay :show="isAppLoading" no-wrap />
-        <el-header style="padding: 0;"> </el-header>
         <div class="page-container">
           <router-view />
         </div>
