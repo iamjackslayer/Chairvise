@@ -1,87 +1,71 @@
 <template>
   <div>
-    <div
-      v-loading="isLoadingDBMetaData || isLoadingSectionList"
-      v-if="!isNewPresentation"
-    >
-      <aside class="addRowRightAlign" v-if="isLogin">
-        <br />
-        <b-card v-if="!isSectionListEmpty">
-          <div slot="header" class="clearfix">
-            <span> Select version </span>
-          </div>
-          <b-form-select
-            class="versionInput"
-            v-model="presentationFormVersion"
-            placeholder="Please select a version"
-          >
-            <b-form-select-option
-              v-for="v in versions"
-              :key="v"
-              :label="v"
-              :value="v"
+    <b-overlay :show="isLoadingDBMetaData || isLoadingSectionList">
+      <div v-if="!isNewPresentation">
+        <div v-if="isLogin">
+          <b-card v-if="!isSectionListEmpty" class="mt-4">
+            <div slot="header">
+              <span> Select Version </span>
+            </div>
+            <!-- TODO: Add link the create conference if no conferences -->
+            <b-form-select
+              v-model="presentationFormVersion"
+              :options="versions"
             >
-            </b-form-select-option>
-          </b-form-select>
-        </b-card>
-        <b-card>
-          <div slot="header" class="clearfix">
-            <span> Add section </span>
-          </div>
-          <b-form-select
-            class="selectionInput"
-            v-model="selectedNewSection"
-            placeholder="Please select a section to add"
-            filterable
-          >
-            <b-form-select-option-group
-              v-for="group in predefinedSections"
-              :key="group.label"
-              :label="group.label"
-            >
-              <b-form-select-option
-                v-for="item in group.options"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
-              >
+              <template v-slot:first>
+                <b-form-select-option :value="null" disabled>
+                  Please select an option
+                </b-form-select-option>
+              </template>
+            </b-form-select>
+          </b-card>
+          <b-card class="mt-4">
+            <div slot="header">
+              <span> Add Section </span>
+            </div>
+            <b-form-select v-model="selectedNewSection">
+              <b-form-select-option :value="null" disabled>
+                Please select an option
               </b-form-select-option>
-            </b-form-select-option-group>
-          </b-form-select>
-          <b-button
-            class="selectionInputButton"
-            icon="el-icon-plus"
-            type="success"
-            @click="addNewSection"
-            >Add New Section</b-button
-          >
+              <b-form-select-option-group
+                v-for="group in predefinedSections"
+                :key="group.label"
+                :label="group.label"
+              >
+                <b-form-select-option
+                  v-for="item in group.options"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value"
+                />
+              </b-form-select-option-group>
+            </b-form-select>
+            <b-button class="mt-2" variant="primary" @click="addNewSection">
+              <b-icon icon="plus" />Add New Section
+            </b-button>
+          </b-card>
+        </div>
+        <b-alert v-if="isSectionListApiError" show variant="danger">
+          <b-icon
+            class="alert-icon"
+            icon="exclamation-circle-fill"
+            variant="danger"
+          />
+          {{ sectionListApiErrorMsg }}
+        </b-alert>
+        <b-card class="mt-4">
+          <abstract-section-detail
+            class="presentation-section"
+            v-for="section in sectionList"
+            :sectionDetail="section"
+            :key="section.id"
+            :presentationId="presentationId"
+            :version="presentationFormVersion"
+          />
+          <EmptySection v-if="isSectionListEmpty" />
         </b-card>
-      </aside>
-      <br />
-      <b-alert
-        v-if="isSectionListApiError"
-        :title="sectionListApiErrorMsg"
-        variant="danger"
-      >
-        <b-icon
-          class="alert-icon"
-          icon="exclamation-circle-fill"
-          variant="danger"
-        />
-        {{ sectionListApiErrorMsg }}
-      </b-alert>
-      <b-card shadow="hover">
-        <abstract-section-detail
-          class="presentation-section"
-          v-for="section in sectionList"
-          :sectionDetail="section"
-          :key="section.id"
-          :presentationId="presentationId"
-          :version="presentationFormVersion"
-        />
-        <EmptySection v-if="isSectionListEmpty" />
-      </b-card>
-    </div>
+      </div>
+    </b-overlay>
   </div>
 </template>
 
@@ -103,8 +87,8 @@ export default {
   },
   data() {
     return {
-      selectedNewSection: "",
-      presentationFormVersion: ""
+      selectedNewSection: null,
+      presentationFormVersion: null
     };
   },
   computed: {
@@ -214,10 +198,15 @@ export default {
 
     addNewSection() {
       if (this.selectedNewSection.length === 0) {
-        this.$notify.error({
-          title: "Error",
-          message: "Please select a section to add into presentation."
-        });
+        this.$bvToast.toast(
+          "Please select a section to add into presentation.",
+          {
+            title: "Error",
+            variant: "danger",
+            solid: true,
+            autoHideDelay: 0
+          }
+        );
         return;
       }
       this.$store
@@ -234,29 +223,8 @@ export default {
 };
 </script>
 
-<style scoped>
-.textBold {
-  font-weight: bold;
-}
-.versionInput {
-  display: inline-block;
-  width: 100%;
-}
-.selectionInput {
-  display: inline-block;
-  width: 100%;
-  margin-bottom: 16px;
-}
-.selectionInputButton {
-  display: inline-block;
-  width: 100%;
-}
-.addRowRightAlign {
-  float: right;
-  width: 30%;
-  margin-left: 16px;
-}
-.addRowRightAlign .el-card {
-  margin-bottom: 16px;
+<style lang="scss" scoped>
+.presentation-section:not(:first-child) {
+  margin-top: 2rem;
 }
 </style>

@@ -14,114 +14,100 @@
   >
     <bar-chart :chart-data="chartData" :options="options"></bar-chart>
 
+    <!-- TODO: Replace validation. -->
     <template slot="extraFormItems" slot-scope="slotProps">
-      <el-form-item
-        label="xAxis Field Name"
-        prop="extraData.xAxisFieldName"
-        v-if="slotProps.isInAdvancedMode"
-      >
-        <el-select
-          placeholder="xAxisFieldName"
-          v-model="slotProps.extraData.xAxisFieldName"
-        >
-          <el-option
+      <b-form-group label="xAxis Field Name" v-if="slotProps.isInAdvancedMode">
+        <b-form-select v-model="slotProps.extraData.xAxisFieldName">
+          <b-form-select-option
             v-for="selection in slotProps.editForm.selections"
             :key="selection.rename"
             :label="selection.rename"
             :value="selection.rename"
-          >
-          </el-option>
-        </el-select>
-      </el-form-item>
-      <el-form-item
-        label="yAxis Field Name"
-        prop="extraData.yAxisFieldName"
-        v-if="slotProps.isInAdvancedMode"
-      >
-        <el-select
-          placeholder="yAxisFieldName"
-          v-model="slotProps.extraData.yAxisFieldName"
-        >
-          <el-option
+          ></b-form-select-option>
+        </b-form-select>
+      </b-form-group>
+
+      <b-form-group label="yAxis Field Name" v-if="slotProps.isInAdvancedMode">
+        <b-form-select v-model="slotProps.extraData.yAxisFieldName">
+          <b-form-select-option
             v-for="selection in slotProps.editForm.selections"
             :key="selection.rename"
             :label="selection.rename"
             :value="selection.rename"
-          >
-          </el-option>
-        </el-select>
-      </el-form-item>
-      <el-form-item
-        label="Legend Label Name"
-        prop="extraData.dataSetLabel"
-        v-if="slotProps.isInAdvancedMode"
-      >
-        <el-input
-          v-model="slotProps.extraData.dataSetLabel"
-          placeholder="Label Name"
-        ></el-input>
-      </el-form-item>
-      <el-form-item
-        label="Colorful Bar"
-        prop="extraData.isColorfulBar"
-        v-if="slotProps.isInAdvancedMode"
-      >
-        <el-switch
+          ></b-form-select-option>
+        </b-form-select>
+      </b-form-group>
+
+      <b-form-group label="Legend Label Name" v-if="slotProps.isInAdvancedMode">
+        <b-form-input v-model="slotProps.extraData.dataSetLabel">
+        </b-form-input>
+      </b-form-group>
+
+      <b-form-group label="Colorful Bar" v-if="slotProps.isInAdvancedMode">
+        <b-form-checkbox
           v-model="slotProps.extraData.isColorfulBar"
-          active-text="Colorful Bar"
-          inactive-text="Single Color Bar"
-        >
-        </el-switch>
-      </el-form-item>
-      <el-form-item
-        label="Num of result to display"
-        prop="extraData.numOfResultToDisplay"
+          switch
+          size="lg"
+        />
+      </b-form-group>
+      <b-form-group
+        :label="
+          'Num of result to display: ' +
+            slotProps.extraData.numOfResultToDisplay
+        "
         v-if="slotProps.isInAdvancedMode"
       >
-        <el-slider
+        <b-form-input
           v-model="slotProps.extraData.numOfResultToDisplay"
-          :min="5"
-          :max="30"
-        ></el-slider>
-      </el-form-item>
-      <el-form-item
-        v-if="slotProps.isInAdvancedMode"
-        v-for="(tooltip, index) in slotProps.extraData.fieldsShownInToolTips"
-        :label="'Tooltips ' + index"
-        :key="'tooltips' + index"
-      >
-        <el-select placeholder="Field" v-model="tooltip.field">r
-          <el-option
-            v-for="selection in slotProps.editForm.selections"
-            :key="selection.rename"
-            :label="selection.rename"
-            :value="selection.rename"
+          type="range"
+          min="5"
+          max="30"
+        ></b-form-input>
+      </b-form-group>
+
+      <div v-if="slotProps.isInAdvancedMode">
+        <b-form-group
+          v-for="(tooltip, index) in slotProps.extraData.fieldsShownInToolTips"
+          :label="'Tooltips ' + index"
+          :key="'tooltips' + index"
+        >
+          <b-form-select
+            placeholder="Field"
+            v-model="tooltip.field"
+            class="w-auto mr-2"
           >
-          </el-option> </el-select
-        >&nbsp;
-        <el-input
-          v-model="tooltip.label"
-          placeholder="Label Name"
-          style="width: 150px"
-        ></el-input
-        >&nbsp;
-        <el-button
-          type="danger"
-          icon="el-icon-delete"
-          circle
-          @click="
-            removeTooltip(slotProps.extraData.fieldsShownInToolTips, tooltip)
-          "
-        ></el-button>
-      </el-form-item>
-      <el-form-item v-if="slotProps.isInAdvancedMode">
-        <el-button
-          type="success"
-          plain
+            <b-form-select-option
+              v-for="selection in slotProps.editForm.selections"
+              :key="selection.rename"
+              :label="selection.rename"
+              :value="selection.rename"
+            >
+            </b-form-select-option>
+          </b-form-select>
+          <b-form-input
+            class="d-inline-block mr-2 align-middle"
+            v-model="tooltip.label"
+            placeholder="Label Name"
+            style="width: 200px"
+          ></b-form-input>
+          <b-button
+            variant="outline-danger"
+            @click="
+              removeTooltip(slotProps.extraData.fieldsShownInToolTips, tooltip)
+            "
+          >
+            <b-icon icon="trash-fill" aria-hidden="true" />
+          </b-button>
+        </b-form-group>
+      </div>
+      <b-form-group v-if="slotProps.isInAdvancedMode">
+        <b-button
+          variant="primary"
           @click="addTooltip(slotProps.extraData.fieldsShownInToolTips)"
-          >Add Tooltip
-        </el-button>
-      </el-form-item>
+        >
+          Add Tooltip
+        </b-button>
+      </b-form-group>
     </template>
   </basic-section-detail>
 </template>

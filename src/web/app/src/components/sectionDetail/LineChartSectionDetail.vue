@@ -9,53 +9,36 @@
   >
     <line-chart :chart-data="chartData" :options="options"></line-chart>
 
+    <!-- TODO: Replace validation. -->
     <template slot="extraFormItems" slot-scope="slotProps">
-      <el-form-item
-        label="xAxis Field Name"
-        prop="extraData.xAxisFieldName"
-        v-if="slotProps.isInAdvancedMode"
-      >
-        <el-select
-          placeholder="xAxisFieldName"
-          v-model="slotProps.extraData.xAxisFieldName"
-        >
-          <el-option
+      <b-form-group label="xAxis Field Name" v-if="slotProps.isInAdvancedMode">
+        <b-form-select v-model="slotProps.extraData.xAxisFieldName">
+          <b-form-select-option
             v-for="selection in slotProps.editForm.selections"
             :key="selection.rename"
             :label="selection.rename"
             :value="selection.rename"
-          >
-          </el-option>
-        </el-select>
-      </el-form-item>
-      <el-form-item
-        label="yAxis Field Name"
-        prop="extraData.yAxisFieldName"
-        v-if="slotProps.isInAdvancedMode"
-      >
-        <el-select
-          placeholder="yAxisFieldName"
-          v-model="slotProps.extraData.yAxisFieldName"
-        >
-          <el-option
+          ></b-form-select-option>
+        </b-form-select>
+      </b-form-group>
+
+      <b-form-group label="yAxis Field Name" v-if="slotProps.isInAdvancedMode">
+        <b-form-select v-model="slotProps.extraData.yAxisFieldName">
+          <b-form-select-option
             v-for="selection in slotProps.editForm.selections"
             :key="selection.rename"
             :label="selection.rename"
             :value="selection.rename"
-          >
-          </el-option>
-        </el-select>
-      </el-form-item>
-      <el-form-item
-        label="Legend Label Name"
-        prop="extraData.dataSetLabel"
-        v-if="slotProps.isInAdvancedMode"
-      >
-        <el-input
+          ></b-form-select-option>
+        </b-form-select>
+      </b-form-group>
+
+      <b-form-group label="Legend Label Name" v-if="slotProps.isInAdvancedMode">
+        <b-form-input
           v-model="slotProps.extraData.dataSetLabel"
           placeholder="Label Name"
-        ></el-input>
-      </el-form-item>
+        />
+      </b-form-group>
     </template>
   </basic-section-detail>
 </template>

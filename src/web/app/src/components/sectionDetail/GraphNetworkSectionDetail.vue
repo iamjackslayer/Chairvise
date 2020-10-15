@@ -16,29 +16,27 @@
     ></GraphNetwork>
 
     <template slot="extraFormItems" slot-scope="slotProps">
-      <el-form-item
-        label="Colorful Bar"
-        prop="extraData.isColorfulBar"
-        v-if="slotProps.isInAdvancedMode"
-      >
-        <el-switch
+      <b-form-group label="Colorful Bar" v-if="slotProps.isInAdvancedMode">
+        <b-form-checkbox
           v-model="slotProps.extraData.isColorfulBar"
-          active-text="Colorful Bar"
-          inactive-text="Single Color Bar"
-        >
-        </el-switch>
-      </el-form-item>
-      <el-form-item
-        label="Num of result to display"
-        prop="extraData.numOfResultToDisplay"
+          switch
+          size="lg"
+        />
+      </b-form-group>
+      <b-form-group
+        :label="
+          'Num of result to display: ' +
+            slotProps.extraData.numOfResultToDisplay
+        "
         v-if="slotProps.isInAdvancedMode"
       >
-        <el-slider
+        <b-form-input
           v-model="slotProps.extraData.numOfResultToDisplay"
-          :min="5"
-          :max="30"
-        ></el-slider>
-      </el-form-item>
+          type="range"
+          min="5"
+          max="30"
+        ></b-form-input>
+      </b-form-group>
     </template>
   </basic-section-detail>
 </template>

@@ -41,7 +41,6 @@
             </b-nav-item>
             <b-nav-item to="/logout" @click="logout">
               <b-icon icon="arrow-down-right-square-fill" class="mr-2"></b-icon>
-
               Logout
             </b-nav-item>
           </b-nav>
@@ -71,10 +70,11 @@ export default {
       if (!this.isFetchUserInfoError) {
         return;
       }
-      this.$notify.error({
+      this.$bvToast.toast(this.$store.state.userInfo.apiErrorMsg || "-", {
         title: "Auth request fail",
-        message: this.$store.state.userInfo.apiErrorMsg,
-        duration: 0
+        variant: "danger",
+        solid: true,
+        autoHideDelay: 0
       });
     }
   },

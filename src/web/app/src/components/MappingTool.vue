@@ -198,9 +198,11 @@ export default {
   watch: {
     errors(newValue) {
       if (newValue.length > 0) {
-        this.$notify.error({
+        this.$bvToast.toast(newValue.join("\n"), {
           title: "Error",
-          message: newValue.join("\n")
+          variant: "danger",
+          solid: true,
+          autoHideDelay: 0
         });
       }
     }

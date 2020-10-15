@@ -60,12 +60,16 @@ export default {
       if (!this.isError) {
         return;
       }
-      this.$notify.error({
-        title: "Presentation list API request fail",
-        message: this.$store.state.presentation.presentationListStatus
-          .apiErrorMsg,
-        duration: 0
-      });
+      this.$bvToast.toast(
+        this.$store.state.presentation.presentationListStatus.apiErrorMsg ||
+          "-",
+        {
+          title: "Presentation list API request fail",
+          variant: "danger",
+          solid: true,
+          autoHideDelay: 0
+        }
+      );
     }
   },
   computed: {

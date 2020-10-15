@@ -1,84 +1,89 @@
 <template>
-  <b-row class="sectionDetail">
-    <div v-if="version !== undefined && typeof version != 'undefined'">
-      <div v-if="sectionDetail.type === WORD_CLOUD">
-        <word-cloud-section-detail
-          :sectionDetail="sectionDetail"
-          :presentationId="presentationId"
-          :version="version"
-        />
-      </div>
-      <div v-else-if="sectionDetail.type === BAR_CHART">
-        <bar-chart-section-detail
-          :sectionDetail="sectionDetail"
-          :presentationId="presentationId"
-          :version="version"
-        />
-      </div>
-      <div v-else-if="sectionDetail.type === PIE_CHART">
-        <pie-chart-section-detail
-          :sectionDetail="sectionDetail"
-          :presentationId="presentationId"
-          :version="version"
-        />
-      </div>
-      <div v-else-if="sectionDetail.type === LINE_CHART">
-        <line-chart-section-detail
-          :sectionDetail="sectionDetail"
-          :presentationId="presentationId"
-          :version="version"
-        />
-      </div>
-      <div v-else-if="sectionDetail.type === STATS">
-        <stats-section-detail
-          :sectionDetail="sectionDetail"
-          :presentationId="presentationId"
-          :version="version"
-        />
-      </div>
-      <div v-else-if="sectionDetail.type === SCATTER_CHART">
-        <scatter-chart-section-detail
-          :sectionDetail="sectionDetail"
-          :presentationId="presentationId"
-          :version="version"
-        />
-      </div>
-      <div v-else-if="sectionDetail.type === GRAPH_NETWORK">
-        <graph-network-section-detail
-          :sectionDetail="sectionDetail"
-          :presentationId="presentationId"
-          :version="version"
-        />
-      </div>
-      <div v-else-if="sectionDetail.type === RADAR_CHART">
-        <radar-chart-section-detail
-          :sectionDetail="sectionDetail"
-          :presentationId="presentationId"
-          :version="version"
-        />
-      </div>
-      <div v-else-if="sectionDetail.type === DEPENDENCY_CHART">
-        <dependency-chart-section-detail
-          :sectionDetail="sectionDetail"
-          :presentationId="presentationId"
-          :version="version"
-        />
-      </div>
-      <div v-else>
-        <b-alert
-          :title="`Unexpected Section Detail Type: ${sectionDetail.type}`"
-          variant="danger"
-        >
-          Unexpected Section Detail Type: ${sectionDetail.type}
-        </b-alert>
-      </div>
+  <div v-if="version !== undefined && typeof version != 'undefined'">
+    <div v-if="sectionDetail.type === WORD_CLOUD">
+      <word-cloud-section-detail
+        :sectionDetail="sectionDetail"
+        :presentationId="presentationId"
+        :version="version"
+      />
+    </div>
+    <div v-else-if="sectionDetail.type === BAR_CHART">
+      <bar-chart-section-detail
+        :sectionDetail="sectionDetail"
+        :presentationId="presentationId"
+        :version="version"
+      />
+    </div>
+    <div v-else-if="sectionDetail.type === PIE_CHART">
+      <pie-chart-section-detail
+        :sectionDetail="sectionDetail"
+        :presentationId="presentationId"
+        :version="version"
+      />
+    </div>
+    <div v-else-if="sectionDetail.type === LINE_CHART">
+      <line-chart-section-detail
+        :sectionDetail="sectionDetail"
+        :presentationId="presentationId"
+        :version="version"
+      />
+    </div>
+    <div v-else-if="sectionDetail.type === STATS">
+      <stats-section-detail
+        :sectionDetail="sectionDetail"
+        :presentationId="presentationId"
+        :version="version"
+      />
+    </div>
+    <div v-else-if="sectionDetail.type === SCATTER_CHART">
+      <scatter-chart-section-detail
+        :sectionDetail="sectionDetail"
+        :presentationId="presentationId"
+        :version="version"
+      />
+    </div>
+    <div v-else-if="sectionDetail.type === GRAPH_NETWORK">
+      <graph-network-section-detail
+        :sectionDetail="sectionDetail"
+        :presentationId="presentationId"
+        :version="version"
+      />
+    </div>
+    <div v-else-if="sectionDetail.type === RADAR_CHART">
+      <radar-chart-section-detail
+        :sectionDetail="sectionDetail"
+        :presentationId="presentationId"
+        :version="version"
+      />
+    </div>
+    <div v-else-if="sectionDetail.type === DEPENDENCY_CHART">
+      <dependency-chart-section-detail
+        :sectionDetail="sectionDetail"
+        :presentationId="presentationId"
+        :version="version"
+      />
     </div>
     <div v-else>
-      <b-alert :title="`Unexpected version`" variant="danger">
-        Unexpected Version
+      <b-alert show variant="danger">
+        <b-icon
+          class="alert-icon"
+          icon="exclamation-circle-fill"
+          variant="danger"
+        />
+        Unexpected Section Detail Type: {{ sectionDetail.type }}
       </b-alert>
     </div>
-  </b-row>
+  </div>
+  <div v-else>
+    <b-alert show variant="danger">
+      <b-icon
+        class="alert-icon"
+        icon="exclamation-circle-fill"
+        variant="danger"
+      />
+      Unexpected Version
+    </b-alert>
+  </div>
 </template>
 
 <script>
