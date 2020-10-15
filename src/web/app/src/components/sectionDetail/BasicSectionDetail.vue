@@ -21,7 +21,7 @@
           </b-button>
         </div>
       </div>
-      <div class="title" v-else>
+      <div class="title mb-2" v-else>
         <b-form-input v-model="editForm.title"></b-form-input>
       </div>
       <b-alert

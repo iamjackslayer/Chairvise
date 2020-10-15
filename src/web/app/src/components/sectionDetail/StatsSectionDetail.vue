@@ -7,51 +7,37 @@
     :extraFormItemsRules="{}"
     @update-visualisation="updateVisualisation"
   >
-    <el-table :data="tableData" stripe style="width: 100%">
-      <el-table-column prop="type" label="Type" width="200"> </el-table-column>
-
-      <el-table-column prop="value" label="Value" width="100">
-        <template slot-scope="scope">
-          <el-popover trigger="hover" placement="top-start">
-            <p>No. of Reviewers: {{ scope.row.numIds }}</p>
-            <div slot="reference" class="name-wrapper">
-              <el-button class="hovered-text" type="text">
-                {{ scope.row.value }}
-              </el-button>
-            </div>
-          </el-popover>
-        </template>
-      </el-table-column>
-
-      <el-table-column prop="reviewer" label="Corresponding Reviewer ID">
-        <template slot-scope="scope">
-          {{ scope.row.reviewer }}
-        </template>
-      </el-table-column>
-    </el-table>
+    <b-table
+      outlined
+      striped
+      hover
+      :fields="[
+        'type',
+        'value',
+        { key: 'numIds', label: 'Reviewers' },
+        { key: 'reviewer', label: 'Corresponding Reviewer ID' }
+      ]"
+      :items="tableData"
+    >
+    </b-table>
     <template slot="extraFormItems" slot-scope="slotProps">
-      <el-form-item label="Type" v-if="slotProps.isInAdvancedMode">
-        <el-select
-          placeholder="type"
+      <b-form-group label="Type" v-if="slotProps.isInAdvancedMode">
+        <!-- TODO: Review if need reviewer value -->
+        <b-form-select
           v-model="slotProps.extraData.types"
           multiple
+          :select-size="4"
+          :options="[
+            { value: 'min', text: 'Min', reviewer: 'min' },
+            { value: 'max', text: 'Max', reviewer: 'max' },
+            { value: 'sum', text: 'Sum', reviewer: 'sum' },
+            { value: 'avg', text: 'Average', reviewer: 'avg' },
+            { value: 'median', text: 'Median', reviewer: 'median' },
+            { value: 'std', text: 'Standard Deviation', reviewer: 'std' }
+          ]"
         >
-          <el-option label="Min" value="min" reviewer="min"></el-option>
-          <el-option label="Max" value="max" reviewer="max"></el-option>
-          <el-option label="Sum" value="sum" reviewer="sum"></el-option>
-          <el-option label="Average" value="avg" reviewer="avg"></el-option>
-          <el-option
-            label="Median"
-            value="median"
-            reviewer="median"
-          ></el-option>
-          <el-option
-            label="Standard Deviation"
-            value="std"
-            reviewer="std"
-          ></el-option>
-        </el-select>
-      </el-form-item>
+        </b-form-select>
+      </b-form-group>
     </template>
   </basic-section-detail>
 </template>
