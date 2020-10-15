@@ -12,31 +12,30 @@
   >
     <word-cloud :data="words"> </word-cloud>
 
-    <template slot="extraFormItems" slot-scope="slotProps">
-      <el-form-item
-        label="Delimiter to Generate Word"
-        prop="extraData.delimiters"
-        v-if="slotProps.isInAdvancedMode"
-      >
-        <el-select multiple v-model="slotProps.extraData.delimiters">
-          <el-option label="\r" value="\r" />
-          <el-option label="\n" value="\n" />
-          <el-option label="Space" value="\s" />
-        </el-select>
-      </el-form-item>
-      <el-form-item
-        label="Word to Ignore"
-        prop="extraData.ignoreWords"
-        v-if="slotProps.isInAdvancedMode"
-      >
-        <el-select
+    <template
+      slot="extraFormItems"
+      v-if="slotProps.isInAdvancedMode"
+      slot-scope="slotProps"
+    >
+      <b-form-group label="Delimiter to Generate Word">
+        <b-form-select
           multiple
-          v-model="slotProps.extraData.ignoreWords"
-          filterable
-          allow-create
+          v-model="slotProps.extraData.delimiters"
+          :select-size="3"
         >
-        </el-select>
-      </el-form-item>
+          <b-form-select-option label="\r" value="\r" />
+          <b-form-select-option label="\n" value="\n" />
+          <b-form-select-option label="Space" value="\s" />
+        </b-form-select>
+      </b-form-group>
+
+      <b-form-group label="Word to Ignore">
+        <b-form-tags
+          input-id="ignored-word"
+          v-model="slotProps.extraData.ignoreWords"
+          placeholder="Add word..."
+        ></b-form-tags>
+      </b-form-group>
     </template>
   </basic-section-detail>
 </template>

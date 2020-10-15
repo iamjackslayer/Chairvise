@@ -218,4 +218,8 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.presentation-section:not(:first-child) {
+  margin-top: 2rem;
+}
+</style>
