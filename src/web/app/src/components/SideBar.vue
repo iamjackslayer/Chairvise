@@ -122,6 +122,7 @@ export default {
 
 .logo {
   font-weight: bold;
+  line-height: 1;
   display: block;
   flex: 1;
   &--small {

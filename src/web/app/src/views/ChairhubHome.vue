@@ -1,11 +1,13 @@
 <template>
   <div>
+    <Header />
     <EmptyPublicPostList v-if="isPublicPostListEmpty" />
     <PublicPostList v-if="!fetchingPublicPostList" />
   </div>
 </template>
 
 <script>
+import Header from "@/components/chairhub/Header.vue";
 import PublicPostList from "@/components/chairhub/PublicPostList.vue";
 import EmptyPublicPostList from "@/components/chairhub/EmptyPublicPostList.vue";
 
@@ -25,6 +27,7 @@ export default {
     }
   },
   components: {
+    Header,
     PublicPostList,
     EmptyPublicPostList
   },
