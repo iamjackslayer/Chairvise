@@ -32,10 +32,11 @@ public class Presentation {
     private String creatorIdentifier;
 
     @ManyToOne
-    @JoinColumns({
-        @JoinColumn(name = "conference_creator_identifier", referencedColumnName = "creator_identifier"),
-        @JoinColumn(name = "conference_name", referencedColumnName = "name")
-    })
+//    @JoinColumns({
+//        @JoinColumn(name = "conference_creator_identifier", referencedColumnName = "creator_identifier"),
+//        @JoinColumn(name = "conference_name", referencedColumnName = "name")
+//    })
+    @JoinColumn(name = "conference_id", referencedColumnName = "id")
     private Conference conference;
 
     private boolean isPublic;

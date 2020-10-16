@@ -1,27 +1,34 @@
 package sg.edu.nus.comp.cs3219.viz.ui.controller.api;
 
+import java.util.ArrayList;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import sg.edu.nus.comp.cs3219.viz.common.datatransfer.UserInfo;
+import sg.edu.nus.comp.cs3219.viz.common.entity.Presentation;
 import sg.edu.nus.comp.cs3219.viz.common.entity.record.Conference;
 import sg.edu.nus.comp.cs3219.viz.common.exception.ConferenceNotFoundException;
+import sg.edu.nus.comp.cs3219.viz.common.exception.PresentationNotFoundException;
 import sg.edu.nus.comp.cs3219.viz.logic.ConferenceLogic;
 import sg.edu.nus.comp.cs3219.viz.logic.GateKeeper;
 
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
+import sg.edu.nus.comp.cs3219.viz.logic.PresentationLogic;
 
 @RestController
 public class ConferenceController extends BaseRestController {
 
     private final ConferenceLogic conferenceLogic;
+    private final PresentationLogic presentationLogic;
 
     private final GateKeeper gateKeeper;
 
     public ConferenceController(ConferenceLogic conferenceLogic,
+                                PresentationLogic presentationLogic,
                                 GateKeeper gateKeeper) {
         this.conferenceLogic = conferenceLogic;
+        this.presentationLogic = presentationLogic;
         this.gateKeeper = gateKeeper;
     }
 
@@ -30,6 +37,20 @@ public class ConferenceController extends BaseRestController {
         UserInfo currentUser = gateKeeper.verifyLoginAccess();
 
         return conferenceLogic.findAllForUser(currentUser);
+    }
+
+    @GetMapping("/presentations/{presentationId}/conferences")
+    public List<Conference> conferencesForPresentation(@PathVariable Long presentationId) {
+        UserInfo currentUser = gateKeeper.verifyLoginAccess();
+        Presentation presentation = presentationLogic.findById(presentationId)
+            .orElseThrow(() -> new PresentationNotFoundException(presentationId));
+
+        if (presentation.getCreatorIdentifier().equals(currentUser.getUserEmail())) {
+            return all();
+        }
+        List<Conference> cList = new ArrayList<Conference>();
+        cList.add(presentation.getConference());
+        return cList;
     }
 
     @PostMapping("/conferences")
