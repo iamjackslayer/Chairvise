@@ -1,7 +1,11 @@
 <template>
   <div class="col-12 col-md-3 col-xl-2 sidebar">
     <div class="logo-container h3">
-      <span class="logo">ChairVise</span>
+      <span v-if="isChairhubHomeRoute" class="logo d-none d-md-block"
+        >ChairVise</span
+      >
+      <span v-if="isChairhubHomeRoute" class="logo d-md-none">Chairhub</span>
+      <span v-else class="logo">ChairVise</span>
       <button
         @click="toggleCollapse"
         class="d-md-none p-0 ml-3 btn mobile-nav-toggle"
@@ -13,30 +17,30 @@
       <b-col class="d-flex flex-column p-0 h-100">
         <b-nav class="sidebar-links" vertical>
           <!-- TODO: Add check for login and logout views -->
-          <b-nav-item to="/home">
+          <b-nav-item to="/home" @click="onNavItemClicked">
             <b-icon icon="house-door-fill" class="mr-2"></b-icon>
             Home
           </b-nav-item>
-          <b-nav-item to="/importData">
+          <b-nav-item to="/importData" @click="onNavItemClicked">
             <b-icon icon="cloud-arrow-up-fill" class="mr-2"></b-icon>
             Import Data
           </b-nav-item>
-          <b-nav-item to="/analyze">
+          <b-nav-item to="/analyze" @click="onNavItemClicked">
             <b-icon icon="file-image-fill" class="mr-2"></b-icon>
             My Presentations
           </b-nav-item>
-          <b-nav-item to="/conference">
+          <b-nav-item to="/conference" @click="onNavItemClicked">
             <b-icon icon="calendar-week-fill" class="mr-2"></b-icon>
             My Conferences
           </b-nav-item>
-          <b-nav-item to="/chairhub/home">
+          <b-nav-item to="/chairhub/home" @click="onNavItemClicked">
             <b-icon icon="people-fill" class="mr-2"></b-icon>
             Chairhub
           </b-nav-item>
         </b-nav>
         <div class="secondary-actions">
           <b-nav class="sidebar-links" vertical>
-            <b-nav-item to="/userGuide">
+            <b-nav-item to="/userGuide" @click="onNavItemClicked">
               <b-icon icon="patch-question-fll" class="mr-2"></b-icon>
               User Guide
             </b-nav-item>
@@ -62,14 +66,15 @@ export default {
   name: "SideBar",
   data() {
     return {
-      visible: true
+      visible: true,
+      isWindowLarge: true
     };
   },
   mounted() {
     // Expands collapse when larger than md and vice versa.
     window.addEventListener("resize", ev => {
       let innerWidth = ev.currentTarget.innerWidth;
-      this.visible = innerWidth > 768;
+      this.isWindowLarge = this.visible = innerWidth > 768;
     });
   },
   computed: {
@@ -81,6 +86,9 @@ export default {
     },
     isApiError() {
       return this.$store.state.userInfo.isApiError;
+    },
+    isChairhubHomeRoute() {
+      return this.$route.name === "chairhubHome";
     }
   },
   methods: {
@@ -92,6 +100,11 @@ export default {
     },
     toggleCollapse() {
       this.visible = !this.visible;
+    },
+    onNavItemClicked() {
+      if (!this.isWindowLarge) {
+        this.toggleCollapse();
+      }
     }
   }
 };
