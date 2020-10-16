@@ -1,78 +1,109 @@
 <template>
-  <el-main>
-    <el-card>
-      <div slot="header" class="clearfix">
-        <span> Add New Conference </span>
-      </div>
-      <el-alert
-        v-if="isNewConference && !isLogin"
-        title="Please login to create new conference"
-        type="error"
-        show-icon
-        class="errorMsg"
+  <div>
+    <div class="title-bar">
+      <h1 class="title">Add New Conference</h1>
+    </div>
+    <b-alert
+      v-if="isNewConference && !isLogin"
+      show
+      variant="danger"
+      class="mb-2"
+    >
+      <b-icon
+        class="alert-icon"
+        icon="exclamation-circle-fill"
+        variant="danger"
       />
-      <el-form
-        v-else
-        :rules="rules"
-        ref="conferenceForm"
-        :model="conferenceForm"
-        v-loading="isLoading"
-      >
-        <el-form-item label="Name" :prop="'name'">
-          <el-col>
-            <el-input v-model="conferenceFormName" placeholder="Enter name" />
-          </el-col>
-        </el-form-item>
-        <el-form-item label="Description">
-          <el-col>
-            <el-input
-              v-model="conferenceFormDescription"
-              placeholder="Enter description"
-            />
-          </el-col>
-        </el-form-item>
-        <el-form-item label="Conference Date" :prop="'date'">
-          <el-col>
-            <el-date-picker
-              v-model="conferenceFormDate"
-              type="datetime"
-              placeholder="Select date and time"
-            >
-            </el-date-picker>
-          </el-col>
-        </el-form-item>
+      Please login to create new conference
+    </b-alert>
+    <b-card v-else class="form">
+      <b-overlay :show="isLoading" no-wrap />
 
-        <el-form-item>
-          <el-button
-            type="primary"
-            icon="el-icon-check"
-            @click="uploadClicked()"
-            >Save</el-button
-          >
-        </el-form-item>
-      </el-form>
-    </el-card>
+      <b-form @submit.stop.prevent="uploadClicked">
+        <div class="form-section">
+          <div class="form-description">
+            <h5>Basic Information</h5>
+            <p class="form-section-description">
+              Having an up-to-date email address attached to your acount is a
+              great step toward improved account security.
+            </p>
+          </div>
+          <div class="form-container">
+            <b-form-group label="Name" label-for="name">
+              <b-form-input
+                id="name"
+                name="name"
+                v-model="conferenceFormName"
+                :state="validateState('name')"
+                aria-describedby="name-live-feedback"
+              />
+              <b-form-invalid-feedback id="name-live-feedback"
+                >This is a required field and must be at least 3
+                characters.</b-form-invalid-feedback
+              >
+            </b-form-group>
 
+            <b-form-group label="Description" label-for="description">
+              <b-form-textarea
+                id="description"
+                name="description"
+                rows="3"
+                max-rows="6"
+                :state="validateState('description')"
+                v-model="conferenceFormDescription"
+              />
+            </b-form-group>
+
+            <b-form-group label="Date" label-for="date">
+              <b-form-datepicker
+                id="date"
+                name="date"
+                v-model="conferenceFormDate"
+                :state="validateState('date')"
+                aria-describedby="date-live-feedback"
+              />
+
+              <b-form-invalid-feedback id="date-live-feedback">
+                This is a required field.
+              </b-form-invalid-feedback>
+            </b-form-group>
+
+            <b-button type="submit" class="submit-btn" variant="primary">
+              Submit
+            </b-button>
+          </div>
+        </div>
+      </b-form>
+    </b-card>
+
+    <!-- <pre class="temp">{{ $v.conferenceForm }}</pre> -->
     <!-- dialogs -->
-    <el-dialog title="Confirm" :visible.sync="hasSubmitted" width="30%" center>
+    <b-modal
+      title="Confirm"
+      centered
+      :visible.sync="hasSubmitted"
+      @ok="addConference"
+      @hidden="hasSubmitted = false"
+      @cancel="hasSubmitted = false"
+    >
       <span> Are you sure that the conference details are correct?</span>
-      <span slot="footer" class="dialog-footer">
-        <el-button v-on:click="hasSubmitted = false">Cancel</el-button>
-        <el-button type="primary" v-on:click="addConference">Confirm</el-button>
-      </span>
-    </el-dialog>
-    <el-dialog title="Success" :visible.sync="saveSuccess" width="30%" center>
+    </b-modal>
+    <b-modal
+      title="Success"
+      centered
+      :visible.sync="saveSuccess"
+      ok-only
+      @ok="closeSuccess"
+      @hidden="closeSuccess"
+    >
       <span>You have successfully added a new conference</span>
-      <span slot="footer" class="dialog-footer">
-        <el-button type="primary" v-on:click="closeSuccess">Sure</el-button>
-      </span>
-    </el-dialog>
+    </b-modal>
     <!-- end of dialogs -->
-  </el-main>
+  </div>
 </template>
 
 <script>
-import Datepicker from "vuejs-datepicker";
+import { required, minLength } from "vuelidate/lib/validators";
 import { ID_NEW_CONFERENCE } from "../common/const";
 export default {
   name: "AddConference",
@@ -160,70 +191,58 @@ export default {
       });
     },
     updateConferenceForm() {
-      if (this.$refs["conferenceForm"]) {
-        this.$refs["conferenceForm"].clearValidate();
+      if (this.$v) {
+        this.$v.$reset();
       }
       this.$store.commit("resetConferenceForm");
     },
     uploadClicked() {
-      this.$refs["conferenceForm"].validate((valid, object) => {
-        if (!valid) {
-          if ("name" in object) {
-            this.$notify.error({
-              title: "Error",
-              message: object.name[0].message
-            });
-          }
-          if ("date" in object) {
-            this.$notify.error({
-              title: "Error",
-              message: object.date[0].message,
-              offset: 100
-            });
-          }
-          return;
-        }
-        this.$refs["conferenceForm"].clearValidate();
-        this.hasSubmitted = true;
-      });
+      this.$v.conferenceForm.$touch();
+      if (this.$v.conferenceForm.$anyError) {
+        return;
+      }
+
+      this.hasSubmitted = true;
     },
     closeSuccess() {
       this.$store.commit("setSaveSuccess", false);
       this.$router.push({
         name: "conference"
       });
+    },
+    validateState(name) {
+      const { $dirty, $error } = this.$v.conferenceForm[name];
+      return $dirty ? !$error : null;
     }
   },
-  components: {
-    Datepicker
+  validations: {
+    conferenceForm: {
+      name: {
+        required,
+        minLength: minLength(3)
+      },
+      description: {
+        alphaNum: true
+      },
+      date: {
+        required
+      }
+    }
   },
   data() {
     return {
-      hasSubmitted: false,
-      rules: {
-        name: [
-          {
-            required: true,
-            message: "Please enter conference name",
-            trigger: "blur"
-          },
-          {
-            min: 3,
-            message: "The length should be more than 3 character",
-            trigger: "blur"
-          }
-        ],
-        date: [
-          {
-            required: true,
-            message: "Please select a conference date and time.",
-            trigger: "blur"
-          }
-        ]
-      }
+      hasSubmitted: false
     };
   }
 };
 </script>
 
-<style scoped></style>
+<style lang="scss" scoped>
+// .temp {
+//   display: block;
+//   background-color: $gray-200;
+//   color: $red-600;
+//   padding: 1rem;
+//   max-width: 35em;
+// }
+</style>

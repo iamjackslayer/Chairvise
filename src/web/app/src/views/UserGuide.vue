@@ -1,30 +1,28 @@
 <template>
   <div>
-    <div>
-      <el-container>
-        <el-main>
-          <el-tabs :tab-position="tabPosition">
-            <el-tab-pane label="Overview">
-              <OverviewGuide />
-            </el-tab-pane>
-            <el-tab-pane label="Features">
-              <FeatureGuide />
-            </el-tab-pane>
-            <el-tab-pane label="Instructions">
-              <InstructionsGuide />
-            </el-tab-pane>
-            <el-tab-pane label="FAQ">
-              <FAQGuide />
-            </el-tab-pane>
-          </el-tabs>
-        </el-main>
-      </el-container>
+    <div class="title-bar">
+      <h1 class="title">User Guide</h1>
     </div>
+    <b-card no-body>
+      <b-tabs :tab-position="tabPosition" card>
+        <b-tab title="Overview" active>
+          <OverviewGuide />
+        </b-tab>
+        <b-tab title="Features">
+          <FeatureGuide />
+        </b-tab>
+        <b-tab title="Instructions">
+          <InstructionsGuide />
+        </b-tab>
+        <b-tab title="FAQ">
+          <FAQGuide />
+        </b-tab>
+      </b-tabs>
+    </b-card>
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
 import OverviewGuide from "@/components/userPageDetail/OverviewGuide.vue";
 import FeatureGuide from "@/components/userPageDetail/FeatureGuide.vue";
 import InstructionsGuide from "@/components/userPageDetail/InstructionsGuide.vue";
@@ -45,4 +43,8 @@ export default {
   }
 };
 </script>
-<style scoped></style>
+<style lang="scss" scoped>
+.display-card > .tabs > .tab-content > .card-body {
+  padding: 2rem;
+}
+</style>

@@ -5,11 +5,6 @@
 
       <div class="col-12 col-md-9 col-xl-10 py-md-3 px-md-5 bd-content content">
         <b-overlay :show="isAppLoading" no-wrap />
-        <el-header style="padding: 0;">
-          <!-- <menu-bar
-            style="position: fixed; width: 100vw; z-index: 1;"
-          ></menu-bar> -->
-        </el-header>
         <div class="page-container">
           <router-view />
         </div>
@@ -32,10 +27,11 @@ export default {
       if (!this.isFetchUserInfoError) {
         return;
       }
-      this.$notify.error({
+      this.$bvToast.toast(this.$store.state.userInfo.apiErrorMsg || "-", {
         title: "Auth request fail",
-        message: this.$store.state.userInfo.apiErrorMsg,
-        duration: 0
+        variant: "danger",
+        solid: true,
+        autoHideDelay: 0
       });
     }
   },

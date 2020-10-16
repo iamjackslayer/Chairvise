@@ -1,12 +1,8 @@
 <template>
-  <el-main>
-    <el-container>
-      <el-main>
-        <presentation-brief :id="id" />
-        <section-list-panel :presentationId="id" />
-      </el-main>
-    </el-container>
-  </el-main>
+  <div>
+    <presentation-brief :id="id" />
+    <section-list-panel :presentationId="id" />
+  </div>
 </template>
 
 <script>
@@ -109,5 +105,3 @@ export default {
   }
 };
 </script>
-
-<style scoped></style>

@@ -1,56 +1,43 @@
 <template>
-  <el-main>
-    <h1 class="alignLeft">My Created Presentations</h1>
-    <el-button
-      class="alignRight"
-      type="primary"
-      icon="el-icon-plus"
-      v-if="!isPresentationListEmpty"
-      @click="createPresentation"
-      >Add New Presentation</el-button
-    >
-    <br />
-    <el-divider></el-divider>
-    <div class="infinite-list-wrapper">
-      <el-card v-if="isPresentationListEmpty">
-        <EmptyPresentation />
-      </el-card>
-      <ul
-        class="infinite-list"
-        v-infinite-scroll="loadMorePresentation"
-        infinite-scroll-disabled="disabled"
-        v-loading="isLoading"
+  <div>
+    <div class="title-bar">
+      <h1 class="title">My Presentations</h1>
+      <b-button
+        class="title-action"
+        variant="primary"
+        v-if="!isPresentationListEmpty"
+        @click="createPresentation"
       >
-        <li
-          v-for="(presentation, index) in presentations"
-          :key="presentation.id"
-        >
-          <zoom-center-transition :duration="500" :delay="100 * (index - 1)">
-            <el-card shadow="hover">
-              <el-button
-                type="text"
-                class="presentationCard"
-                v-show="show"
-                @click="viewPresentation(presentation.id)"
-              >
-                <el-row>
-                  <el-col class="presentation-id" :span="1">
-                    <p>#{{ presentation.id }}</p>
-                  </el-col>
-                  <el-col :span="19" :offset="1">
-                    <p>{{ presentation.name }}</p>
-                  </el-col>
-                  <el-col :span="19" :offset="1">
-                    <p>{{ presentation.description }}</p>
-                  </el-col>
-                </el-row>
-              </el-button>
-            </el-card>
-          </zoom-center-transition>
-        </li>
-      </ul>
+        <b-icon icon="plus"></b-icon>
+        Add New Presentation
+      </b-button>
     </div>
-  </el-main>
+    <div>
+      <b-card
+        class="shadow p-3 mb-5 bg-white rounded"
+        v-if="isPresentationListEmpty"
+      >
+        <!-- TODO: Replace with openpeeps image -->
+        <EmptyPresentation />
+      </b-card>
+      <div class="presentation-grid">
+        <b-card
+          class="presentation-card p-2 shadow-sm rounded-lg"
+          v-for="presentation in presentations"
+          :key="presentation.id"
+          @click="viewPresentation(presentation.id)"
+        >
+          <h5 class="presentation-title">{{ presentation.name }}</h5>
+          <div class="presentation-description">
+            {{ presentation.description || "-" }}
+          </div>
+          <div class="privacy-status">
+            <b-icon icon="lock" class="mr-1" />Private
+          </div>
+        </b-card>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -73,12 +60,16 @@ export default {
       if (!this.isError) {
         return;
       }
-      this.$notify.error({
-        title: "Presentation list API request fail",
-        message: this.$store.state.presentation.presentationListStatus
-          .apiErrorMsg,
-        duration: 0
-      });
+      this.$bvToast.toast(
+        this.$store.state.presentation.presentationListStatus.apiErrorMsg ||
+          "-",
+        {
+          title: "Presentation list API request fail",
+          variant: "danger",
+          solid: true,
+          autoHideDelay: 0
+        }
+      );
     }
   },
   computed: {
@@ -112,6 +103,7 @@ export default {
     loadPresentations() {
       this.show = true;
     },
+    // TODO: Remove the infinite scroll stuff.
     loadMorePresentation() {
       this.count += 5;
     },
@@ -126,52 +118,51 @@ export default {
 };
 </script>
 
-<style scoped>
-.alignLeft {
-  float: left;
-  display: inline-block;
-  margin: 0;
-}
-.alignRight {
-  float: right;
-  display: inline-block;
-  margin: 0;
-}
-.background {
-  background-color: transparent;
-  border-style: hidden;
-}
-.presentationCard {
-  width: 100%;
-  height: 100%;
-  margin-bottom: 16px;
-  background-color: white;
-  text-align: left;
-  color: black;
-  padding: 4px 16px;
+<style lang="scss" scoped>
+@supports (display: grid) {
+  .presentation-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    // TODO: Change to one column for mobile
+    grid-gap: 1.5rem;
+  }
 }
 
-.el-card__body {
+.presentation-card {
+  cursor: pointer;
+  height: 200px;
 }
-.menuCard {
-  width: 100%;
-  height: 100%;
+
+.presentation-card:hover {
+  background-color: $indigo-100;
 }
-.infinite-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
+
+.presentation-card > .card-body {
+  display: flex;
+  flex-direction: column;
 }
-.presentationCard .button {
-  color: black;
-  text-align: left;
+
+.presentation-description {
+  font-size: 0.95rem;
+  letter-spacing: -0.025em;
+  color: $gray-600;
+  // clamp to 3 lines (restricted to webkit browsers)
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
 }
-.presentation-image {
-  text-align: center;
-  vertical-align: middle;
-  margin-top: 1rem;
+
+.privacy-status {
+  margin-top: auto;
+  font-size: 0.95rem;
+  color: $indigo-600;
+  align-self: flex-end;
 }
-.presentation-id {
-  margin-top: 1.7rem;
+
+.presentation-title {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 </style>

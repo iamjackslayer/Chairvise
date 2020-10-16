@@ -1,33 +1,25 @@
 <template>
-  <el-main>
-    <h1 class="alignLeft">My Conferences</h1>
-    <el-button
-      class="alignRight"
-      type="primary"
-      icon="el-icon-plus"
-      @click="createConference"
-      >Add New Conference</el-button
-    >
-    <br />
-    <el-divider></el-divider>
-    <zoom-center-transition :duration="500" :delay="100">
-      <el-card v-show="show">
-        <FullCalendar
-          :events="conferences"
-          ref="fullCalendar"
-          defaultView="month"
-          :config="config"
-          @event-selected="eventSelected"
-        />
-      </el-card>
-    </zoom-center-transition>
-  </el-main>
+  <div>
+    <div class="title-bar">
+      <h1 class="title">My Conferences</h1>
+      <b-button class="title-action" variant="primary" @click="createConference"
+        ><b-icon icon="plus"></b-icon> Add New Conference</b-button
+      >
+    </div>
+
+    <b-card>
+      <FullCalendar :options="calendarOptions" />
+    </b-card>
+  </div>
 </template>
 
 <script>
-import { ZoomCenterTransition } from "vue2-transitions";
-import { FullCalendar } from "vue-full-calendar";
 import ConferenceBrief from "@/components/ConferenceBrief.vue";
+import FullCalendar from "@fullcalendar/vue";
+import dayGridPlugin from "@fullcalendar/daygrid";
+import timeGridPlugin from "@fullcalendar/timegrid";
+import interactionPlugin from "@fullcalendar/interaction";
+import listPlugin from "@fullcalendar/list";
 
 export default {
   name: "ViewConferences",
@@ -48,11 +40,16 @@ export default {
       if (!this.isError) {
         return;
       }
-      this.$notify.error({
-        title: "Conference list API request fail",
-        message: this.$store.state.conference.conferenceListStatus.apiErrorMsg,
-        duration: 0
-      });
+
+      this.$bvToast.toast(
+        this.$store.state.conference.conferenceListStatus.apiErrorMsg || "-",
+        {
+          title: "Conference list API request fail",
+          variant: "danger",
+          solid: true,
+          autoHideDelay: 0
+        }
+      );
     }
   },
   computed: {
@@ -65,8 +62,13 @@ export default {
     isLoading() {
       return this.$store.state.conference.conferenceListStatus.isLoading;
     },
+
+    isError() {
+      return this.$store.state.conference.conferenceListStatus.isApiError;
+    },
     conferences() {
       let list = this.$store.state.conference.conferenceList;
+      // TODO: Review this timezone code, I think it can just be set to UTC
       var tzoffset = new Date().getTimezoneOffset() * 60000; //offset in milliseconds
       let newList = [];
       list.forEach(element => {
@@ -76,17 +78,28 @@ export default {
           id: element.id,
           title: element.name,
           start: date,
-          allDay: false
+          allDay: true
         });
       });
       return newList;
     },
-    isError() {
-      return this.$store.state.conference.conferenceListStatus.isApiError;
+    calendarOptions() {
+      return {
+        themeSystem: "bootstrap",
+        plugins: [dayGridPlugin, timeGridPlugin, listPlugin, interactionPlugin],
+        // initialView: "dayMonthView",
+        events: this.conferences,
+        eventClick: this.eventSelected,
+        selectable: true,
+        headerToolbar: {
+          left: "today prev,next",
+          center: "title",
+          right: "dayGridMonth timeGridWeek timeGridDay listYear"
+        }
+      };
     }
   },
   components: {
-    ZoomCenterTransition,
     FullCalendar,
     ConferenceBrief
   },
@@ -100,7 +113,7 @@ export default {
     viewConference(id) {
       this.$router.push("/conference/" + id);
     },
-    eventSelected(event) {
+    eventSelected({ event }) {
       this.viewConference(event.id);
     }
   },
@@ -111,55 +124,4 @@ export default {
 };
 </script>
 
-<style scoped>
-.alignLeft {
-  float: left;
-  display: inline-block;
-  margin: 0;
-}
-.alignRight {
-  float: right;
-  display: inline-block;
-  margin: 0;
-}
-.background {
-  background-color: transparent;
-  border-style: hidden;
-}
-.conferenceCard {
-  width: 100%;
-  height: 100%;
-  margin-bottom: 16px;
-  background-color: white;
-  text-align: left;
-  color: black;
-  padding: 4px 16px;
-}
-
-.el-card__body {
-}
-.menuCard {
-  width: 100%;
-  height: 100%;
-}
-.infinite-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-.conferenceCard .button {
-  color: black;
-  text-align: left;
-}
-.presentation-image {
-  text-align: center;
-  vertical-align: middle;
-  margin-top: 1rem;
-}
-.presentation-id {
-  margin-top: 1.7rem;
-}
-.right {
-  float: right;
-}
-</style>
+<style lang="scss" scoped></style>

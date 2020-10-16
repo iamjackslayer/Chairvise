@@ -9,54 +9,47 @@
   >
     <pie-chart :chart-data="chartData" :options="options"></pie-chart>
 
+    <!-- TODO: Replace validation. -->
     <template slot="extraFormItems" slot-scope="slotProps">
-      <el-form-item
+      <b-form-group
         label="Category Field Name"
-        prop="extraData.categoryFieldName"
         v-if="slotProps.isInAdvancedMode"
       >
-        <el-select
-          placeholder="categoryFieldName"
-          v-model="slotProps.extraData.categoryFieldName"
-        >
-          <el-option
+        <b-form-select v-model="slotProps.extraData.categoryFieldName">
+          <b-form-select-option
             v-for="selection in slotProps.editForm.selections"
             :key="selection.rename"
             :label="selection.rename"
             :value="selection.rename"
-          >
-          </el-option>
-        </el-select>
-      </el-form-item>
-      <el-form-item
-        label="Value Field Name"
-        prop="extraData.valueFieldName"
-        v-if="slotProps.isInAdvancedMode"
-      >
-        <el-select
-          placeholder="valueFieldName"
-          v-model="slotProps.extraData.valueFieldName"
-        >
-          <el-option
+          ></b-form-select-option>
+        </b-form-select>
+      </b-form-group>
+
+      <b-form-group label="Value Field Name" v-if="slotProps.isInAdvancedMode">
+        <b-form-select v-model="slotProps.extraData.valueFieldName">
+          <b-form-select-option
             v-for="selection in slotProps.editForm.selections"
             :key="selection.rename"
             :label="selection.rename"
             :value="selection.rename"
-          >
-          </el-option>
-        </el-select>
-      </el-form-item>
-      <el-form-item
-        label="Num of result to display"
-        prop="extraData.numOfResultToDisplay"
+          ></b-form-select-option>
+        </b-form-select>
+      </b-form-group>
+
+      <b-form-group
+        :label="
+          'Num of result to display: ' +
+            slotProps.extraData.numOfResultToDisplay
+        "
         v-if="slotProps.isInAdvancedMode"
       >
-        <el-slider
+        <b-form-input
           v-model="slotProps.extraData.numOfResultToDisplay"
-          :min="5"
-          :max="30"
-        ></el-slider>
-      </el-form-item>
+          type="range"
+          min="5"
+          max="30"
+        ></b-form-input>
+      </b-form-group>
     </template>
   </basic-section-detail>
 </template>

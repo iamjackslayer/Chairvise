@@ -28,7 +28,7 @@ public class ConferenceDeserializer extends StdDeserializer<Conference> {
 
     private Date getDateValueByField(JsonNode node, String fieldName) {
         if (node.hasNonNull(fieldName)) {
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             try {
                 return sdf.parse(node.get(fieldName).asText());
             } catch (ParseException e) {

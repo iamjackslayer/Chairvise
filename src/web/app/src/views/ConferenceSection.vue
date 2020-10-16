@@ -1,11 +1,7 @@
 <template>
-  <el-main>
-    <el-container>
-      <el-main>
-        <conference-brief :id="id" />
-      </el-main>
-    </el-container>
-  </el-main>
+  <div>
+    <conference-brief :id="id" />
+  </div>
 </template>
 
 <script>
@@ -40,9 +36,3 @@ export default {
   methods: {}
 };
 </script>
-
-<style scoped>
-.el-main {
-  padding: 0px 20px;
-}
-</style>
