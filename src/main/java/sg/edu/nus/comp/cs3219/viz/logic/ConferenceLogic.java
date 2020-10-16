@@ -26,10 +26,16 @@ public class ConferenceLogic {
         return conferenceRepository.findById(id);
     }
 
-    public List<Conference> findByUserAndName(UserInfo userInfo, String name) {
+    public List<Conference> findByUserInfoAndName(UserInfo userInfo, String name) {
         Optional<Conference> o;
         return conferenceRepository.findByCreatorIdentifierAndName(userInfo.getUserEmail(), name);
     }
+
+    public List<Conference> findByUserAndName(String user, String name) {
+        Optional<Conference> o;
+        return conferenceRepository.findByCreatorIdentifierAndName(user, name);
+    }
+
 
     public Conference saveForUser(Conference conference, UserInfo userInfo) {
         List<Conference> cList = conferenceRepository.findByCreatorIdentifierAndName(userInfo.getUserEmail(), conference.getName());

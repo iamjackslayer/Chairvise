@@ -45,11 +45,17 @@ public class ConferenceController extends BaseRestController {
         Presentation presentation = presentationLogic.findById(presentationId)
             .orElseThrow(() -> new PresentationNotFoundException(presentationId));
 
-        if (presentation.getCreatorIdentifier().equals(currentUser.getUserEmail())) {
-            return all();
-        }
         List<Conference> cList = new ArrayList<Conference>();
-        cList.add(presentation.getConference());
+        if (presentation.getConference() != null) {
+            cList.add(presentation.getConference());
+        }
+
+        if (presentation.getCreatorIdentifier().equals(currentUser.getUserEmail())) {
+            List<Conference> allConferences = all();
+            for (Conference c : allConferences) {
+                cList.add(c);
+            }
+        }
         return cList;
     }
 

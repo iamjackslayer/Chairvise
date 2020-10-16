@@ -3,6 +3,8 @@ package sg.edu.nus.comp.cs3219.viz.logic;
 import org.springframework.stereotype.Component;
 import sg.edu.nus.comp.cs3219.viz.common.datatransfer.UserInfo;
 import sg.edu.nus.comp.cs3219.viz.common.entity.Presentation;
+import sg.edu.nus.comp.cs3219.viz.common.entity.PresentationSection;
+import sg.edu.nus.comp.cs3219.viz.common.entity.record.Conference;
 import sg.edu.nus.comp.cs3219.viz.storage.repository.PresentationRepository;
 
 import java.util.List;
@@ -41,6 +43,13 @@ public class PresentationLogic {
     public Presentation updatePresentation(Presentation oldPresentation, Presentation newPresentation) {
         oldPresentation.setName(newPresentation.getName());
         oldPresentation.setDescription(newPresentation.getDescription());
+//        oldPresentation.setConference(newPresentation.getConference());
+//        oldPresentation.setIsPublic(newPresentation.getIsPublic());
+        return presentationRepository.save(oldPresentation);
+    }
+
+    public Presentation updatePresentationConference (Presentation oldPresentation, Conference conference) {
+        oldPresentation.setConference(conference);
         return presentationRepository.save(oldPresentation);
     }
 
