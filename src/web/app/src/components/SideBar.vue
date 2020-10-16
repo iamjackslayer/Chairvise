@@ -4,7 +4,9 @@
       <span v-if="isChairhubHomeRoute" class="logo d-none d-md-block"
         >ChairVise</span
       >
-      <span v-if="isChairhubHomeRoute" class="logo d-md-none">Chairhub</span>
+      <span v-if="isChairhubHomeRoute" class="logo d-md-none"
+        >Chairhub <span class="logo--small">by ChairVise</span></span
+      >
       <span v-else class="logo">ChairVise</span>
       <button
         @click="toggleCollapse"
@@ -122,6 +124,11 @@ export default {
   font-weight: bold;
   display: block;
   flex: 1;
+  &--small {
+    font-size: 53%;
+    font-weight: 400;
+    color: $gray-500;
+  }
 }
 
 .mobile-nav-toggle {
