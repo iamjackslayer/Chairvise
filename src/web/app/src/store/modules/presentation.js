@@ -159,10 +159,10 @@ export default {
         });
     },
 
-    async getConferenceList({ commit }) {
+    async getConferenceListForPresentation({ commit }, presentationId) {
       commit("setPresentationListLoading", true);
       axios
-        .get("/api/conferences")
+        .get(`/api/presentations/${presentationId}/conferences`)
         .then(response => {
           commit("setConferenceList", response.data);
         })

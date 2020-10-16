@@ -28,9 +28,7 @@ export default new Router({
       // this generates a separate chunk (about.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
       component: () =>
-        import(
-          /* webpackChunkName: "chairhubHome" */ "./views/ChairhubHome.vue"
-        )
+        import(/* webpackChunkName: "chairhubHome" */ "./views/ChairhubHome.vue")
     },
     {
       path: "/userGuide",
@@ -67,9 +65,7 @@ export default new Router({
         title: "Section Page"
       },
       component: () =>
-        import(
-          /* webpackChunkName: "analyze" */ "./views/PresentationSection.vue"
-        ),
+        import(/* webpackChunkName: "analyze" */ "./views/PresentationSection.vue"),
       props: true
     },
     {
@@ -78,9 +74,7 @@ export default new Router({
         title: "Add Conference Page"
       },
       component: () =>
-        import(
-          /* webpackChunkName: "conference" */ "./views/NewConference.vue"
-        ),
+        import(/* webpackChunkName: "conference" */ "./views/NewConference.vue"),
       props: true
     },
     {
@@ -100,9 +94,7 @@ export default new Router({
         title: "Conference Details Page"
       },
       component: () =>
-        import(
-          /* webpackChunkName: "analyze" */ "./views/ConferenceSection.vue"
-        ),
+        import(/* webpackChunkName: "analyze" */ "./views/ConferenceSection.vue"),
       props: true
     },
     {

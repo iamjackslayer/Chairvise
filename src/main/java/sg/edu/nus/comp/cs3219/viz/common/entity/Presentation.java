@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -13,6 +14,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+import sg.edu.nus.comp.cs3219.viz.common.entity.record.Conference;
 
 @Entity
 public class Presentation {
@@ -28,6 +30,14 @@ public class Presentation {
     private String description;
 
     private String creatorIdentifier;
+
+    @ManyToOne
+//    @JoinColumns({
+//        @JoinColumn(name = "conference_creator_identifier", referencedColumnName = "creator_identifier"),
+//        @JoinColumn(name = "conference_name", referencedColumnName = "name")
+//    })
+    @JoinColumn(name = "conference_id", referencedColumnName = "id")
+    private Conference conference;
 
     private boolean isPublic;
 
@@ -65,4 +75,7 @@ public class Presentation {
 
     public boolean getIsPublic() {return isPublic;}
     public void setIsPublic(boolean isPublic) {this.isPublic = isPublic;}
+
+    public Conference getConference(){return conference;}
+    public void setConference(Conference conference){this.conference = conference;}
 }

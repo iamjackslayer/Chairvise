@@ -74,7 +74,6 @@
             </b-form-group>
           </div>
         </div>
-
         <div class="form-section" v-if="isReadyForChoosing">
           <div class="form-description">
             <h5>Conference Information</h5>
