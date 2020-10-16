@@ -88,11 +88,11 @@
 
             <el-tooltip placement="top">
               <div slot="content">
-                If the input conference is an existing conference, current record will
-                be replaced based on record type.
+                If the input conference is an existing conference, current
+                record will be replaced based on record type.
                 <br />
-                If the input conference is a new conference, current record will be
-                created based on record type.
+                If the input conference is a new conference, current record will
+                be created based on record type.
               </div>
               <el-button type="text" icon="el-icon-question" circle></el-button>
             </el-tooltip>

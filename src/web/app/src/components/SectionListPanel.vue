@@ -173,7 +173,10 @@ export default {
   mounted() {
     this.fetchSectionList();
     this.$store.dispatch("fetchDBMetaDataEntities");
-    this.$store.dispatch("getConferenceList");
+    this.$store.dispatch(
+      "getConferenceListForPresentation",
+      this.presentationId
+    );
   },
   methods: {
     updateConference() {
@@ -213,7 +216,8 @@ export default {
           selectedNewSection: this.selectedNewSection,
           // (JIAN YU) This change is done to ensure modification by other user is still using
           // presentation creator's data.
-          dataSet: this.$store.state.presentation.presentationForm.creatorIdentifier
+          dataSet: this.$store.state.presentation.presentationForm
+            .creatorIdentifier
         })
         .then(() => {
           this.selectedNewSection = "";
