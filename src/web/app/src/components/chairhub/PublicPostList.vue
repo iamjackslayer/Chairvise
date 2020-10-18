@@ -1,12 +1,14 @@
 <template>
-  <b-container fluid class="mt-5">
-    <b-row>
+  <b-container fluid class="my-5">
+    <b-row class="mb-3">
       <!-- select options for perPage -->
       <b-col sm="12" md="6" class="my-1">
         <b-form-group
           label="Per page"
-          label-cols-sm="3"
-          label-align-sm="right"
+          label-cols-sm="2"
+          label-cols-md="3"
+          label-align-sm="left"
+          label-align-md="right"
           label-size="md"
           label-for="perPageSelect"
           class="mb-0 font-weight-bold"
@@ -24,8 +26,10 @@
       <b-col sm="12" md="6" class="my-1">
         <b-form-group
           label="Search"
-          label-cols-sm="3"
-          label-align-sm="right"
+          label-cols-sm="2"
+          label-cols-md="3"
+          label-align-sm="left"
+          label-align-md="right"
           label-size="md"
           label-for="filterInput"
           class="mb-0 font-weight-bold"
