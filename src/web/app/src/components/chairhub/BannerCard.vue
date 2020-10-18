@@ -1,5 +1,5 @@
 <template>
-  <b-col fluid md="3" class="banner-card">
+  <b-col fluid class="banner-card">
     <h6 class="card--title">{{ title }}</h6>
     <h6 class="card--figure">{{ figure }}</h6>
     <h6 class="card--subfigure my-0">{{ subfigure }}</h6>
@@ -23,9 +23,9 @@ export default {
   border: 1.7px solid $gray-400;
   border-radius: 0.7rem;
   padding: 1rem;
-  margin: 0.4rem;
+  margin: 0.4rem 0.8rem;
   min-width: 9rem;
-  max-width: 24rem;
+  max-width: 30rem;
   .card--title {
     font-size: 0.9rem;
     font-weight: bold;

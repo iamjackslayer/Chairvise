@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="px-lg-3">
     <Header />
     <EmptyPublicPostList v-if="isPublicPostListEmpty" />
     <PublicPostList v-if="!fetchingPublicPostList" />

@@ -1,25 +1,25 @@
 <template>
   <b-container fluid class="mx-0 my-3">
     <h1 class="chairhub-heading d-none d-md-block">Chairhub</h1>
-    <b-row class="banner">
+    <b-row class="banner mx-0">
       <b-col class="px-0">
         <h3 class="mb-3">This week</h3>
         <b-row align-h="around">
           <BannerCard
             title="public posts"
-            figure="6,617"
+            :figure="totalPublicPostsPastWeek.toString()"
             subfigure="32"
             subtitle="per day avg"
           />
           <BannerCard
             title="comments"
-            figure="6,617"
+            :figure="totalCommentsPastWeek.toString()"
             subfigure="24"
             subtitle="per day avg"
           />
           <BannerCard
             title="active users"
-            figure="6,617"
+            :figure="totalActiveUsersPastWeek.toString()"
             subfigure="2123"
             subtitle="per day avg"
           />
@@ -37,8 +37,15 @@ export default {
     BannerCard
   },
   computed: {
-    totalPublicPostsPastWeek() {},
-    totalCommentsPastWeek() {}
+    totalPublicPostsPastWeek() {
+      return 212;
+    },
+    totalCommentsPastWeek() {
+      return 3219;
+    },
+    totalActiveUsersPastWeek() {
+      return 21;
+    }
   }
 };
 </script>
