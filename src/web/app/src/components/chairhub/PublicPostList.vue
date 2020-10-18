@@ -62,7 +62,7 @@
       :sort-desc.sync="sortDesc"
       hover
       :fields="fields"
-      :items="items"
+      :items="postList"
       :per-page="perPage"
       :current-page="currentPage"
       :filter="filter"
@@ -94,8 +94,10 @@
   </b-container>
 </template>
 <script>
-import dummyList from "../../store/data/dummyPublicPosts";
 export default {
+  props: {
+    postList: Array
+  },
   methods: {
     onRowSelected(row) {
       // console.log(row[0].post_name);
@@ -117,16 +119,15 @@ export default {
       sortDesc: true,
       filter: "",
       fields: [
-        { key: "id", sortable: true },
-        { key: "post_name" },
-        { key: "created_by" },
-        { key: "created_on", sortable: true }
-      ],
-      items: dummyList
+        { key: "id", label: "id", sortable: true },
+        { key: "name", label: "Post names" },
+        { key: "creatorIdentifier", label: "Created by" }
+        // { key: "created_on", sortable: true }
+      ]
     };
   },
   mounted() {
-    this.totalRows = this.items.length;
+    this.totalRows = this.postList.length;
   }
 };
 </script>

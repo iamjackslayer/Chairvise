@@ -2,7 +2,7 @@
   <div class="px-lg-3">
     <Header />
     <EmptyPublicPostList v-if="isPublicPostListEmpty" />
-    <PublicPostList v-else />
+    <PublicPostList v-else :postList="getPublicPostList" />
   </div>
 </template>
 
@@ -24,6 +24,9 @@ export default {
     },
     isPublicPostListEmpty() {
       return this.$store.state.presentation.publicPresentationList.length === 0;
+    },
+    getPublicPostList() {
+      return this.$store.state.presentation.publicPresentationList;
     }
   },
   components: {
