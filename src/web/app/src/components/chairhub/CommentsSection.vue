@@ -1,22 +1,27 @@
 <template>
   <div>
     <h1 class="chairhub-heading d-none d-md-block">Comments</h1>
-    <b-form @submit="addComments">
+    <b-form @submit="addComment">
       <b-form-textarea
-          id="textarea"
-          v-model="commentText"
-          placeholder="Enter something..."
-          rows="3"
-          max-rows="6"
+        id="textarea"
+        v-model="commentFormComment"
+        placeholder="Enter something..."
+        rows="3"
+        max-rows="6"
       ></b-form-textarea>
       <div class="d-flex justify-content-end mb-3">
-        <b-button type="submit" :disabled=isCommentTextEmpty>Submit comment</b-button>
+        <b-button type="submit" :disabled="isCommentTextEmpty"
+          >Submit comment</b-button
+        >
       </div>
     </b-form>
 
     <b-list-group>
-      <b-list-group-item v-for="comment in commentList" v-bind:key="comment">
-        <Comment :comment="comment.comment" :user="comment.user_identifier"></Comment>
+      <b-list-group-item v-for="comment in commentList" v-bind:key="comment.id">
+        <Comment
+          :comment="comment.comment"
+          :user="comment.userIdentifier"
+        ></Comment>
       </b-list-group-item>
     </b-list-group>
   </div>
@@ -26,17 +31,13 @@
 import Comment from "@/components/chairhub/Comment.vue";
 
 export default {
+  props: {
+    presentationId: String
+  },
   name: "Comments",
   data() {
     return {
-      commentText: "",
-      commentList: [{
-        "user_identifier": "testUser",
-        "comment": "testComment",
-      },{
-        "user_identifier": "testUser",
-        "comment": "testComment",
-      }],
+      commentText: ""
     };
   },
   components: {
@@ -45,24 +46,33 @@ export default {
   watch: {},
   computed: {
     isCommentTextEmpty() {
-      return (this.commentText.trim() == "");
+      return this.$store.state.comment.commentForm.comment.trim() == "";
+    },
+    commentList() {
+      return this.$store.state.comment.commentList;
+    },
+    commentFormComment: {
+      get() {
+        return this.$store.state.comment.commentForm.comment;
+      },
+      set(value) {
+        this.$store.commit("setCommentFormField", {
+          field: "comment",
+          value
+        });
+      }
     }
   },
   methods: {
-    addComments(evt) {
+    addComment(evt) {
       // Prevent auto refresh of page
       evt.preventDefault();
 
-      console.log("add comment");
-      console.log(this.commentText);
-      //TODO: call API to add comments here
+      this.$store.dispatch("addCommentForPresentation", this.presentationId);
     }
   },
-  mounted() {
-  }
+  mounted() {}
 };
 </script>
 
-<style>
-
-</style>
+<style></style>

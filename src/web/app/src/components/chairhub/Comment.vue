@@ -9,28 +9,23 @@
 </template>
 
 <script>
-  export default {
-    props: {
-      user: String,
-      comment: String,
-    },
-    name: "Comments",
-    data() {
-      return {
-        commentText: "",
-        commentList: [],
-      };
-    },
-    watch: {},
-    computed: {
-    },
-    methods: {
-    },
-    mounted() {
-    }
-  };
+export default {
+  props: {
+    user: String,
+    comment: String
+  },
+  name: "Comments",
+  data() {
+    return {
+      commentText: "",
+      commentList: []
+    };
+  },
+  watch: {},
+  computed: {},
+  methods: {},
+  mounted() {}
+};
 </script>
 
-<style>
-
-</style>
+<style></style>
