@@ -5,6 +5,7 @@ import mutations from "./mutations";
 import accessControl from "./modules/accessControl";
 import presentation from "./modules/presentation";
 import conference from "./modules/conference";
+import comment from "./modules/comment";
 import section from "./modules/section";
 import dbMetaData from "./modules/dbMetaData";
 import dataMapping from "./modules/dataMapping";
@@ -25,6 +26,7 @@ export default new Vuex.Store({
   modules: {
     userInfo,
     presentation,
+    comment,
     conference,
     accessControl,
     section,

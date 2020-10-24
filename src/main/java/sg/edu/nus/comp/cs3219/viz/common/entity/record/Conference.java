@@ -14,7 +14,8 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import org.hibernate.annotations.GenericGenerator;
-import sg.edu.nus.comp.cs3219.viz.common.util.Deserializer.ConferenceDeserializer;;
+import sg.edu.nus.comp.cs3219.viz.common.util.Deserializer.ConferenceDeserializer;
+import sg.edu.nus.comp.cs3219.viz.common.util.Serializer.ConferenceSerializer;;
 
 @JsonDeserialize(using = ConferenceDeserializer.class)
 @Exportable(name = "Conference", nameInDB = "conference")
@@ -22,7 +23,7 @@ import sg.edu.nus.comp.cs3219.viz.common.util.Deserializer.ConferenceDeserialize
     @UniqueConstraint(columnNames = { "creator_identifier", "name" })
 })
 @Entity
-public class Conference {
+public class Conference implements Serializable{
 
     @Id
     @GenericGenerator(name = "UseExistingIdOtherwiseGenerateUsingIdentity", strategy = "sg.edu.nus.comp.cs3219.viz.common.entity.UseExistingIdOtherwiseGenerateUsingIdentity")
@@ -35,9 +36,10 @@ public class Conference {
 
     private String description;
     private Date date;
-    private boolean hasAuthorRecord;
-    private boolean hasReviewRecord;
-    private boolean hasSubmissionRecord;
+
+    private int numAuthorRecord;
+    private int numReviewRecord;
+    private int numSubmissionRecord;
 
     @Column(name = "creator_identifier")
     private String creatorIdentifier;
@@ -64,26 +66,8 @@ public class Conference {
 
     public Conference(String creatorIdentifier, String name){
 //        this.id = new ConferencePK(creatorIdentifier, name);
-        // TODO: Add date here
         this.creatorIdentifier = creatorIdentifier;
         this.name = name;
-    }
-
-    public Conference(String creatorIdentifier, String name, String recordType){
-        this.creatorIdentifier = creatorIdentifier;
-        this.name = name;
-        // TODO: Add date here
-        if (recordType != null) {
-            if (recordType.equals("AuthorRecord")) {
-                this.hasAuthorRecord = true;
-            }
-            if (recordType.equals("ReviewRecord")) {
-                this.hasReviewRecord = true;
-            }
-            if (recordType.equals("SubmissionRecord")) {
-                this.hasSubmissionRecord = true;
-            }
-        }
     }
 
     public Long getId(){return id;}
@@ -122,28 +106,28 @@ public class Conference {
         this.date = date;
     }
 
-    public boolean getHasAuthorRecord() {
-        return hasAuthorRecord;
+    public int getNumAuthorRecord() {
+        return numAuthorRecord;
     }
 
-    public void setHasAuthorRecord(boolean hasAuthorRecord) {
-        this.hasAuthorRecord = hasAuthorRecord;
+    public void setNumAuthorRecord(int numAuthorRecord) {
+        this.numAuthorRecord = numAuthorRecord;
     }
 
-    public boolean getHasReviewRecord() {
-        return hasReviewRecord;
+    public int getNumReviewRecord() {
+        return numReviewRecord;
     }
 
-    public void setHasReviewRecord(boolean hasReviewRecord) {
-        this.hasReviewRecord = hasReviewRecord;
+    public void setNumReviewRecord(int numReviewRecord) {
+        this.numReviewRecord = numReviewRecord;
     }
 
-    public boolean getHasSubmissionRecord() {
-        return hasSubmissionRecord;
+    public int getNumSubmissionRecord() {
+        return numSubmissionRecord;
     }
 
-    public void setHasSubmissionRecord(boolean hasSubmissionRecord) {
-        this.hasSubmissionRecord = hasSubmissionRecord;
+    public void setNumSubmissionRecord(int numSubmissionRecord) {
+        this.numSubmissionRecord = numSubmissionRecord;
     }
 
     @Embeddable

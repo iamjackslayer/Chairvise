@@ -17,9 +17,9 @@ public class ConferenceSerializer extends StdSerializer<Conference> {
     @Override
     public void serialize(Conference value, JsonGenerator gen, SerializerProvider provider) throws IOException {
         gen.writeStartObject();
-        gen.writeBooleanField("hasAuthorRecord", value.getHasAuthorRecord());
-        gen.writeBooleanField("hasReviewRecord", value.getHasReviewRecord());
-        gen.writeBooleanField("hasSubmissionRecord", value.getHasSubmissionRecord());
+        gen.writeNumberField("numAuthorRecord", value.getNumAuthorRecord());
+        gen.writeNumberField("numReviewRecord", value.getNumReviewRecord());
+        gen.writeNumberField("numSubmissionRecord", value.getNumSubmissionRecord());
         gen.writeStringField("name", value.getName());
         if(value.getDate() != null) {
             gen.writeStringField("date", value.getDate().toString());

@@ -57,7 +57,7 @@ public class SubmissionRecordDeserializer extends StdDeserializer<SubmissionReco
         System.out.println("called");
         JsonNode node = p.getCodec().readTree(p);
         String conferenceName = getStrValueByField(node, "conferenceName");
-        Conference conference = new Conference(null, conferenceName, null);
+        Conference conference = new Conference(null, conferenceName);
 
         String submissionId = getStrValueByField(node, "submissionId");
         String trackId = getStrValueByField(node,"trackId");
