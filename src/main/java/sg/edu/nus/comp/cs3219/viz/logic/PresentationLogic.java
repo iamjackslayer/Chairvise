@@ -1,5 +1,6 @@
 package sg.edu.nus.comp.cs3219.viz.logic;
 
+import java.util.Date;
 import org.springframework.stereotype.Component;
 import sg.edu.nus.comp.cs3219.viz.common.datatransfer.UserInfo;
 import sg.edu.nus.comp.cs3219.viz.common.entity.Presentation;
@@ -37,12 +38,18 @@ public class PresentationLogic {
         newPresentation.setDescription(presentation.getDescription());
         newPresentation.setCreatorIdentifier(userInfo.getUserEmail());
         newPresentation.setIsPublic(presentation.getIsPublic());
+        Date currentTime = new Date();
+        newPresentation.setCreatedDate(currentTime);
+        newPresentation.setLastUpdatedDate(currentTime);
         return presentationRepository.save(newPresentation);
     }
 
     public Presentation updatePresentation(Presentation oldPresentation, Presentation newPresentation) {
         oldPresentation.setName(newPresentation.getName());
         oldPresentation.setDescription(newPresentation.getDescription());
+        Date currentTime = new Date();
+        oldPresentation.setLastUpdatedDate(currentTime);
+        // TODO: Add the following when it is done in frontend.
 //        oldPresentation.setConference(newPresentation.getConference());
 //        oldPresentation.setIsPublic(newPresentation.getIsPublic());
         return presentationRepository.save(oldPresentation);
@@ -50,7 +57,15 @@ public class PresentationLogic {
 
     public Presentation updatePresentationConference (Presentation oldPresentation, Conference conference) {
         oldPresentation.setConference(conference);
+        Date currentTime = new Date();
+        oldPresentation.setLastUpdatedDate(currentTime);
         return presentationRepository.save(oldPresentation);
+    }
+
+    public Presentation updatePresentationLastUpdatedDate(Presentation presentation) {
+        Date currentTime = new Date();
+        presentation.setLastUpdatedDate(currentTime);
+        return presentationRepository.save(presentation);
     }
 
     public void deleteById(Long id) {
