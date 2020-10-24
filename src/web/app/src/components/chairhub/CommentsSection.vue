@@ -64,6 +64,12 @@ export default {
     }
   },
   methods: {
+    fetchComments() {
+      this.$store.dispatch(
+        "getCommentListForPresentation",
+        this.presentationId
+      );
+    },
     addComment(evt) {
       // Prevent auto refresh of page
       evt.preventDefault();
@@ -74,7 +80,10 @@ export default {
       );
     }
   },
-  mounted() {}
+  mounted() {
+    // fetch all comments for this presentation
+    this.fetchComments();
+  }
 };
 </script>
 

@@ -2,7 +2,10 @@
   <div>
     <presentation-brief :id="id" />
     <section-list-panel :presentationId="id" />
-    <comments-section v-if="isPresentationPublic" />
+    <comments-section
+      :presentationId="presentationId"
+      v-if="isPresentationPublic"
+    />
   </div>
 </template>
 
