@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <h1 class="chairhub-heading d-none d-md-block">Comments</h1>
+  <b-container class="comments-section">
+    <h3 class="chairhub-heading d-none d-md-block">Comments</h3>
     <b-form @submit="addComment">
       <b-form-textarea
         id="textarea"
@@ -9,7 +9,7 @@
         rows="3"
         max-rows="6"
       ></b-form-textarea>
-      <div class="d-flex justify-content-end mb-3">
+      <div class="d-flex justify-content-end py-3">
         <b-button type="submit" :disabled="isCommentTextEmpty"
           >Submit comment</b-button
         >
@@ -24,7 +24,7 @@
         ></Comment>
       </b-list-group-item>
     </b-list-group>
-  </div>
+  </b-container>
 </template>
 
 <script>
@@ -68,11 +68,21 @@ export default {
       // Prevent auto refresh of page
       evt.preventDefault();
 
-      this.$store.dispatch("addCommentForPresentation", this.presentationId);
+      this.$store.dispatch(
+        "addCommentForPresentation",
+        this.$store.state.presentation.presentationForm.id
+      );
     }
   },
   mounted() {}
 };
 </script>
 
-<style></style>
+<style>
+.comments-section {
+  margin: 15px 0 0 0;
+  padding: 0;
+  width: 100%;
+  max-width: 100%;
+}
+</style>
