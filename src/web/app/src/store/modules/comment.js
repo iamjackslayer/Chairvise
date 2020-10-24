@@ -45,6 +45,20 @@ export default {
       state.commentList = payload;
     },
 
+    editComment(state, payload) {
+      state.commentList = state.commentList.map(comment =>
+        comment.id == payload.commentId
+          ? { ...comment, comment: payload.editedComment }
+          : comment
+      );
+    },
+
+    removeFromCommentList(state, payload) {
+      state.commentList = state.commentList.filter(
+        comment => comment.id != payload.id
+      );
+    },
+
     setCommentFormLoading(state, payload) {
       if (payload) {
         state.commentFormStatus.isApiError = false;
@@ -106,6 +120,44 @@ export default {
         })
         .finally(() => {
           commit("setCommentFormLoading", false);
+        });
+    },
+
+    async editCommentForPresentation(
+      { commit },
+      { presentationId, id, editedComment }
+    ) {
+      commit("setCommentFormLoading", true);
+      axios
+        .put(
+          `/api/presentations/${presentationId}/comments/${id}`,
+          editedComment
+        )
+        .then(() => {
+          commit("editComment", { id, editedComment });
+          commit("setSaveSuccess", true);
+        })
+        .catch(e => {
+          commit("setCommentFormApiError", e.toString());
+        })
+        .finally(() => {
+          commit("setCommentFormLoading", false);
+        });
+    },
+
+    async deleteCommentForPresentation({ commit }, { presentationId, id }) {
+      commit("setCommentFormLoading", true);
+      axios
+        .delete(`/api/presentations/${presentationId}/comments/${id}`)
+        .then(() => {
+          commit("removeFromCommentList", { id });
+          commit("setSaveSuccess", true);
+        })
+        .catch(e => {
+          commit("setCommentFormApiError", e.toString());
+        })
+        .finally(() => {
+          commit("setCommentFormLoading", true);
         });
     }
   }
