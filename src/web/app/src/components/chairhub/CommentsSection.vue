@@ -19,8 +19,10 @@
     <b-list-group>
       <b-list-group-item v-for="comment in commentList" v-bind:key="comment.id">
         <Comment
+          :id="comment.id"
+          :presentationId="presentationId"
           :comment="comment.comment"
-          :user="comment.userIdentifier"
+          :creator="comment.userIdentifier"
         ></Comment>
       </b-list-group-item>
     </b-list-group>
@@ -36,9 +38,7 @@ export default {
   },
   name: "Comments",
   data() {
-    return {
-      commentText: ""
-    };
+    return {};
   },
   components: {
     Comment
@@ -70,14 +70,21 @@ export default {
         this.presentationId
       );
     },
+    clearTextField() {
+      this.commentFormComment = "";
+    },
     addComment(evt) {
       // Prevent auto refresh of page
       evt.preventDefault();
 
-      this.$store.dispatch(
-        "addCommentForPresentation",
-        this.$store.state.presentation.presentationForm.id
-      );
+      this.$store
+        .dispatch(
+          "addCommentForPresentation",
+          this.$store.state.presentation.presentationForm.id
+        )
+        .then(() => {
+          this.$store.dispatch("clearCommentField");
+        });
     }
   },
   mounted() {

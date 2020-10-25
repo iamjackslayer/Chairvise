@@ -85,9 +85,16 @@ export default {
 
     setSaveSuccess(state, success) {
       state.isSaveSuccess = success;
+    },
+
+    clearField(state) {
+      state.commentForm.comment = "";
     }
   },
   actions: {
+    clearCommentField({ commit }) {
+      commit("clearField");
+    },
     async getCommentListForPresentation({ commit }, presentationId) {
       commit("setCommentListLoading", true);
       axios
