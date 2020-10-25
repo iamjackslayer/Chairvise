@@ -3,6 +3,7 @@ package sg.edu.nus.comp.cs3219.viz.common.entity;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
+import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -25,6 +26,10 @@ public class PresentationComment {
     private String userIdentifier;
 
     private String comment;
+
+    private Date createdDate;
+
+    private Date lastUpdatedDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "presentation_id")
@@ -62,5 +67,19 @@ public class PresentationComment {
 
     public void setPresentation(Presentation presentation) {
         this.presentation = presentation;
+    }
+
+    public Date getUpdatedDate() {
+        return lastUpdatedDate;
+    }
+    public void setLastUpdatedDate(Date lastUpdatedDate) {
+        this.lastUpdatedDate = lastUpdatedDate;
+    }
+
+    public Date getCreatedDate() {
+        return createdDate;
+    }
+    public void setCreatedDate(Date createdDate) {
+        this.createdDate = createdDate;
     }
 }

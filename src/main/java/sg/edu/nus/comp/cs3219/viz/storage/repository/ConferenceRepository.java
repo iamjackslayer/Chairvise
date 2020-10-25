@@ -9,9 +9,9 @@ public interface ConferenceRepository extends JpaRepository<Conference, Long> {
 
     List<Conference> findByCreatorIdentifier(String creatorIdentifier);
 
-    List<Conference> findByCreatorIdentifierAndHasAuthorRecord(String creatorIdentifier, boolean hasAuthorRecord);
-    List<Conference> findByCreatorIdentifierAndHasReviewRecord(String creatorIdentifier, boolean hasReviewRecord);
-    List<Conference> findByCreatorIdentifierAndHasSubmissionRecord(String creatorIdentifier, boolean hasSubmissionRecord);
+    List<Conference> findByCreatorIdentifierAndNumAuthorRecordGreaterThan(String creatorIdentifier, int numAuthorRecord);
+    List<Conference> findByCreatorIdentifierAndNumReviewRecordGreaterThan(String creatorIdentifier, int numReviewRecord);
+    List<Conference> findByCreatorIdentifierAndNumSubmissionRecordGreaterThan(String creatorIdentifier, int numSubmissionRecord);
 
     List<Conference> findByCreatorIdentifierAndName(String creatorIdentifier, String name);
 

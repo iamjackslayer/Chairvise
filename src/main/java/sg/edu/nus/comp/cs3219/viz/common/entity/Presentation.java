@@ -3,6 +3,7 @@ package sg.edu.nus.comp.cs3219.viz.common.entity;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
+import java.util.Date;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinColumns;
@@ -30,6 +31,10 @@ public class Presentation {
     private String description;
 
     private String creatorIdentifier;
+
+    private Date createdDate;
+
+    private Date lastUpdatedDate;
 
     @ManyToOne
 //    @JoinColumns({
@@ -78,4 +83,18 @@ public class Presentation {
 
     public Conference getConference(){return conference;}
     public void setConference(Conference conference){this.conference = conference;}
+
+    public Date getUpdatedDate() {
+        return lastUpdatedDate;
+    }
+    public void setLastUpdatedDate(Date lastUpdatedDate) {
+        this.lastUpdatedDate = lastUpdatedDate;
+    }
+
+    public Date getCreatedDate() {
+        return createdDate;
+    }
+    public void setCreatedDate(Date createdDate) {
+        this.createdDate = createdDate;
+    }
 }

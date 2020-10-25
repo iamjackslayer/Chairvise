@@ -61,13 +61,13 @@ public class ConferenceLogic {
 
     public List<Conference> findAllForUserWithRecordType(UserInfo userInfo, String recordType){
         if (recordType.equals("AuthorRecord")) {
-            return conferenceRepository.findByCreatorIdentifierAndHasAuthorRecord(userInfo.getUserEmail(), true);
+            return conferenceRepository.findByCreatorIdentifierAndNumAuthorRecordGreaterThan(userInfo.getUserEmail(), 0);
         }
         if (recordType.equals("ReviewRecord")) {
-            return conferenceRepository.findByCreatorIdentifierAndHasReviewRecord(userInfo.getUserEmail(), true);
+            return conferenceRepository.findByCreatorIdentifierAndNumReviewRecordGreaterThan(userInfo.getUserEmail(), 0);
         }
         if (recordType.equals("SubmissionRecord")) {
-            return conferenceRepository.findByCreatorIdentifierAndHasSubmissionRecord(userInfo.getUserEmail(), true);
+            return conferenceRepository.findByCreatorIdentifierAndNumSubmissionRecordGreaterThan(userInfo.getUserEmail(), 0);
         } else {
             return null;
         }

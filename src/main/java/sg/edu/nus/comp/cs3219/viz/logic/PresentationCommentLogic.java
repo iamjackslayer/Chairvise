@@ -1,6 +1,7 @@
 package sg.edu.nus.comp.cs3219.viz.logic;
 
 import com.google.appengine.api.users.User;
+import java.util.Date;
 import org.springframework.stereotype.Component;
 import sg.edu.nus.comp.cs3219.viz.common.datatransfer.UserInfo;
 import sg.edu.nus.comp.cs3219.viz.common.entity.Presentation;
@@ -34,12 +35,16 @@ public class PresentationCommentLogic {
     newComment.setComment(presentationComment.getComment());
     newComment.setUserIdentifier(userInfo.getUserEmail());
     newComment.setPresentation(presentation);
+    Date currentTime = new Date();
+    newComment.setCreatedDate(currentTime);
+    newComment.setLastUpdatedDate(currentTime);
     return presentationCommentRepository.save(newComment);
   }
 
   public PresentationComment updatePresentationComment(PresentationComment oldPresentationComment, PresentationComment newPresentationComment) {
     oldPresentationComment.setComment(newPresentationComment.getComment());
-
+    Date currentTime = new Date();
+    oldPresentationComment.setLastUpdatedDate(currentTime);
     return presentationCommentRepository.save(oldPresentationComment);
   }
 

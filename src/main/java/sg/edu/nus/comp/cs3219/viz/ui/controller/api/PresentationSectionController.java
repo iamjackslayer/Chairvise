@@ -1,5 +1,6 @@
 package sg.edu.nus.comp.cs3219.viz.ui.controller.api;
 
+import java.util.Date;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import sg.edu.nus.comp.cs3219.viz.common.datatransfer.AccessLevel;
@@ -46,6 +47,8 @@ public class PresentationSectionController extends BaseRestController {
                 .orElseThrow(() -> new PresentationNotFoundException(presentationId));
         gateKeeper.verifyAccessForPresentation(presentation, AccessLevel.CAN_WRITE);
 
+        presentationLogic.updatePresentationLastUpdatedDate(presentation);
+
         PresentationSection newPresentationSection = presentationSectionLogic.saveForPresentation(presentation, presentationSection);
 
         return ResponseEntity
@@ -62,6 +65,7 @@ public class PresentationSectionController extends BaseRestController {
         Presentation presentation = oldPresentationSection.getPresentation();
         gateKeeper.verifyAccessForPresentation(presentation, AccessLevel.CAN_WRITE);
 
+        presentationLogic.updatePresentationLastUpdatedDate(presentation);
         PresentationSection updatedPresentationSection =
                 presentationSectionLogic.updatePresentation(oldPresentationSection, newPresentationSection);
 
@@ -77,7 +81,7 @@ public class PresentationSectionController extends BaseRestController {
 
         Presentation presentation = presentationSection.getPresentation();
         gateKeeper.verifyAccessForPresentation(presentation, AccessLevel.CAN_WRITE);
-
+        presentationLogic.updatePresentationLastUpdatedDate(presentation);
         presentationSectionLogic.deleteById(sectionId);
 
         return ResponseEntity.noContent().build();

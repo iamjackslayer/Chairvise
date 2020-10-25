@@ -52,9 +52,10 @@ public class RecordLogic {
         Conference c;
         if (cList.size() > 0) {
             c = cList.get(0);
-            c.setHasAuthorRecord(true);
+            c.setNumAuthorRecord(authorRecordList.size());
         } else {
-            c = new Conference(dataSet, temp.getConference().getName(), "AuthorRecord");
+            c = new Conference(dataSet, temp.getConference().getName());
+            c.setNumAuthorRecord(authorRecordList.size());
             conferenceRepository.save(c);
         }
         authorRecordRepository.deleteAllByConferenceEquals(c);
@@ -80,9 +81,10 @@ public class RecordLogic {
         Conference c;
         if (cList.size() > 0) {
             c = cList.get(0);
-            c.setHasReviewRecord(true);
+            c.setNumReviewRecord(reviewRecordList.size());
         } else {
-            c = new Conference(dataSet, temp.getConference().getName(), "ReviewRecord");
+            c = new Conference(dataSet, temp.getConference().getName());
+            c.setNumReviewRecord(reviewRecordList.size());
             conferenceRepository.save(c);
         }
         reviewRecordRepository.deleteAllByConferenceEquals(c);
@@ -111,9 +113,10 @@ public class RecordLogic {
         Conference c;
         if (cList.size() > 0) {
             c = cList.get(0);
-            c.setHasSubmissionRecord(true);
+            c.setNumSubmissionRecord(submissionRecordList.size());
         } else {
-            c = new Conference(dataSet, temp.getConference().getName(), "SubmissionRecord");
+            c = new Conference(dataSet, temp.getConference().getName());
+            c.setNumSubmissionRecord(submissionRecordList.size());
             conferenceRepository.save(c);
         }
         submissionRecordRepository.deleteAllByConferenceEquals(c);
