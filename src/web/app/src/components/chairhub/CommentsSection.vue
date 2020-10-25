@@ -1,6 +1,6 @@
 <template>
   <b-container class="comments-section">
-    <h3 class="chairhub-heading d-none d-md-block">Comments</h3>
+    <h3 class="chairhub-heading d-none d-md-block">Create comment</h3>
     <b-form @submit="addComment">
       <b-form-textarea
         id="textarea"
@@ -10,21 +10,22 @@
         max-rows="6"
       ></b-form-textarea>
       <div class="d-flex justify-content-end py-3">
-        <b-button type="submit" :disabled="isCommentTextEmpty"
-          >Submit comment</b-button
+        <b-button type="submit" :disabled="isCommentTextEmpty" variant="create"
+          >Create</b-button
         >
       </div>
     </b-form>
-
+    <h3>Comments</h3>
     <b-list-group>
-      <b-list-group-item v-for="comment in commentList" v-bind:key="comment.id">
-        <Comment
-          :id="comment.id"
-          :presentationId="presentationId"
-          :comment="comment.comment"
-          :creator="comment.userIdentifier"
-        ></Comment>
-      </b-list-group-item>
+      <Comment
+        v-for="comment in commentList"
+        :key="comment.id"
+        class="my-1"
+        :id="comment.id"
+        :presentationId="presentationId"
+        :comment="comment.comment"
+        :creator="comment.userIdentifier"
+      ></Comment>
     </b-list-group>
   </b-container>
 </template>
@@ -94,11 +95,14 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss" scoped>
 .comments-section {
-  margin: 15px 0 0 0;
+  margin: 20px 0 0 0;
   padding: 0;
   width: 100%;
   max-width: 100%;
+}
+.btn-create {
+  @include button-variant($gray-700, #fff, lighten($gray-700, 5%), $gray-700);
 }
 </style>

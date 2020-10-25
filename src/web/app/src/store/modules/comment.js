@@ -47,7 +47,7 @@ export default {
 
     editComment(state, payload) {
       state.commentList = state.commentList.map(comment =>
-        comment.id == payload.commentId
+        comment.id == payload.id
           ? { ...comment, comment: payload.editedComment }
           : comment
       );
@@ -136,10 +136,10 @@ export default {
     ) {
       commit("setCommentFormLoading", true);
       axios
-        .put(
-          `/api/presentations/${presentationId}/comments/${id}`,
-          editedComment
-        )
+        .put(`/api/presentations/${presentationId}/comments/${id}`, {
+          id,
+          comment: editedComment
+        })
         .then(() => {
           commit("editComment", { id, editedComment });
           commit("setSaveSuccess", true);
