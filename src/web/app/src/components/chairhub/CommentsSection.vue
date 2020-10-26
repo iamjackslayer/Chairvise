@@ -1,6 +1,6 @@
 <template>
   <b-container class="comments-section">
-    <h3 class="chairhub-heading d-none d-md-block">Create comment</h3>
+    <h3 class="cs-heading d-none d-md-block">Create a comment</h3>
     <b-form @submit="onCreateComment">
       <b-form-textarea
         id="textarea"
@@ -15,7 +15,7 @@
         >
       </div>
     </b-form>
-    <h3 v-if="commentList.length > 0">Comments</h3>
+    <h3 class="cs-list-heading" v-if="commentList.length > 0">Comments</h3>
     <b-list-group>
       <Comment
         v-for="comment in commentList"
@@ -102,6 +102,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.cs-heading {
+  font-size: 1.5rem;
+}
+.cs-list-heading {
+  font-size: 1.4rem;
+}
 .comments-section {
   margin: 20px 0 0 0;
   padding: 0;

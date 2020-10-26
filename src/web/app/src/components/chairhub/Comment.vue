@@ -4,7 +4,7 @@
       <h6 class="comment-heading col-10" v-text="creator"></h6>
       <b-button
         v-if="canDelete"
-        @click="deleteComment"
+        @click="showDeleteConfirmation"
         variant="outline-delete"
         size="sm"
         class="mx-0 ml-auto"
@@ -104,6 +104,22 @@ export default {
         presentationId: this.presentationId,
         id: this.id
       });
+    },
+    showDeleteConfirmation() {
+      this.$bvModal
+        .msgBoxConfirm("Delete comment?", {
+          title: "Please Confirm",
+          size: "sm",
+          buttonSize: "md",
+          okVariant: "delete",
+          okTitle: "Yes",
+          cancelTitle: "No",
+          footerClass: "p-2",
+          centered: true
+        })
+        .then(value => {
+          if (value) this.deleteComment();
+        });
     }
   },
   mounted() {
@@ -118,7 +134,7 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .comment-container {
   background-color: $white;
   border: 1px solid $gray-400;
@@ -137,6 +153,15 @@ export default {
 .comment-footer {
   margin: 0.5rem 0 0 0;
   text-align: center;
+}
+.btn-delete {
+  @include button-variant(
+    $red-500,
+    $red-500,
+    darken($red-500, 7.5%),
+    lighten($red-500, 5%),
+    $red-500
+  );
 }
 .btn-outline-delete {
   @include button-outline-variant(
