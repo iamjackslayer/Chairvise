@@ -10,13 +10,19 @@
     </b-row>
     <b-row class="row">
       <b-col
-        ><b-card header="Author Records"><h1>hello</h1></b-card></b-col
+        ><b-card header="Author Records"
+          ><h1>{{ getAuthorRecord }}</h1></b-card
+        ></b-col
       >
       <b-col
-        ><b-card header="Submission Records"><h1>hello</h1></b-card></b-col
+        ><b-card header="Submission Records"
+          ><h1>{{ getSubmissionRecord }}</h1></b-card
+        ></b-col
       >
       <b-col
-        ><b-card header="Review Records"><h1>hello</h1></b-card>
+        ><b-card header="Review Records"
+          ><h1>{{ getReviewRecord }}</h1></b-card
+        >
       </b-col>
     </b-row>
     <b-row>
@@ -103,6 +109,15 @@ export default {
   computed: {
     isLogin() {
       return this.$store.state.userInfo.isLogin;
+    },
+    getAuthorRecord() {
+      return this.$store.state.conference.conferenceForm.numAuthorRecord;
+    },
+    getReviewRecord() {
+      return this.$store.state.conference.conferenceForm.numReviewRecord;
+    },
+    getSubmissionRecord() {
+      return this.$store.state.conference.conferenceForm.numSubmissionRecord;
     },
     // conferenceForm() {
     //   // TODO: Review the date time formatting
