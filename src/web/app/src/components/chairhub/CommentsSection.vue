@@ -1,7 +1,7 @@
 <template>
   <b-container class="comments-section">
     <h3 class="chairhub-heading d-none d-md-block">Create comment</h3>
-    <b-form @submit="addComment">
+    <b-form @submit="onCreateComment">
       <b-form-textarea
         id="textarea"
         v-model="commentFormComment"
@@ -15,12 +15,12 @@
         >
       </div>
     </b-form>
-    <h3>Comments</h3>
+    <h3 v-if="commentList.length > 0">Comments</h3>
     <b-list-group>
       <Comment
         v-for="comment in commentList"
         :key="comment.id"
-        class="my-1"
+        class="my-1 comment-item"
         :id="comment.id"
         :presentationId="presentationId"
         :comment="comment.comment"
@@ -39,7 +39,7 @@ export default {
   },
   name: "Comments",
   data() {
-    return {};
+    return { scrolling: false };
   },
   components: {
     Comment
@@ -74,7 +74,7 @@ export default {
     clearTextField() {
       this.commentFormComment = "";
     },
-    addComment(evt) {
+    async addComment(evt) {
       // Prevent auto refresh of page
       evt.preventDefault();
 
@@ -86,6 +86,12 @@ export default {
         .then(() => {
           this.$store.dispatch("clearCommentField");
         });
+    },
+    async onCreateComment(evt) {
+      evt.preventDefault();
+      this.addComment(evt);
+      // console.log(document.body.scrollHeight);
+      this.scrolling = true;
     }
   },
   mounted() {

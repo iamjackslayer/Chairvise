@@ -1,13 +1,13 @@
 <template>
   <div class="comment-container">
-    <b-row class="mb-2">
-      <h6 class="comment-heading col-11" v-text="creator"></h6>
+    <b-row class="mb-2 mx-0">
+      <h6 class="comment-heading col-10" v-text="creator"></h6>
       <b-button
         v-if="canDelete"
         @click="deleteComment"
         variant="outline-delete"
         size="sm"
-        class="mx-0"
+        class="mx-0 ml-auto"
       >
         <b-icon icon="trash-fill"></b-icon>
       </b-button>
@@ -109,6 +109,11 @@ export default {
   mounted() {
     this.originalComment = this.comment;
     this.currentComment = this.comment;
+    this.$el.scrollIntoView({
+      top: this.$el.offsetTop,
+      behavior: "smooth",
+      block: "end"
+    });
   }
 };
 </script>
@@ -121,6 +126,7 @@ export default {
   padding: 0.9rem 1rem;
 }
 .comment-heading {
+  padding: 0;
   margin: 1px 0 1px 0;
   color: $teal-600;
   font-size: 0.9rem;
