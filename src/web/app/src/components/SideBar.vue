@@ -63,12 +63,12 @@ export default {
   name: "SideBar",
   data() {
     return {
-      visible: true,
-      isWindowLarge: true
+      visible: window.innerWidth >= 992,
+      isWindowLarge: false
     };
   },
   mounted() {
-    // Expands collapse when larger than md and vice versa.
+    // Expands collapse when larger than lg and vice versa.
     window.addEventListener("resize", ev => {
       let innerWidth = ev.currentTarget.innerWidth;
       this.isWindowLarge = this.visible = innerWidth >= 992;

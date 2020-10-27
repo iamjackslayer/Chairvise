@@ -1,14 +1,13 @@
 <template>
   <div>
     <div class="title-bar">
-      <h1 class="title">My Conferences</h1>
+      <h1 class="title">Calendar</h1>
       <b-button class="title-action" variant="primary" @click="createConference"
-        ><b-icon icon="plus"></b-icon> Add New Conference</b-button
+        ><b-icon icon="plus"></b-icon> Add Conference</b-button
       >
     </div>
-
     <b-card>
-      <FullCalendar :options="calendarOptions" />
+      <FullCalendar ref="fullCalendar" :options="calendarOptions" />
     </b-card>
   </div>
 </template>
@@ -28,11 +27,7 @@ export default {
   },
   data() {
     return {
-      show: false,
-      config: {
-        height: 500,
-        editable: false
-      }
+      isWindowLarge: this.checkLargeScreen()
     };
   },
   watch: {
@@ -84,18 +79,29 @@ export default {
       return newList;
     },
     calendarOptions() {
+      const headerToolbarOptions = this.isWindowLarge
+        ? {
+            left: "today prev,next",
+            center: "title",
+            right: "dayGridMonth timeGridWeek timeGridDay listYear"
+          }
+        : {
+            left: "title",
+            center: "",
+            right: "prev,next"
+          };
+
+      const view = this.isWindowLarge ? "dayGridMonth" : "listYear";
+
       return {
         themeSystem: "bootstrap",
         plugins: [dayGridPlugin, timeGridPlugin, listPlugin, interactionPlugin],
-        // initialView: "dayMonthView",
+        initialView: view,
         events: this.conferences,
         eventClick: this.eventSelected,
+        windowResize: this.handleResize,
         selectable: true,
-        headerToolbar: {
-          left: "today prev,next",
-          center: "title",
-          right: "dayGridMonth timeGridWeek timeGridDay listYear"
-        }
+        headerToolbar: headerToolbarOptions
       };
     }
   },
@@ -107,19 +113,23 @@ export default {
     createConference() {
       this.$router.push("/conference/add");
     },
-    loadConferences() {
-      this.show = true;
-    },
     viewConference(id) {
       this.$router.push("/conference/" + id);
     },
     eventSelected({ event }) {
       this.viewConference(event.id);
+    },
+    checkLargeScreen() {
+      return window.innerWidth >= 992;
+    },
+    handleResize() {
+      this.isWindowLarge = this.checkLargeScreen();
+      const view = this.isWindowLarge ? "dayGridMonth" : "listYear";
+      this.$refs.fullCalendar.getApi().changeView(view);
     }
   },
   mounted() {
     this.$store.dispatch("getConferenceList");
-    this.loadConferences();
   }
 };
 </script>
