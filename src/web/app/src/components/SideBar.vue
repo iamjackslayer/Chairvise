@@ -6,7 +6,8 @@
         @click="toggleCollapse"
         class="d-lg-none p-0 ml-3 btn mobile-nav-toggle"
       >
-        <b-icon icon="list" />
+        <b-icon v-if="visible" icon="x" />
+        <b-icon v-else icon="list" />
       </button>
     </div>
     <b-collapse v-model="visible" id="nav-collapse">

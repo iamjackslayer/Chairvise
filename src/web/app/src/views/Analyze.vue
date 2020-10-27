@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="title-bar">
-      <h1 class="title">My Presentations</h1>
+      <h1 class="title">Presentations</h1>
       <b-button
         class="title-action"
         variant="primary"

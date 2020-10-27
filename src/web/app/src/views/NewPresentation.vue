@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="title-bar">
-      <h1 class="title">Add New Presentation</h1>
+      <h1 class="title">Add Presentation</h1>
     </div>
 
     <b-alert v-if="isNewPresentation && !isLogin" show variant="danger">
