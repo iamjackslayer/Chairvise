@@ -3,7 +3,7 @@
     <div class="row flex-xl-nowrap">
       <SideBar />
 
-      <div class="col-12 col-md-9 col-xl-10 py-md-3 px-md-5 bd-content content">
+      <div class="col-12 col-lg-9 col-xl-10 py-lg-3 px-lg-5 bd-content content">
         <b-overlay :show="isAppLoading" no-wrap />
         <div class="page-container">
           <router-view />

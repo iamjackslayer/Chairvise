@@ -1,16 +1,10 @@
 <template>
-  <div class="col-12 col-md-3 col-xl-2 sidebar">
-    <div class="logo-container h3">
-      <span v-if="isChairhubHomeRoute" class="logo d-none d-md-block"
-        >ChairVise</span
-      >
-      <span v-if="isChairhubHomeRoute" class="logo d-md-none"
-        >Chairhub <span class="logo--small">by ChairVise</span></span
-      >
-      <span v-else class="logo">ChairVise</span>
+  <div class="col-12 col-lg-3 col-xl-2 p-2 p-lg-3 sidebar">
+    <div class="logo-container">
+      <span class="logo">ChairVise</span>
       <button
         @click="toggleCollapse"
-        class="d-md-none p-0 ml-3 btn mobile-nav-toggle"
+        class="d-lg-none p-0 ml-3 btn mobile-nav-toggle"
       >
         <b-icon icon="list" />
       </button>
@@ -29,11 +23,11 @@
           </b-nav-item>
           <b-nav-item to="/analyze" @click="onNavItemClicked">
             <b-icon icon="file-image-fill" class="mr-2"></b-icon>
-            My Presentations
+            Presentations
           </b-nav-item>
           <b-nav-item to="/conference" @click="onNavItemClicked">
             <b-icon icon="calendar-week-fill" class="mr-2"></b-icon>
-            My Conferences
+            Conferences
           </b-nav-item>
           <b-nav-item to="/chairhub/home" @click="onNavItemClicked">
             <b-icon icon="people-fill" class="mr-2"></b-icon>
@@ -76,7 +70,7 @@ export default {
     // Expands collapse when larger than md and vice versa.
     window.addEventListener("resize", ev => {
       let innerWidth = ev.currentTarget.innerWidth;
-      this.isWindowLarge = this.visible = innerWidth > 768;
+      this.isWindowLarge = this.visible = innerWidth >= 992;
     });
   },
   computed: {
@@ -114,10 +108,16 @@ export default {
 <style lang="scss" scoped>
 .logo-container {
   display: flex;
-  font-size: 2rem;
-  padding: 0 1rem;
-  margin-top: 1rem;
-  margin-bottom: 1rem;
+  font-size: 1.4rem;
+  padding: 0.5rem 0.5rem;
+  align-items: center;
+
+  @include media-breakpoint-up(lg) {
+    font-size: 2rem;
+    padding: 0 1rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+  }
 }
 
 .logo {
@@ -125,22 +125,17 @@ export default {
   line-height: 1;
   display: block;
   flex: 1;
-  &--small {
-    font-size: 53%;
-    font-weight: 400;
-    color: $gray-500;
-  }
 }
 
 .mobile-nav-toggle {
+  font-size: inherit;
   display: flex;
   align-items: center;
   color: white;
 }
 
-.mobile-nav-toggle svg {
-  height: 30px;
-  width: 30px;
+.mobile-nav-toggle:hover {
+  color: $indigo-600;
 }
 
 #nav-collapse {
@@ -161,9 +156,8 @@ export default {
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
-  padding: 1rem;
 
-  @include media-breakpoint-up(md) {
+  @include media-breakpoint-up(lg) {
     @supports (position: sticky) {
       position: sticky;
       top: 0;
@@ -197,10 +191,8 @@ export default {
   color: $gray-300;
   border-radius: 5px;
   margin: 5px 0;
-  // outline: 1px solid blue;
   outline: none;
   font-size: 0.9rem;
-  // background-color: $gray-700;
 }
 
 .sidebar .nav > li > a:hover {
@@ -211,6 +203,5 @@ export default {
 .sidebar .nav > li > a.router-link-active {
   background-color: $gray-900;
   box-shadow: inset 0 2px 2px hsla(0, 0%, 0%, 0.1);
-  // background-color: $teal-400;
 }
 </style>
