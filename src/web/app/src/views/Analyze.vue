@@ -122,15 +122,28 @@ export default {
 @supports (display: grid) {
   .presentation-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    // TODO: Change to one column for mobile
-    grid-gap: 1.5rem;
+    grid-template-columns: repeat(1, 1fr);
+    grid-gap: 1rem;
+
+    @include media-breakpoint-up(lg) {
+      grid-template-columns: repeat(2, 1fr);
+      grid-gap: 1.5rem;
+    }
+
+    @include media-breakpoint-up(xl) {
+      grid-template-columns: repeat(3, 1fr);
+      grid-gap: 1.5rem;
+    }
   }
 }
 
 .presentation-card {
   cursor: pointer;
-  height: 200px;
+  height: 175px;
+
+  @include media-breakpoint-up(lg) {
+    height: 200px;
+  }
 }
 
 .presentation-card:hover {
@@ -146,6 +159,7 @@ export default {
   font-size: 0.95rem;
   letter-spacing: -0.025em;
   color: $gray-600;
+
   // clamp to 3 lines (restricted to webkit browsers)
   overflow: hidden;
   display: -webkit-box;
