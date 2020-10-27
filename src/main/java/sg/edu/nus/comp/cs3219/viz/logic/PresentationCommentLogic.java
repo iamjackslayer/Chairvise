@@ -48,4 +48,8 @@ public class PresentationCommentLogic {
     return presentationCommentRepository.save(oldPresentationComment);
   }
 
+  public void deleteById(Long id) {
+    presentationCommentRepository.deleteById(id);
+  } 
+
 }

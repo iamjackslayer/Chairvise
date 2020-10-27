@@ -71,4 +71,16 @@ public class PresentationCommentController extends BaseRestController {
         .body(updatedPresentationComment);
   }
 
+  @DeleteMapping("/presentations/{presentationId}/comments/{commentId}")
+  public ResponseEntity<?> deletePresentationComment(@PathVariable Long presentationId, @PathVariable Long commentId) throws URISyntaxException{
+    PresentationComment currentPresentationComment = presentationCommentLogic.findById(commentId)
+        .orElseThrow(() -> new PresentationCommentNotFoundException(presentationId, commentId));
+
+    gateKeeper.verifyDeletionAccessForPresentationComment(currentPresentationComment);
+
+    presentationCommentLogic.deleteById(commentId);
+
+    return ResponseEntity.noContent().build();
+  }
+
 }

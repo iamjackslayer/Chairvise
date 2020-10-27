@@ -1,7 +1,7 @@
 <template>
-  <div>
-    <h1 class="chairhub-heading d-none d-md-block">Comments</h1>
-    <b-form @submit="addComment">
+  <b-container class="comments-section">
+    <h3 class="cs-heading d-none d-md-block">Create a comment</h3>
+    <b-form @submit="onCreateComment">
       <b-form-textarea
         id="textarea"
         v-model="commentFormComment"
@@ -9,22 +9,25 @@
         rows="3"
         max-rows="6"
       ></b-form-textarea>
-      <div class="d-flex justify-content-end mb-3">
-        <b-button type="submit" :disabled="isCommentTextEmpty"
-          >Submit comment</b-button
+      <div class="d-flex justify-content-end py-3">
+        <b-button type="submit" :disabled="isCommentTextEmpty" variant="create"
+          >Create</b-button
         >
       </div>
     </b-form>
-
+    <h3 class="cs-list-heading" v-if="commentList.length > 0">Comments</h3>
     <b-list-group>
-      <b-list-group-item v-for="comment in commentList" v-bind:key="comment.id">
-        <Comment
-          :comment="comment.comment"
-          :user="comment.userIdentifier"
-        ></Comment>
-      </b-list-group-item>
+      <Comment
+        v-for="comment in commentList"
+        :key="comment.id"
+        class="my-1 comment-item"
+        :id="comment.id"
+        :presentationId="presentationId"
+        :comment="comment.comment"
+        :creator="comment.userIdentifier"
+      ></Comment>
     </b-list-group>
-  </div>
+  </b-container>
 </template>
 
 <script>
@@ -36,9 +39,7 @@ export default {
   },
   name: "Comments",
   data() {
-    return {
-      commentText: ""
-    };
+    return { scrolling: false };
   },
   components: {
     Comment
@@ -64,15 +65,56 @@ export default {
     }
   },
   methods: {
-    addComment(evt) {
+    fetchComments() {
+      this.$store.dispatch(
+        "getCommentListForPresentation",
+        this.presentationId
+      );
+    },
+    clearTextField() {
+      this.commentFormComment = "";
+    },
+    async addComment(evt) {
       // Prevent auto refresh of page
       evt.preventDefault();
 
-      this.$store.dispatch("addCommentForPresentation", this.presentationId);
+      this.$store
+        .dispatch(
+          "addCommentForPresentation",
+          this.$store.state.presentation.presentationForm.id
+        )
+        .then(() => {
+          this.$store.dispatch("clearCommentField");
+        });
+    },
+    async onCreateComment(evt) {
+      evt.preventDefault();
+      this.addComment(evt);
+      // console.log(document.body.scrollHeight);
+      this.scrolling = true;
     }
   },
-  mounted() {}
+  mounted() {
+    // fetch all comments for this presentation
+    this.fetchComments();
+  }
 };
 </script>
 
-<style></style>
+<style lang="scss" scoped>
+.cs-heading {
+  font-size: 1.5rem;
+}
+.cs-list-heading {
+  font-size: 1.4rem;
+}
+.comments-section {
+  margin: 20px 0 0 0;
+  padding: 0;
+  width: 100%;
+  max-width: 100%;
+}
+.btn-create {
+  @include button-variant($gray-700, #fff, lighten($gray-700, 5%), $gray-700);
+}
+</style>

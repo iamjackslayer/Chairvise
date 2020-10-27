@@ -2,6 +2,10 @@
   <div>
     <presentation-brief :id="id" />
     <section-list-panel :presentationId="id" />
+    <comments-section
+      :presentationId="presentationId"
+      v-if="isPresentationPublic"
+    />
   </div>
 </template>
 
@@ -12,6 +16,7 @@ import { ID_NEW_PRESENTATION } from "@/common/const";
 import SectionListPanel from "@/components/SectionListPanel.vue";
 import PredefinedQueries from "@/store/data/predefinedQueries";
 import PresentationBrief from "@/components/PresentationBrief.vue";
+import CommentsSection from "@/components/chairhub/CommentsSection.vue";
 
 export default {
   props: {
@@ -24,6 +29,21 @@ export default {
     };
   },
   computed: {
+    getCreatorId() {
+      return this.$store.state.presentation.presentationForm.creatorIdentifier;
+    },
+
+    getUserEmail() {
+      return this.$store.state.userInfo.userEmail;
+    },
+    isPresentationCreatedByUser() {
+      return this.getCreatorId == this.getUserEmail;
+    },
+
+    isPresentationPublic() {
+      return this.$store.state.presentation.presentationForm.isPublic;
+    },
+
     isLogin() {
       return this.$store.state.userInfo.isLogin;
     },
@@ -87,7 +107,8 @@ export default {
     AbstractSectionDetail,
     SectionListPanel,
     PresentationBrief,
-    ChartJsPluginDataLabels
+    ChartJsPluginDataLabels,
+    CommentsSection
   },
   mounted() {
     this.presentationId = this.$route.params.id;

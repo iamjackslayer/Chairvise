@@ -131,4 +131,13 @@ public class GateKeeper {
             throw new UnauthorisedException();
         }
     }
+
+    public void verifyDeletionAccessForPresentationComment(PresentationComment presentationComment) {
+        UserInfo currentUser = getCurrentLoginUser()
+            .orElseThrow(UnauthorisedException::new);
+
+        if (!currentUser.getUserEmail().equals(presentationComment.getUserIdentifier())) {
+            throw new UnauthorisedException();
+        }
+    }
 }
