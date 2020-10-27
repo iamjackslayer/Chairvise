@@ -47,7 +47,7 @@
               />
             </b-form-group>
 
-            <b-button type="submit" class="submit-btn" variant="primary"
+            <b-button type="submit" class="responsive-btn" variant="primary"
               >Submit</b-button
             >
           </div>

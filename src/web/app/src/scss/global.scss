@@ -124,8 +124,12 @@ body {
   flex: 2;
 }
 
-.submit-btn {
-  margin-top: 1rem;
+.responsive-btn {
+  width:100%;
+
+  @include media-breakpoint-up(lg) { 
+    width: auto;
+  }
 }
 
 // User Guide section styling
