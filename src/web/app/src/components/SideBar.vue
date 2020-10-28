@@ -16,7 +16,7 @@
           <!-- TODO: Add check for login and logout views -->
           <b-nav-item to="/home" @click="onNavItemClicked">
             <b-icon icon="house-door-fill" class="mr-2"></b-icon>
-            Home
+            Conferences
           </b-nav-item>
           <b-nav-item to="/importData" @click="onNavItemClicked">
             <b-icon icon="cloud-arrow-up-fill" class="mr-2"></b-icon>
@@ -28,7 +28,7 @@
           </b-nav-item>
           <b-nav-item to="/conference" @click="onNavItemClicked">
             <b-icon icon="calendar-week-fill" class="mr-2"></b-icon>
-            Conferences
+            Calendar
           </b-nav-item>
           <b-nav-item to="/chairhub/home" @click="onNavItemClicked">
             <b-icon icon="people-fill" class="mr-2"></b-icon>
@@ -51,6 +51,12 @@
               <b-icon icon="arrow-down-right-square-fill" class="mr-2"></b-icon>
               Logout
             </b-nav-item>
+            <b-nav-text>
+              <div class="user-email">
+                <b-icon icon="person-circle" class="mr-2"></b-icon>
+                {{ $store.state.userInfo.userEmail }}
+              </div>
+            </b-nav-text>
           </b-nav>
         </div>
       </b-col>
@@ -64,7 +70,8 @@ export default {
   data() {
     return {
       visible: window.innerWidth >= 992,
-      isWindowLarge: false
+      isWindowLarge: false,
+      stuff: this.$store.state.userInfo
     };
   },
   mounted() {
@@ -194,6 +201,20 @@ export default {
   margin: 5px 0;
   outline: none;
   font-size: 0.9rem;
+}
+
+.navbar-text {
+  display: block;
+  padding: 0;
+}
+
+.user-email {
+  font-size: 0.9rem;
+  padding: 0.5rem 1rem;
+
+  > svg {
+    font-size: 125%;
+  }
 }
 
 .sidebar .nav > li > a:hover {
