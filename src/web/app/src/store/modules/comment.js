@@ -15,7 +15,7 @@ export default {
       id: "",
       comment: "",
       createdDate: "",
-      lastUpdatedDate: "",
+      updatedDate: "",
       userIdentifier: "",
       presentationId: ""
     },

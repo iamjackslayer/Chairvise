@@ -25,6 +25,8 @@
         :presentationId="presentationId"
         :comment="comment.comment"
         :creator="comment.userIdentifier"
+        :createdDate="comment.createdDate"
+        :updatedDate="comment.updatedDate"
       ></Comment>
     </b-list-group>
   </b-container>
