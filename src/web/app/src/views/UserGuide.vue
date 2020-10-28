@@ -43,8 +43,17 @@ export default {
   }
 };
 </script>
-<style lang="scss" scoped>
-.display-card > .tabs > .tab-content > .card-body {
-  padding: 2rem;
+<style lang="scss">
+.card-body > .accordion > .card {
+  border-radius: 0;
+}
+
+.card-body > img {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.card > .tabs > .tab-content > .card-body {
+  padding: 0rem;
 }
 </style>
