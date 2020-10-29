@@ -46,14 +46,14 @@ export default {
     },
 
     sortCommentList(state) {
-      function compare(a,b) {
+      function compare(a, b) {
         if (a.createdDate < b.createdDate) {
-          return 1
+          return 1;
         } else if (a.createdDate > b.createdDate) {
-          return -1
+          return -1;
         }
-        return 0
-      };
+        return 0;
+      }
       state.commentList.sort(compare);
     },
 

@@ -89,7 +89,12 @@ export default {
     getTimeDiffCreated() {
       let output = "";
       let timeArray = [1000 * 60 * 60 * 24, 1000 * 60 * 60, 1000 * 60, 1000];
-      let stringArray = ["Days", "Hours", "Minutes", "Seconds"];
+      let stringArray = [
+        "Day(s) ago",
+        "Hour(s) ago",
+        "Minute(s) ago",
+        "Second(s) ago"
+      ];
       for (let i = 0; i < timeArray.length; i++) {
         let timeDiff = Math.floor(this.timeElapsedCreated / timeArray[i]);
         output = timeDiff + " " + stringArray[i];
@@ -97,12 +102,17 @@ export default {
           return output;
         }
       }
-      return "0 Seconds";
+      return "0 Seconds ago";
     },
     getTimeDiffUpdated() {
       let output = "";
       let timeArray = [1000 * 60 * 60 * 24, 1000 * 60 * 60, 1000 * 60, 1000];
-      let stringArray = ["Days", "Hours", "Minutes", "Seconds"];
+      let stringArray = [
+        "Day(s) ago",
+        "Hour(s) ago",
+        "Minute(s) ago",
+        "Second(s) ago"
+      ];
       for (let i = 0; i < timeArray.length; i++) {
         let timeDiff = Math.floor(this.timeElapsedUpdated / timeArray[i]);
         output = timeDiff + " " + stringArray[i];
@@ -110,7 +120,7 @@ export default {
           return output;
         }
       }
-      return "0 Seconds";
+      return "0 Seconds ago";
     }
   },
   methods: {
@@ -163,11 +173,11 @@ export default {
     this.currentComment = this.comment;
     this.timeElapsedUpdated = this.currentTime - new Date(this.updatedDate);
     this.timeElapsedCreated = this.currentTime - new Date(this.createdDate);
-    this.$el.scrollIntoView({
-      top: this.$el.offsetTop,
-      behavior: "smooth",
-      block: "end"
-    });
+    // this.$el.scrollIntoView({
+    //   top: this.$el.offsetTop,
+    //   behavior: "smooth",
+    //   block: "end"
+    // });
   }
 };
 </script>

@@ -91,7 +91,7 @@ export default {
     },
     async onCreateComment(evt) {
       evt.preventDefault();
-      this.addComment(evt);
+      await this.addComment(evt);
       // console.log(document.body.scrollHeight);
       this.scrolling = true;
     }
