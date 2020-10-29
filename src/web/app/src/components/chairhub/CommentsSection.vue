@@ -10,9 +10,7 @@
         max-rows="6"
       ></b-form-textarea>
       <div class="d-flex justify-content-end py-3">
-        <b-button type="submit" :disabled="isCommentTextEmpty" variant="create"
-          >Create</b-button
-        >
+        <b-button type="submit" :disabled="isCommentTextEmpty" variant="create">Create</b-button>
       </div>
     </b-form>
     <h3 class="cs-list-heading" v-if="commentList.length > 0">Comments</h3>
@@ -94,21 +92,53 @@ export default {
       await this.addComment(evt);
       // console.log(document.body.scrollHeight);
       this.scrolling = true;
+    },
+    scrollToLastComment() {
+      const comments = document.getElementsByClassName("comment-item");
+      const len = comments.length;
+      comments[len - 1].scrollIntoView({
+        behavior: "smooth",
+        block: "end"
+      });
     }
   },
   mounted() {
     // fetch all comments for this presentation
     this.fetchComments();
+  },
+  updated() {
+    this.scrollToLastComment();
   }
 };
 </script>
 
 <style lang="scss" scoped>
+.animate-show {
+  opacity: 1;
+}
+.list-enter {
+  opacity: 0;
+  transform: scale(0);
+}
+.list-leave-active {
+  transition: all 0.4s ease;
+}
+.list-enter-active {
+  transition: all 0.4s ease;
+}
+.list-leave-to {
+  opacity: 0;
+  transform: scale(0);
+}
 .cs-heading {
+  color: $gray-700;
   font-size: 1.5rem;
 }
 .cs-list-heading {
+  color: $gray-700;
   font-size: 1.4rem;
+}
+.comment-item {
 }
 .comments-section {
   margin: 20px 0 0 0;

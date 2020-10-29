@@ -13,7 +13,7 @@
       </b-button>
     </b-row>
     <b-row v-if="!editMode" class="mx-0 my-2">
-      <p v-text="currentComment"></p>
+      <p class="fade" v-text="currentComment"></p>
     </b-row>
     <b-row v-if="editMode" class="mx-0">
       <b-form-textarea
@@ -181,9 +181,22 @@ export default {
   }
 };
 </script>
-
+<style lang="scss" scoped>
+.fade {
+  animation: fadeinout 1s ease-in-out 0s 1 forwards;
+  @keyframes fadeinout {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+}
+</style>
 <style lang="scss">
 .comment-container {
+  transition: 0.4s all ease-out;
   background-color: $white;
   border: 1px solid $gray-400;
   border-radius: 5px;
