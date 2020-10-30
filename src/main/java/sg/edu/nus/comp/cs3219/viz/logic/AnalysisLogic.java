@@ -52,10 +52,10 @@ public class AnalysisLogic {
         return jdbcTemplate.queryForList(sql);
     }
 
-    private String addVersionToNestedQuery(PresentationSection.Record record, String version){
-        String regex = "(\\w+\\S).data_set";
+    private String addConferenceNameToNestedQuery(PresentationSection.Record record, String conferenceName){
+        String regex = "(\\w+\\S).creator_identifier";
         String strToMatch = record.getName();
-        strToMatch = strToMatch.replaceAll(regex, "$1.version = '" + version + "' AND $1.data_set" );
+        strToMatch = strToMatch.replaceAll(regex, "$1.conference_name = '" + conferenceName + "' AND $1.creator_identifier" );
         return strToMatch;
     }
 
@@ -69,7 +69,7 @@ public class AnalysisLogic {
 
         String tablesStr = analysisRequest.getInvolvedRecords().stream()
                 // band-aid fix. Total fix is too length
-                .map(x -> addVersionToNestedQuery(x, analysisRequest.getConferenceName()))
+                .map(x -> addConferenceNameToNestedQuery(x, analysisRequest.getConferenceName()))
                 .collect(Collectors.joining(","));
 
         String joinersStr = analysisRequest.getJoiners().stream()
@@ -80,9 +80,9 @@ public class AnalysisLogic {
                 .map(f -> String.format("%s %s %s", f.getField(), f.getComparator(), wrapValue(f.getField(), f.getValue())))
                 .collect(Collectors.joining(" AND "));
 
-        String dataSetVersionFilter = analysisRequest.getInvolvedRecords().stream()
+        String creatorIdentifierConferenceNameFilter = analysisRequest.getInvolvedRecords().stream()
                 .filter(r -> !r.isCustomized())
-                .map(t -> String.format("%s.data_set = '%s' AND %s.version = '%s'",
+                .map(t -> String.format("%s.creator_identifier = '%s' AND %s.conference_name = '%s'",
                         t.getName(), analysisRequest.getDataSet(),
                         t.getName(), analysisRequest.getConferenceName()))
                 .collect(Collectors.joining(" AND "));
@@ -97,8 +97,8 @@ public class AnalysisLogic {
 
         String baseSQL = String.format("SELECT %s FROM %s", selectionsStr, tablesStr);
 
-        if (!dataSetVersionFilter.isEmpty()) {
-            baseSQL += String.format(" WHERE %s", dataSetVersionFilter);
+        if (!creatorIdentifierConferenceNameFilter.isEmpty()) {
+            baseSQL += String.format(" WHERE %s", creatorIdentifierConferenceNameFilter);
         } else {
             baseSQL += " WHERE true";
         }

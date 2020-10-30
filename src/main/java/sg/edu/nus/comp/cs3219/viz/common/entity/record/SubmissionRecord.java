@@ -141,11 +141,10 @@ public class SubmissionRecord {
     @Column(name = "s_submission_abstract", columnDefinition = "TEXT")
     private String submissionAbstract;
 
-    //TODO: Change version to conference
     @ManyToOne
     @JoinColumns({
-        @JoinColumn(name = "data_set", referencedColumnName = "creator_identifier"),
-        @JoinColumn(name = "version", referencedColumnName = "name"),
+        @JoinColumn(name = "creator_identifier", referencedColumnName = "creator_identifier"),
+        @JoinColumn(name = "conference_name", referencedColumnName = "name"),
     })
     private Conference conference;
 

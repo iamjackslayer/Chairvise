@@ -14,18 +14,18 @@
       </div>
     </b-form>
     <h3 class="cs-list-heading" v-if="commentList.length > 0">Comments</h3>
-    <b-list-group ref="comments">
-      <transition-group name="list">
-        <Comment
-          v-for="comment in commentList"
-          :key="comment.id"
-          class="my-1 comment-item animate-show"
-          :id="comment.id"
-          :presentationId="presentationId"
-          :comment="comment.comment"
-          :creator="comment.userIdentifier"
-        ></Comment>
-      </transition-group>
+    <b-list-group>
+      <Comment
+        v-for="comment in commentList"
+        :key="comment.id"
+        class="my-1 comment-item"
+        :id="comment.id"
+        :presentationId="presentationId"
+        :comment="comment.comment"
+        :creator="comment.userIdentifier"
+        :createdDate="comment.createdDate"
+        :updatedDate="comment.updatedDate"
+      ></Comment>
     </b-list-group>
   </b-container>
 </template>
@@ -89,7 +89,7 @@ export default {
     },
     async onCreateComment(evt) {
       evt.preventDefault();
-      this.addComment(evt);
+      await this.addComment(evt);
       // console.log(document.body.scrollHeight);
       this.scrolling = true;
     },

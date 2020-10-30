@@ -19,7 +19,7 @@
               </template>
             </b-form-select>
           </b-card>
-          <b-card class="mt-4">
+          <b-card class="mt-4" v-if="isPresentationEditable">
             <div slot="header">
               <span> Add Section </span>
             </div>

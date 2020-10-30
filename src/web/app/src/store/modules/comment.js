@@ -15,7 +15,7 @@ export default {
       id: "",
       comment: "",
       createdDate: "",
-      lastUpdatedDate: "",
+      updatedDate: "",
       userIdentifier: "",
       presentationId: ""
     },
@@ -43,6 +43,18 @@ export default {
 
     setCommentList(state, payload) {
       state.commentList = payload;
+    },
+
+    sortCommentList(state) {
+      function compare(a, b) {
+        if (a.createdDate < b.createdDate) {
+          return 1;
+        } else if (a.createdDate > b.createdDate) {
+          return -1;
+        }
+        return 0;
+      }
+      state.commentList.sort(compare);
     },
 
     editComment(state, payload) {
@@ -101,6 +113,7 @@ export default {
         .get(`/api/presentations/${presentationId}/comments`)
         .then(response => {
           commit("setCommentList", response.data);
+          commit("sortCommentList");
         })
         .catch(e => {
           commit("setCommentListApiError", e.toString());
@@ -119,6 +132,7 @@ export default {
         )
         .then(response => {
           commit("addToCommentList", deepCopy(response.data));
+          commit("sortCommentList");
           // commit("setConferenceForm", deepCopy(response.data));
           commit("setSaveSuccess", true);
         })

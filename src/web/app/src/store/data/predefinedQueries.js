@@ -34,7 +34,7 @@ export default {
             "(select a1.a_person_id as a1_author, a2.a_person_id as a2_author, a1.a_submission_id as submission_id," +
             "s1.s_is_accepted, s1.s_keywords\n" +
             "from author_record as a1, author_record as a2, submission_record as s1\n" +
-            "where a1.data_set = '${PLACEHOLDER_DATA_SET}' and a2.data_set = '${PLACEHOLDER_DATA_SET}' and s1.data_set = '${PLACEHOLDER_DATA_SET}'\n" +
+            "where a1.creator_identifier = '${PLACEHOLDER_DATA_SET}' and a2.creator_identifier = '${PLACEHOLDER_DATA_SET}' and s1.creator_identifier = '${PLACEHOLDER_DATA_SET}'\n" +
             "and a1.a_submission_id = a2.a_submission_id and s1.s_submission_id = a1.a_submission_id " +
             "and a1.a_person_id < a2.a_person_id and a1.a_person_id != '') as temp",
           customized: true
@@ -107,7 +107,7 @@ export default {
             "(select a1.a_person_id as a1_author, a2.a_person_id as a2_author, a1.a_submission_id as submission_id," +
             "s1.s_is_accepted, s1.s_keywords\n" +
             "from author_record as a1, author_record as a2, submission_record as s1\n" +
-            "where a1.data_set = '${PLACEHOLDER_DATA_SET}' and a2.data_set = '${PLACEHOLDER_DATA_SET}' and s1.data_set = '${PLACEHOLDER_DATA_SET}'\n" +
+            "where a1.creator_identifier = '${PLACEHOLDER_DATA_SET}' and a2.creator_identifier = '${PLACEHOLDER_DATA_SET}' and s1.creator_identifier = '${PLACEHOLDER_DATA_SET}'\n" +
             "and a1.a_submission_id = a2.a_submission_id and s1.s_submission_id = a1.a_submission_id " +
             "and a1.a_person_id < a2.a_person_id and a1.a_person_id != '') as temp",
           customized: true
@@ -179,7 +179,7 @@ export default {
             "(select a1.a_organisation as a1_org, a2.a_organisation as a2_org, a1.a_submission_id as submission_id," +
             "s1.s_is_accepted, s1.s_keywords\n" +
             "from author_record as a1, author_record as a2, submission_record as s1\n" +
-            "where a1.data_set = '${PLACEHOLDER_DATA_SET}' and a2.data_set = '${PLACEHOLDER_DATA_SET}' and s1.data_set = '${PLACEHOLDER_DATA_SET}'\n" +
+            "where a1.creator_identifier = '${PLACEHOLDER_DATA_SET}' and a2.creator_identifier = '${PLACEHOLDER_DATA_SET}' and s1.creator_identifier = '${PLACEHOLDER_DATA_SET}'\n" +
             "and a1.a_submission_id = a2.a_submission_id and s1.s_submission_id = a1.a_submission_id " +
             "and a1.a_organisation < a2.a_organisation) as temp",
           customized: true
@@ -251,7 +251,7 @@ export default {
             "(select a1.a_country as a1_country, a2.a_country as a2_country, a1.a_submission_id as submission_id," +
             "s1.s_is_accepted, s1.s_keywords\n" +
             "from author_record as a1, author_record as a2, submission_record as s1\n" +
-            "where a1.data_set = '${PLACEHOLDER_DATA_SET}' and a2.data_set = '${PLACEHOLDER_DATA_SET}' and s1.data_set = '${PLACEHOLDER_DATA_SET}'\n" +
+            "where a1.creator_identifier = '${PLACEHOLDER_DATA_SET}' and a2.creator_identifier = '${PLACEHOLDER_DATA_SET}' and s1.creator_identifier = '${PLACEHOLDER_DATA_SET}'\n" +
             "and a1.a_submission_id = a2.a_submission_id and s1.s_submission_id = a1.a_submission_id " +
             "and a1.a_country < a2.a_country) as temp",
           customized: true
@@ -323,7 +323,7 @@ export default {
             "(select a1.a_person_id as a1_author, a2.a_person_id as a2_author, a1.a_submission_id as submission_id," +
             "s1.s_is_accepted, s1.s_keywords\n" +
             "from author_record as a1, author_record as a2, submission_record as s1\n" +
-            "where a1.data_set = '${PLACEHOLDER_DATA_SET}' and a2.data_set = '${PLACEHOLDER_DATA_SET}' and s1.data_set = '${PLACEHOLDER_DATA_SET}'\n" +
+            "where a1.creator_identifier = '${PLACEHOLDER_DATA_SET}' and a2.creator_identifier = '${PLACEHOLDER_DATA_SET}' and s1.creator_identifier = '${PLACEHOLDER_DATA_SET}'\n" +
             "and a1.a_submission_id = a2.a_submission_id and s1.s_submission_id = a1.a_submission_id " +
             "and a1.a_person_id < a2.a_person_id and a1.a_person_id != '') as temp",
           customized: true
@@ -395,7 +395,7 @@ export default {
             "(select a1.a_organisation as a1_org, a2.a_organisation as a2_org, a1.a_submission_id as submission_id," +
             "s1.s_is_accepted, s1.s_keywords\n" +
             "from author_record as a1, author_record as a2, submission_record as s1\n" +
-            "where a1.data_set = '${PLACEHOLDER_DATA_SET}' and a2.data_set = '${PLACEHOLDER_DATA_SET}' and s1.data_set = '${PLACEHOLDER_DATA_SET}'\n" +
+            "where a1.creator_identifier = '${PLACEHOLDER_DATA_SET}' and a2.creator_identifier = '${PLACEHOLDER_DATA_SET}' and s1.creator_identifier = '${PLACEHOLDER_DATA_SET}'\n" +
             "and a1.a_submission_id = a2.a_submission_id and s1.s_submission_id = a1.a_submission_id " +
             "and a1.a_organisation < a2.a_organisation) as temp",
           customized: true
@@ -467,7 +467,7 @@ export default {
             "(select a1.a_country as a1_country, a2.a_country as a2_country, a1.a_submission_id as submission_id," +
             "s1.s_is_accepted, s1.s_keywords\n" +
             "from author_record as a1, author_record as a2, submission_record as s1\n" +
-            "where a1.data_set = '${PLACEHOLDER_DATA_SET}' and a2.data_set = '${PLACEHOLDER_DATA_SET}' and s1.data_set = '${PLACEHOLDER_DATA_SET}'\n" +
+            "where a1.creator_identifier = '${PLACEHOLDER_DATA_SET}' and a2.creator_identifier = '${PLACEHOLDER_DATA_SET}' and s1.creator_identifier = '${PLACEHOLDER_DATA_SET}'\n" +
             "and a1.a_submission_id = a2.a_submission_id and s1.s_submission_id = a1.a_submission_id " +
             "and a1.a_country < a2.a_country) as temp",
           customized: true
@@ -543,7 +543,7 @@ export default {
             "(select a1.a_person_id as a1_author, a2.a_person_id as a2_author, a1.a_submission_id as submission_id," +
             "s1.s_is_accepted, s1.s_keywords\n" +
             "from author_record as a1, author_record as a2, submission_record as s1\n" +
-            "where a1.data_set = '${PLACEHOLDER_DATA_SET}' and a2.data_set = '${PLACEHOLDER_DATA_SET}' and s1.data_set = '${PLACEHOLDER_DATA_SET}'\n" +
+            "where a1.creator_identifier = '${PLACEHOLDER_DATA_SET}' and a2.creator_identifier = '${PLACEHOLDER_DATA_SET}' and s1.creator_identifier = '${PLACEHOLDER_DATA_SET}'\n" +
             "and a1.a_submission_id = a2.a_submission_id and s1.s_submission_id = a1.a_submission_id " +
             "and a1.a_person_id < a2.a_person_id and a1.a_person_id != '') as temp",
           customized: true
@@ -623,7 +623,7 @@ export default {
             "(select a1.a_organisation as a1_org, a2.a_organisation as a2_org, a1.a_submission_id as submission_id," +
             "s1.s_is_accepted, s1.s_keywords\n" +
             "from author_record as a1, author_record as a2, submission_record as s1\n" +
-            "where a1.data_set = '${PLACEHOLDER_DATA_SET}' and a2.data_set = '${PLACEHOLDER_DATA_SET}' and s1.data_set = '${PLACEHOLDER_DATA_SET}'\n" +
+            "where a1.creator_identifier = '${PLACEHOLDER_DATA_SET}' and a2.creator_identifier = '${PLACEHOLDER_DATA_SET}' and s1.creator_identifier = '${PLACEHOLDER_DATA_SET}'\n" +
             "and a1.a_submission_id = a2.a_submission_id and s1.s_submission_id = a1.a_submission_id " +
             "and a1.a_organisation < a2.a_organisation) as temp",
           customized: true
@@ -702,7 +702,7 @@ export default {
             "(select a1.a_country as a1_country, a2.a_country as a2_country, a1.a_submission_id as submission_id," +
             "s1.s_is_accepted, s1.s_keywords\n" +
             "from author_record as a1, author_record as a2, submission_record as s1\n" +
-            "where a1.data_set = '${PLACEHOLDER_DATA_SET}' and a2.data_set = '${PLACEHOLDER_DATA_SET}' and s1.data_set = '${PLACEHOLDER_DATA_SET}'\n" +
+            "where a1.creator_identifier = '${PLACEHOLDER_DATA_SET}' and a2.creator_identifier = '${PLACEHOLDER_DATA_SET}' and s1.creator_identifier = '${PLACEHOLDER_DATA_SET}'\n" +
             "and a1.a_submission_id = a2.a_submission_id and s1.s_submission_id = a1.a_submission_id " +
             "and a1.a_country < a2.a_country) as temp",
           customized: true
@@ -1168,7 +1168,7 @@ export default {
       involvedRecords: [
         {
           name: "(SELECT s_author_name FROM submission_record, submission_record_author_set, submission_author_record " +
-            "WHERE s_id = submission_record_s_id AND author_set_s_author_id = s_author_id AND submission_record.data_set = '${PLACEHOLDER_DATA_SET}') AS `tmp`",
+            "WHERE s_id = submission_record_s_id AND author_set_s_author_id = s_author_id AND submission_record.creator_identifier = '${PLACEHOLDER_DATA_SET}') AS `tmp`",
           customized: true,
         }
       ],
@@ -1224,7 +1224,7 @@ export default {
         {
           name:
             "(SELECT s_author_name, s_track_name FROM submission_record, submission_record_author_set, submission_author_record " +
-            "WHERE s_id = submission_record_s_id AND author_set_s_author_id = s_author_id AND submission_record.data_set = '${PLACEHOLDER_DATA_SET}') AS `tmp`",
+            "WHERE s_id = submission_record_s_id AND author_set_s_author_id = s_author_id AND submission_record.creator_identifier = '${PLACEHOLDER_DATA_SET}') AS `tmp`",
           customized: true
         }
       ],
@@ -1297,7 +1297,7 @@ export default {
             "ROUND(SUM(CASE WHEN s_is_accepted = 'accept' THEN 1 ELSE 0 END)/COUNT(*), 2) AS `acceptance_rate`, " +
             "s_author_name FROM " +
             "(SELECT s_author_name, s_is_accepted FROM submission_record, submission_record_author_set, submission_author_record " +
-            "WHERE s_id = submission_record_s_id AND author_set_s_author_id = s_author_id AND submission_record.data_set = '${PLACEHOLDER_DATA_SET}') AS `tmp1` " +
+            "WHERE s_id = submission_record_s_id AND author_set_s_author_id = s_author_id AND submission_record.creator_identifier = '${PLACEHOLDER_DATA_SET}') AS `tmp1` " +
             "GROUP BY s_author_name) AS `tmp2`",
           customized: true
         }
@@ -1367,7 +1367,7 @@ export default {
         {
           name:
             "(SELECT s_author_name, s_is_accepted FROM submission_record, submission_record_author_set, submission_author_record " +
-            "WHERE s_id = submission_record_s_id AND author_set_s_author_id = s_author_id AND submission_record.data_set = '${PLACEHOLDER_DATA_SET}') AS `tmp`",
+            "WHERE s_id = submission_record_s_id AND author_set_s_author_id = s_author_id AND submission_record.creator_identifier = '${PLACEHOLDER_DATA_SET}') AS `tmp`",
           customized: true
         }
       ],
@@ -1570,7 +1570,7 @@ export default {
             "  WHEN weighted_score <= 2.75 THEN '2.50 ~ 2.75'\n" +
             "  WHEN weighted_score <= 3.00 THEN '2.75 ~ 3.00'\n" +
             "END AS `weighted_score_interval` FROM (SELECT SUM(r_confidence_level * r_overall_evaluation_score) / SUM(r_confidence_level) AS `weighted_score` " +
-            "FROM review_record WHERE review_record.data_set = '${PLACEHOLDER_DATA_SET}' GROUP BY r_submission_id " +
+            "FROM review_record WHERE review_record.creator_identifier = '${PLACEHOLDER_DATA_SET}' GROUP BY r_submission_id " +
             "UNION ALL SELECT -2.75\n" +
             "UNION ALL SELECT -2.50\n" +
             "UNION ALL SELECT -2.25\n" +
@@ -1646,8 +1646,8 @@ export default {
       involvedRecords: [
         {
           name:
-            '(SELECT r1.r_id, r2.weighted_score FROM review_record r1, (SELECT r_submission_id, ROUND(SUM(r_confidence_level * r_overall_evaluation_score) / SUM(r_confidence_level), 2) AS `weighted_score` FROM review_record WHERE review_record.data_set = "${PLACEHOLDER_DATA_SET}" GROUP BY r_submission_id) r2\n' +
-            'WHERE r1.r_submission_id = r2.r_submission_id AND r1.data_set = "${PLACEHOLDER_DATA_SET}") as temp',
+            '(SELECT r1.r_id, r2.weighted_score FROM review_record r1, (SELECT r_submission_id, ROUND(SUM(r_confidence_level * r_overall_evaluation_score) / SUM(r_confidence_level), 2) AS `weighted_score` FROM review_record WHERE review_record.creator_identifier = "${PLACEHOLDER_DATA_SET}" GROUP BY r_submission_id) r2\n' +
+            'WHERE r1.r_submission_id = r2.r_submission_id AND r1.creator_identifier = "${PLACEHOLDER_DATA_SET}") as temp',
           customized: true
         }
       ],
@@ -1682,8 +1682,8 @@ export default {
       involvedRecords: [
         {
           name:
-            '(SELECT r1.r_id, r2.avg_expertise_level FROM review_record r1, (SELECT r_submission_id, ROUND(AVG(r_expertise_level), 2) AS `avg_expertise_level` FROM review_record WHERE review_record.data_set = "${PLACEHOLDER_DATA_SET}" GROUP BY r_submission_id) r2\n' +
-            'WHERE r1.r_submission_id = r2.r_submission_id AND r1.data_set = "${PLACEHOLDER_DATA_SET}") as temp',
+            '(SELECT r1.r_id, r2.avg_expertise_level FROM review_record r1, (SELECT r_submission_id, ROUND(AVG(r_expertise_level), 2) AS `avg_expertise_level` FROM review_record WHERE review_record.creator_identifier = "${PLACEHOLDER_DATA_SET}" GROUP BY r_submission_id) r2\n' +
+            'WHERE r1.r_submission_id = r2.r_submission_id AND r1.creator_identifier = "${PLACEHOLDER_DATA_SET}") as temp',
           customized: true
         }
       ],
@@ -1718,8 +1718,8 @@ export default {
       involvedRecords: [
         {
           name:
-            '(SELECT r1.r_id, r2.avg_confidence_level FROM review_record r1, (SELECT r_submission_id, ROUND(AVG(r_confidence_level), 2) AS `avg_confidence_level` FROM review_record WHERE review_record.data_set = "${PLACEHOLDER_DATA_SET}" GROUP BY r_submission_id) r2\n' +
-            'WHERE r1.r_submission_id = r2.r_submission_id AND r1.data_set = "${PLACEHOLDER_DATA_SET}") as temp',
+            '(SELECT r1.r_id, r2.avg_confidence_level FROM review_record r1, (SELECT r_submission_id, ROUND(AVG(r_confidence_level), 2) AS `avg_confidence_level` FROM review_record WHERE review_record.creator_identifier = "${PLACEHOLDER_DATA_SET}" GROUP BY r_submission_id) r2\n' +
+            'WHERE r1.r_submission_id = r2.r_submission_id AND r1.creator_identifier = "${PLACEHOLDER_DATA_SET}") as temp',
           customized: true
         }
       ],
@@ -1939,8 +1939,8 @@ export default {
       involvedRecords: [
         {
           name:
-            '(SELECT r1.r_id, r2.number_of_review FROM review_record r1, (SELECT r_submission_id, COUNT(*) AS `number_of_review` FROM review_record WHERE review_record.data_set = "${PLACEHOLDER_DATA_SET}" GROUP BY r_submission_id) r2\n' +
-            'WHERE r1.r_submission_id = r2.r_submission_id AND r1.data_set = "${PLACEHOLDER_DATA_SET}") as temp',
+            '(SELECT r1.r_id, r2.number_of_review FROM review_record r1, (SELECT r_submission_id, COUNT(*) AS `number_of_review` FROM review_record WHERE review_record.creator_identifier = "${PLACEHOLDER_DATA_SET}" GROUP BY r_submission_id) r2\n' +
+            'WHERE r1.r_submission_id = r2.r_submission_id AND r1.creator_identifier = "${PLACEHOLDER_DATA_SET}") as temp',
           customized: true
         }
       ],
@@ -2070,7 +2070,7 @@ export default {
             "COUNT(*) AS `submitted`," +
             "SUM(CASE WHEN s_is_accepted = 'accept' THEN 1 ELSE 0 END) AS `accepted` " +
             "FROM author_record, submission_record WHERE " +
-            "author_record.data_set = '${PLACEHOLDER_DATA_SET}' AND submission_record.data_set = '${PLACEHOLDER_DATA_SET}' " +
+            "author_record.creator_identifier = '${PLACEHOLDER_DATA_SET}' AND submission_record.creator_identifier = '${PLACEHOLDER_DATA_SET}' " +
             "AND a_submission_id = s_submission_id GROUP BY a_email, a_first_name, a_last_name) AS `tmp`",
           customized: true
         }
@@ -2158,7 +2158,7 @@ export default {
             "END AS `acceptance_rate_interval` FROM " +
             "(SELECT ROUND(SUM(CASE WHEN s_is_accepted = 'accept' THEN 1 ELSE 0 END)/COUNT(*), 2) AS `acceptance_rate`" +
             "FROM author_record, submission_record WHERE " +
-            "author_record.data_set = '${PLACEHOLDER_DATA_SET}' AND submission_record.data_set = '${PLACEHOLDER_DATA_SET}' " +
+            "author_record.creator_identifier = '${PLACEHOLDER_DATA_SET}' AND submission_record.creator_identifier = '${PLACEHOLDER_DATA_SET}' " +
             "AND a_submission_id = s_submission_id GROUP BY a_email, a_first_name, a_last_name " +
             "UNION ALL SELECT 0.1 " +
             "UNION ALL SELECT 0.2 " +
@@ -2326,7 +2326,7 @@ export default {
             "(SELECT ROUND(SUM(CASE WHEN s_is_accepted = 'accept' THEN 1 ELSE 0 END)/COUNT(*), 2) AS `acceptance_rate`," +
             "a_organisation, COUNT(*) AS `submitted`, SUM(CASE WHEN s_is_accepted = 'accept' THEN 1 ELSE 0 END) AS `accepted` FROM " +
             "author_record, submission_record WHERE " +
-            "author_record.data_set = '${PLACEHOLDER_DATA_SET}' AND submission_record.data_set = '${PLACEHOLDER_DATA_SET}' " +
+            "author_record.creator_identifier = '${PLACEHOLDER_DATA_SET}' AND submission_record.creator_identifier = '${PLACEHOLDER_DATA_SET}' " +
             "AND a_submission_id = s_submission_id GROUP BY a_organisation) AS `tmp`",
           customized: true
         }
@@ -2885,7 +2885,7 @@ export default {
         {
           name:
             "(SELECT IF(COUNT(*)<10, CONVERT(COUNT(*), char), '>=10') AS `num_of_review` FROM review_record WHERE " +
-            "review_record.data_set = '${PLACEHOLDER_DATA_SET}' AND review_record.data_set = '${PLACEHOLDER_DATA_SET}' " +
+            "review_record.creator_identifier = '${PLACEHOLDER_DATA_SET}' AND review_record.creator_identifier = '${PLACEHOLDER_DATA_SET}' " +
             "GROUP BY r_submission_id " +
             "UNION ALL SELECT '0'" +
             "UNION ALL SELECT '1'" +
@@ -2997,7 +2997,7 @@ export default {
             "  WHEN avg_expertise_level <= 4.75 THEN '4.50 ~ 4.75'\n" +
             "  WHEN avg_expertise_level <= 5.00 THEN '4.75 ~ 5.00'\n" +
             "END AS `avg_expertise_level_interval`, avg_evaluation_score, avg_confidence_level FROM (SELECT AVG(r_confidence_level) AS `avg_confidence_level`, AVG(r_overall_evaluation_score) AS `avg_evaluation_score`, AVG(r_expertise_level) AS `avg_expertise_level` " +
-            "FROM review_record WHERE review_record.data_set = '${PLACEHOLDER_DATA_SET}' GROUP BY r_reviewer_name " +
+            "FROM review_record WHERE review_record.creator_identifier = '${PLACEHOLDER_DATA_SET}' GROUP BY r_reviewer_name " +
             "UNION ALL SELECT 0, 0, 0.25\n" +
             "UNION ALL SELECT 0, 0, 0.50\n" +
             "UNION ALL SELECT 0, 0, 0.75\n" +
@@ -3129,7 +3129,7 @@ export default {
             "  WHEN avg_confidence_level <= 4.75 THEN '4.50 ~ 4.75'\n" +
             "  WHEN avg_confidence_level <= 5.00 THEN '4.75 ~ 5.00'\n" +
             "END AS `avg_confidence_level_interval`, avg_evaluation_score, avg_expertise_level FROM (SELECT AVG(r_confidence_level) AS `avg_confidence_level`, AVG(r_overall_evaluation_score) AS `avg_evaluation_score`, AVG(r_expertise_level) AS `avg_expertise_level` " +
-            "FROM review_record WHERE review_record.data_set = '${PLACEHOLDER_DATA_SET}' GROUP BY r_reviewer_name " +
+            "FROM review_record WHERE review_record.creator_identifier = '${PLACEHOLDER_DATA_SET}' GROUP BY r_reviewer_name " +
             "UNION ALL SELECT 0.25, 0, 0\n" +
             "UNION ALL SELECT 0.50, 0, 0\n" +
             "UNION ALL SELECT 0.75, 0, 0\n" +
@@ -3269,7 +3269,7 @@ export default {
             "  WHEN avg_evaluation_score <= 2.75 THEN '2.50 ~ 2.75'\n" +
             "  WHEN avg_evaluation_score <= 3.00 THEN '2.75 ~ 3.00'\n" +
             "END AS `avg_evaluation_score_interval`, avg_confidence_level, avg_expertise_level FROM (SELECT AVG(r_confidence_level) AS `avg_confidence_level`, AVG(r_overall_evaluation_score) AS `avg_evaluation_score`, AVG(r_expertise_level) AS `avg_expertise_level` " +
-            "FROM review_record WHERE review_record.data_set = '${PLACEHOLDER_DATA_SET}' GROUP BY r_reviewer_name " +
+            "FROM review_record WHERE review_record.creator_identifier = '${PLACEHOLDER_DATA_SET}' GROUP BY r_reviewer_name " +
             "UNION ALL SELECT 0, -2.75, 0\n" +
             "UNION ALL SELECT 0, -2.50, 0\n" +
             "UNION ALL SELECT 0, -2.25, 0\n" +
@@ -3416,7 +3416,7 @@ export default {
             "  WHEN weighted_score <= 2.75 THEN '2.50 ~ 2.75'\n" +
             "  WHEN weighted_score <= 3.00 THEN '2.75 ~ 3.00'\n" +
             "END AS `weighted_score_interval`, s_is_accepted FROM (SELECT SUM(r_confidence_level * r_overall_evaluation_score) / SUM(r_confidence_level) AS `weighted_score`, s_is_accepted " +
-            "FROM review_record, submission_record WHERE review_record.data_set = '${PLACEHOLDER_DATA_SET}' AND submission_record.data_set = '${PLACEHOLDER_DATA_SET}' " +
+            "FROM review_record, submission_record WHERE review_record.creator_identifier = '${PLACEHOLDER_DATA_SET}' AND submission_record.creator_identifier = '${PLACEHOLDER_DATA_SET}' " +
             "AND review_record.r_submission_id = submission_record.s_submission_id GROUP BY r_submission_id, s_is_accepted " +
             "UNION ALL SELECT -2.75, 'no'\n" +
             "UNION ALL SELECT -2.50, 'no'\n" +
@@ -3503,7 +3503,7 @@ export default {
         {
           name:
             "(SELECT s_track_name, SUM(r_confidence_level * r_overall_evaluation_score) / SUM(r_confidence_level) AS `weighted_score` " +
-            "FROM review_record, submission_record WHERE review_record.data_set = '${PLACEHOLDER_DATA_SET}' AND submission_record.data_set = '${PLACEHOLDER_DATA_SET}' " +
+            "FROM review_record, submission_record WHERE review_record.creator_identifier = '${PLACEHOLDER_DATA_SET}' AND submission_record.creator_identifier = '${PLACEHOLDER_DATA_SET}' " +
             "AND review_record.r_submission_id = submission_record.s_submission_id GROUP BY r_submission_id, s_track_name) AS `tmp`",
           customized: true
         }
@@ -3559,7 +3559,7 @@ export default {
         {
           name:
             "(SELECT IF(DATEDIFF(MIN(r_review_submission_time), s_submission_time) < 21, DATEDIFF(MIN(r_review_submission_time), s_submission_time), 21)  AS `duration_get_reviewed` " +
-            "FROM review_record, submission_record WHERE review_record.data_set = '${PLACEHOLDER_DATA_SET}' AND submission_record.data_set = '${PLACEHOLDER_DATA_SET}' " +
+            "FROM review_record, submission_record WHERE review_record.creator_identifier = '${PLACEHOLDER_DATA_SET}' AND submission_record.creator_identifier = '${PLACEHOLDER_DATA_SET}' " +
             "AND review_record.r_submission_id = submission_record.s_submission_id GROUP BY r_submission_id, s_submission_time " +
             "UNION ALL SELECT 0 " +
             "UNION ALL SELECT 1 " +
@@ -3675,7 +3675,7 @@ export default {
             "  WHEN avg_expertise_level <= 5.00 THEN '4.75 ~ 5.00'\n" +
             "END AS `avg_expertise_level_interval` FROM " +
             "(SELECT AVG(r_expertise_level) AS `avg_expertise_level` FROM review_record " +
-            "WHERE review_record.data_set = '${PLACEHOLDER_DATA_SET}'" +
+            "WHERE review_record.creator_identifier = '${PLACEHOLDER_DATA_SET}'" +
             "GROUP BY r_submission_id " +
             "UNION ALL SELECT 0.25\n" +
             "UNION ALL SELECT 0.50\n" +
@@ -3792,7 +3792,7 @@ export default {
             "  WHEN avg_confidence_level <= 5.00 THEN '4.75 ~ 5.00'\n" +
             "END AS `avg_confidence_level_interval` FROM " +
             "(SELECT AVG(r_confidence_level) AS `avg_confidence_level` FROM review_record " +
-            "WHERE review_record.data_set = '${PLACEHOLDER_DATA_SET}'" +
+            "WHERE review_record.creator_identifier = '${PLACEHOLDER_DATA_SET}'" +
             "GROUP BY r_submission_id " +
             "UNION ALL SELECT 0.25\n" +
             "UNION ALL SELECT 0.50\n" +
@@ -3866,8 +3866,8 @@ export default {
         {
           name:
             "(SELECT s_author_name, weighted_score FROM " +
-            "(SELECT r_submission_id, SUM(r_confidence_level * r_overall_evaluation_score) / SUM(r_confidence_level) AS `weighted_score` FROM review_record WHERE review_record.data_set = '${PLACEHOLDER_DATA_SET}' GROUP BY r_submission_id) AS `tmp1`, submission_record, submission_record_author_set, submission_author_record " +
-            "WHERE r_submission_id = s_submission_id AND s_id = submission_record_s_id AND author_set_s_author_id = s_author_id AND submission_record.data_set = '${PLACEHOLDER_DATA_SET}') AS `tmp2`",
+            "(SELECT r_submission_id, SUM(r_confidence_level * r_overall_evaluation_score) / SUM(r_confidence_level) AS `weighted_score` FROM review_record WHERE review_record.creator_identifier = '${PLACEHOLDER_DATA_SET}' GROUP BY r_submission_id) AS `tmp1`, submission_record, submission_record_author_set, submission_author_record " +
+            "WHERE r_submission_id = s_submission_id AND s_id = submission_record_s_id AND author_set_s_author_id = s_author_id AND submission_record.creator_identifier = '${PLACEHOLDER_DATA_SET}') AS `tmp2`",
           customized: true
         }
       ],
@@ -3930,7 +3930,7 @@ export default {
         {
           name:
             "(SELECT a_first_name, a_last_name, a_email, SUM(r_confidence_level * r_overall_evaluation_score) / SUM(r_confidence_level) AS `weighted_score` FROM review_record, author_record " +
-            "WHERE review_record.data_set = '${PLACEHOLDER_DATA_SET}' AND author_record.data_set = '${PLACEHOLDER_DATA_SET}' " +
+            "WHERE review_record.creator_identifier = '${PLACEHOLDER_DATA_SET}' AND author_record.creator_identifier = '${PLACEHOLDER_DATA_SET}' " +
             "AND review_record.r_submission_id = author_record.a_submission_id GROUP BY a_submission_id, a_first_name, a_last_name, a_email) AS `tmp`",
           customized: true
         }
@@ -4005,7 +4005,7 @@ export default {
         {
           name:
             "(SELECT a_organisation, SUM(r_confidence_level * r_overall_evaluation_score) / SUM(r_confidence_level) AS `weighted_score` FROM review_record, author_record " +
-            "WHERE review_record.data_set = '${PLACEHOLDER_DATA_SET}' AND author_record.data_set = '${PLACEHOLDER_DATA_SET}' " +
+            "WHERE review_record.creator_identifier = '${PLACEHOLDER_DATA_SET}' AND author_record.creator_identifier = '${PLACEHOLDER_DATA_SET}' " +
             "AND review_record.r_submission_id = author_record.a_submission_id GROUP BY a_submission_id, a_organisation) AS `tmp`",
           customized: true
         }
@@ -4070,7 +4070,7 @@ export default {
         {
           name:
             "(SELECT a_country, SUM(r_confidence_level * r_overall_evaluation_score) / SUM(r_confidence_level) AS `weighted_score` FROM review_record, author_record " +
-            "WHERE review_record.data_set = '${PLACEHOLDER_DATA_SET}' AND author_record.data_set = '${PLACEHOLDER_DATA_SET}' " +
+            "WHERE review_record.creator_identifier = '${PLACEHOLDER_DATA_SET}' AND author_record.creator_identifier = '${PLACEHOLDER_DATA_SET}' " +
             "AND review_record.r_submission_id = author_record.a_submission_id GROUP BY a_submission_id, a_country) AS `tmp`",
           customized: true
         }
@@ -4197,19 +4197,19 @@ export default {
             "(select A.r_confidence_level as r_confidence_level, IFNULL(A.tot_score,0) AS r_score_low, IFNULL(B.tot_score,0) AS r_score_high" +
             " from (select r_confidence_level, r_low_or_high, count(*) as tot_score" +
             " from (select r_confidence_level,case when r_overall_evaluation_score<" +
-            "(select case when ((MAX(r_overall_evaluation_score)-MIN(r_overall_evaluation_score))/2)<3 then 3 else 0 end as medium FROM review_record WHERE review_record.data_set = '${PLACEHOLDER_DATA_SET}') then 'low' when r_overall_evaluation_score=(select case when ((MAX(r_overall_evaluation_score)-MIN(r_overall_evaluation_score))/2)<3 then 3 else 0 end as medium FROM review_record WHERE review_record.data_set = '${PLACEHOLDER_DATA_SET}') then 'medium' else 'high' end as r_low_or_high FROM review_record WHERE review_record.data_set = '${PLACEHOLDER_DATA_SET}')as temp1  where r_low_or_high like 'low' group by r_confidence_level,r_low_or_high) as A" +
+            "(select case when ((MAX(r_overall_evaluation_score)-MIN(r_overall_evaluation_score))/2)<3 then 3 else 0 end as medium FROM review_record WHERE review_record.creator_identifier = '${PLACEHOLDER_DATA_SET}') then 'low' when r_overall_evaluation_score=(select case when ((MAX(r_overall_evaluation_score)-MIN(r_overall_evaluation_score))/2)<3 then 3 else 0 end as medium FROM review_record WHERE review_record.creator_identifier = '${PLACEHOLDER_DATA_SET}') then 'medium' else 'high' end as r_low_or_high FROM review_record WHERE review_record.creator_identifier = '${PLACEHOLDER_DATA_SET}')as temp1  where r_low_or_high like 'low' group by r_confidence_level,r_low_or_high) as A" +
             " LEFT JOIN (select r_confidence_level, r_low_or_high, count(*) as tot_score" +
             " from (select r_confidence_level,case when r_overall_evaluation_score<" +
-            "(select case when ((MAX(r_overall_evaluation_score)-MIN(r_overall_evaluation_score))/2)<3 then 3 else 0 end as medium FROM review_record WHERE review_record.data_set = '${PLACEHOLDER_DATA_SET}') then 'low' when r_overall_evaluation_score=(select case when ((MAX(r_overall_evaluation_score)-MIN(r_overall_evaluation_score))/2)<3 then 3 else 0 end as medium FROM review_record WHERE review_record.data_set = '${PLACEHOLDER_DATA_SET}') then 'medium' else 'high' end as r_low_or_high FROM review_record WHERE review_record.data_set = '${PLACEHOLDER_DATA_SET}')as temp1  where r_low_or_high like 'high' group by r_confidence_level,r_low_or_high) as B" +
+            "(select case when ((MAX(r_overall_evaluation_score)-MIN(r_overall_evaluation_score))/2)<3 then 3 else 0 end as medium FROM review_record WHERE review_record.creator_identifier = '${PLACEHOLDER_DATA_SET}') then 'low' when r_overall_evaluation_score=(select case when ((MAX(r_overall_evaluation_score)-MIN(r_overall_evaluation_score))/2)<3 then 3 else 0 end as medium FROM review_record WHERE review_record.creator_identifier = '${PLACEHOLDER_DATA_SET}') then 'medium' else 'high' end as r_low_or_high FROM review_record WHERE review_record.creator_identifier = '${PLACEHOLDER_DATA_SET}')as temp1  where r_low_or_high like 'high' group by r_confidence_level,r_low_or_high) as B" +
             " ON A.r_confidence_level=B.r_confidence_level" +
             " union" +
             " select B.r_confidence_level as r_confidence_level, IFNULL(A.tot_score,0) AS r_score_low, IFNULL(B.tot_score,0) AS r_score_high" +
             " from (select r_confidence_level, r_low_or_high, count(*) as tot_score" +
             " from (select r_confidence_level,case when r_overall_evaluation_score<" +
-            "(select case when ((MAX(r_overall_evaluation_score)-MIN(r_overall_evaluation_score))/2)<3 then 3 else 0 end as medium FROM review_record WHERE review_record.data_set = '${PLACEHOLDER_DATA_SET}') then 'low' when r_overall_evaluation_score=(select case when ((MAX(r_overall_evaluation_score)-MIN(r_overall_evaluation_score))/2)<3 then 3 else 0 end as medium FROM review_record WHERE review_record.data_set = '${PLACEHOLDER_DATA_SET}') then 'medium' else 'high' end as r_low_or_high FROM review_record WHERE review_record.data_set = '${PLACEHOLDER_DATA_SET}')as temp1  where r_low_or_high like 'low' group by r_confidence_level,r_low_or_high) as A" +
+            "(select case when ((MAX(r_overall_evaluation_score)-MIN(r_overall_evaluation_score))/2)<3 then 3 else 0 end as medium FROM review_record WHERE review_record.creator_identifier = '${PLACEHOLDER_DATA_SET}') then 'low' when r_overall_evaluation_score=(select case when ((MAX(r_overall_evaluation_score)-MIN(r_overall_evaluation_score))/2)<3 then 3 else 0 end as medium FROM review_record WHERE review_record.creator_identifier = '${PLACEHOLDER_DATA_SET}') then 'medium' else 'high' end as r_low_or_high FROM review_record WHERE review_record.creator_identifier = '${PLACEHOLDER_DATA_SET}')as temp1  where r_low_or_high like 'low' group by r_confidence_level,r_low_or_high) as A" +
             " RIGHT JOIN (select r_confidence_level, r_low_or_high, count(*) as tot_score" +
             " from (select r_confidence_level,case when r_overall_evaluation_score<" +
-            "(select case when ((MAX(r_overall_evaluation_score)-MIN(r_overall_evaluation_score))/2)<3 then 3 else 0 end as medium FROM review_record WHERE review_record.data_set = '${PLACEHOLDER_DATA_SET}') then 'low' when r_overall_evaluation_score=(select case when ((MAX(r_overall_evaluation_score)-MIN(r_overall_evaluation_score))/2)<3 then 3 else 0 end as medium FROM review_record WHERE review_record.data_set = '${PLACEHOLDER_DATA_SET}') then 'medium' else 'high' end as r_low_or_high FROM review_record WHERE review_record.data_set = '${PLACEHOLDER_DATA_SET}')as temp1  where r_low_or_high like 'high' group by r_confidence_level,r_low_or_high) as B" +
+            "(select case when ((MAX(r_overall_evaluation_score)-MIN(r_overall_evaluation_score))/2)<3 then 3 else 0 end as medium FROM review_record WHERE review_record.creator_identifier = '${PLACEHOLDER_DATA_SET}') then 'low' when r_overall_evaluation_score=(select case when ((MAX(r_overall_evaluation_score)-MIN(r_overall_evaluation_score))/2)<3 then 3 else 0 end as medium FROM review_record WHERE review_record.creator_identifier = '${PLACEHOLDER_DATA_SET}') then 'medium' else 'high' end as r_low_or_high FROM review_record WHERE review_record.creator_identifier = '${PLACEHOLDER_DATA_SET}')as temp1  where r_low_or_high like 'high' group by r_confidence_level,r_low_or_high) as B" +
             " ON A.r_confidence_level=B.r_confidence_level)as temp",
           customized: true
         }
@@ -4317,7 +4317,7 @@ export default {
             "concat (a2.a_first_name,a2.a_last_name) as a2_name_pair,\n" +
             "count(*) as Num_Entries\n" +
             "from author_record as a1, author_record as a2\n" +
-            "where a1.data_set = '${PLACEHOLDER_DATA_SET}' and a2.data_set = '${PLACEHOLDER_DATA_SET}'\n" +
+            "where a1.creator_identifier = '${PLACEHOLDER_DATA_SET}' and a2.creator_identifier = '${PLACEHOLDER_DATA_SET}'\n" +
             "and a1.a_submission_id = a2.a_submission_id and a1.a_id < a2.a_id\n" +
             "group by a1.a_id, a2.a_id\n" +
             "order by count(*) desc)as temp",
