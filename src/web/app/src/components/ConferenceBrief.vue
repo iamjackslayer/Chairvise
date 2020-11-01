@@ -8,24 +8,24 @@
         </b-breadcrumb>
       </b-col>
     </b-row>
-    <b-row class="row">
-      <b-col
-        ><b-card header="Author Records"
-          ><h1>{{ getAuthorRecord }}</h1></b-card
-        ></b-col
-      >
-      <b-col
-        ><b-card header="Submission Records"
-          ><h1>{{ getSubmissionRecord }}</h1></b-card
-        ></b-col
-      >
-      <b-col
-        ><b-card header="Review Records"
-          ><h1>{{ getReviewRecord }}</h1></b-card
-        >
+    <b-row>
+      <b-col xs="12" lg="4" class="record-count">
+        <b-card header="Author Records">
+          <h1>{{ getAuthorRecord }}</h1>
+        </b-card>
+      </b-col>
+      <b-col xs="12" lg="4" class="record-count">
+        <b-card header="Submission Records">
+          <h1>{{ getSubmissionRecord }}</h1>
+        </b-card>
+      </b-col>
+      <b-col xs="12" lg="4" class="record-count">
+        <b-card header="Review Records">
+          <h1>{{ getReviewRecord }}</h1>
+        </b-card>
       </b-col>
     </b-row>
-    <b-row>
+    <b-row class="mt-3">
       <b-col>
         <b-card class="details-with-form">
           <div slot="header">
@@ -276,8 +276,11 @@ export default {
 };
 </script>
 
-<style scoped>
-.row {
-  margin: 20px;
+<style lang="scss" scoped>
+.record-count:not(:first-child) {
+  margin-top: 1rem;
+  @include media-breakpoint-up(lg) {
+    margin-top: 0;
+  }
 }
 </style>
