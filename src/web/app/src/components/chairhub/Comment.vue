@@ -173,11 +173,6 @@ export default {
     this.currentComment = this.comment;
     this.timeElapsedUpdated = this.currentTime - new Date(this.updatedDate);
     this.timeElapsedCreated = this.currentTime - new Date(this.createdDate);
-    // this.$el.scrollIntoView({
-    //   top: this.$el.offsetTop,
-    //   behavior: "smooth",
-    //   block: "end"
-    // });
   }
 };
 </script>
