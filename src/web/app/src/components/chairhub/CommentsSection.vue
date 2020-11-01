@@ -17,17 +17,19 @@
     </b-form>
     <h3 class="cs-list-heading" v-if="commentList.length > 0">Comments</h3>
     <b-list-group>
-      <Comment
-        v-for="comment in commentList"
-        :key="comment.id"
-        class="my-1 comment-item"
-        :id="comment.id"
-        :presentationId="presentationId"
-        :comment="comment.comment"
-        :creator="comment.userIdentifier"
-        :createdDate="comment.createdDate"
-        :updatedDate="comment.updatedDate"
-      ></Comment>
+      <transition-group name="list">
+        <Comment
+          v-for="comment in commentList"
+          :key="comment.id"
+          class="my-1 comment-item"
+          :id="comment.id"
+          :presentationId="presentationId"
+          :comment="comment.comment"
+          :creator="comment.userIdentifier"
+          :createdDate="comment.createdDate"
+          :updatedDate="comment.updatedDate"
+        ></Comment>
+      </transition-group>
     </b-list-group>
   </b-container>
 </template>
@@ -41,7 +43,7 @@ export default {
   },
   name: "Comments",
   data() {
-    return { scrolling: false };
+    return {};
   },
   components: {
     Comment
@@ -92,24 +94,11 @@ export default {
     async onCreateComment(evt) {
       evt.preventDefault();
       await this.addComment(evt);
-      // console.log(document.body.scrollHeight);
-      this.scrolling = true;
-    },
-    scrollToLastComment() {
-      const comments = document.getElementsByClassName("comment-item");
-      const len = comments.length;
-      comments[len - 1].scrollIntoView({
-        behavior: "smooth",
-        block: "end"
-      });
     }
   },
   mounted() {
     // fetch all comments for this presentation
     this.fetchComments();
-  },
-  updated() {
-    this.scrollToLastComment();
   }
 };
 </script>
