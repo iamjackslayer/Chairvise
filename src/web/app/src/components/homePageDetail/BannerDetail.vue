@@ -16,29 +16,28 @@
       </b-row>
     </div>
 
-    <div class="page">
+    <b-card
+      class="shadow p-3 mb-5 bg-white rounded"
+      v-if="isConferenceListEmpty"
+    >
+      <EmptyConference />
+    </b-card>
+    <div v-else class="list-grid">
       <b-card
-        class="shadow p-3 mb-5 bg-white rounded"
-        v-if="isConferenceListEmpty"
+        class="list-card"
+        v-for="conference in conferences"
+        :key="conference.id"
+        @click="viewConference(conference.id)"
       >
-        <EmptyConference />
+        <h5 class="list-title">{{ conference.name }}</h5>
+        <div class="list-description">
+          {{ conference.description || "-" }}
+        </div>
+        <div class="privacy-status">
+          <!-- TODO: Change this to date with calendar icon -->
+          <b-icon icon="lock" class="mr-1" />Private
+        </div>
       </b-card>
-      <div v-else class="list-grid">
-        <b-card
-          class="list-card"
-          v-for="conference in conferences"
-          :key="conference.id"
-          @click="viewConference(conference.id)"
-        >
-          <h5 class="list-title">{{ conference.name }}</h5>
-          <div class="list-description">
-            {{ conference.description || "-" }}
-          </div>
-          <div class="privacy-status">
-            <b-icon icon="lock" class="mr-1" />Private
-          </div>
-        </b-card>
-      </div>
     </div>
   </div>
 </template>
@@ -93,12 +92,6 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
-.page {
-  padding: 20px;
-}
-h2 {
-  font-family: Garamond;
-}
 img {
   width: 250px;
   height: 300px;
