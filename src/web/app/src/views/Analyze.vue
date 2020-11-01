@@ -20,15 +20,15 @@
         <!-- TODO: Replace with openpeeps image -->
         <EmptyPresentation />
       </b-card>
-      <div class="presentation-grid">
+      <div class="list-grid">
         <b-card
-          class="presentation-card p-2 shadow-sm rounded-lg"
+          class="list-card p-2 shadow-sm rounded-lg"
           v-for="presentation in presentations"
           :key="presentation.id"
           @click="viewPresentation(presentation.id)"
         >
-          <h5 class="presentation-title">{{ presentation.name }}</h5>
-          <div class="presentation-description">
+          <h5 class="list-title">{{ presentation.name }}</h5>
+          <div class="list-description">
             {{ presentation.description || "-" }}
           </div>
           <div class="privacy-status">
@@ -118,65 +118,4 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
-@supports (display: grid) {
-  .presentation-grid {
-    display: grid;
-    grid-template-columns: repeat(1, 1fr);
-    grid-gap: 1rem;
-
-    @include media-breakpoint-up(lg) {
-      grid-template-columns: repeat(2, 1fr);
-      grid-gap: 1.5rem;
-    }
-
-    @include media-breakpoint-up(xl) {
-      grid-template-columns: repeat(3, 1fr);
-      grid-gap: 1.5rem;
-    }
-  }
-}
-
-.presentation-card {
-  cursor: pointer;
-  height: 175px;
-
-  @include media-breakpoint-up(lg) {
-    height: 200px;
-  }
-}
-
-.presentation-card:hover {
-  background-color: $indigo-100;
-}
-
-.presentation-card > .card-body {
-  display: flex;
-  flex-direction: column;
-}
-
-.presentation-description {
-  font-size: 0.95rem;
-  letter-spacing: -0.025em;
-  color: $gray-600;
-
-  // clamp to 3 lines (restricted to webkit browsers)
-  overflow: hidden;
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-}
-
-.privacy-status {
-  margin-top: auto;
-  font-size: 0.95rem;
-  color: $indigo-600;
-  align-self: flex-end;
-}
-
-.presentation-title {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-</style>
+<style lang="scss" scoped></style>
