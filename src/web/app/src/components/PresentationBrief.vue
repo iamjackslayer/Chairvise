@@ -7,7 +7,7 @@
     <b-card>
       <div slot="header" class="presentation-header">
         <span> Presentation Details </span>
-        <b-button-toolbar v-if="!isInEditMode">
+        <b-button-toolbar class="presentation-toolbar" v-if="!isInEditMode">
           <b-button-group class="mr-2">
             <b-button
               title="Download PDF"
@@ -360,7 +360,20 @@ export default {
 <style lang="scss" scoped>
 .presentation-header {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  flex-direction: column;
+
+  @include media-breakpoint-up(lg) {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
+
+.presentation-toolbar {
+  margin-top: 0.5rem;
+
+  @include media-breakpoint-up(lg) {
+    margin-top: 0;
+  }
 }
 </style>

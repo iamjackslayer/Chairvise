@@ -40,7 +40,11 @@
                 />
               </b-form-select-option-group>
             </b-form-select>
-            <b-button class="mt-2" variant="primary" @click="addNewSection">
+            <b-button
+              class="mt-2 responsive-btn"
+              variant="primary"
+              @click="addNewSection"
+            >
               <b-icon icon="plus" />Add New Section
             </b-button>
           </b-card>

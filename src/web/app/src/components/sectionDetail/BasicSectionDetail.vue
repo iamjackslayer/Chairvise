@@ -3,16 +3,17 @@
     <b-form>
       <div class="title mb-2" v-if="!isEditing">
         <span class="title-text">{{ sectionDetail.title }}</span>
-        <div class="ml-auto">
+        <div class="toolbar ml-lg-auto">
           <b-button
             variant="primary"
-            class="ml-2 mr-2"
+            class="ml-lg-2 mr-lg-2 responsive-btn"
             @click="changeEditMode(true)"
             v-if="isPresentationEditable"
           >
             <b-icon icon="pencil-square" aria-hidden="true" /> Edit
           </b-button>
           <b-button
+            class="responsive-btn"
             variant="outline-danger"
             @click="deleteSectionDetail"
             v-if="isPresentationEditable"
@@ -702,7 +703,13 @@ export default {
 <style lang="scss" scoped>
 .title {
   display: flex;
-  align-items: center;
+  flex-direction: column;
+
+  @include media-breakpoint-up(lg) {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
 }
 
 .title-text {
