@@ -70,8 +70,7 @@ export default {
   data() {
     return {
       visible: window.innerWidth >= 992,
-      isWindowLarge: false,
-      stuff: this.$store.state.userInfo
+      isWindowLarge: false
     };
   },
   mounted() {
