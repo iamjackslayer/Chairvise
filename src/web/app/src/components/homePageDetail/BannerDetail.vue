@@ -3,6 +3,7 @@
     <div
       class="jumbotron jumbotron-fluid"
       style="background:linear-gradient(to bottom, #add8e6, #fafafa)"
+      v-if="!isLogin"
     >
       <zoom-center-transition :duration="500">
         <b-row style="text-align:center">
@@ -17,11 +18,12 @@
         </b-row>
       </zoom-center-transition>
     </div>
-    <div class="page">
+    <div class="page" v-if="isLogin">
       <b-card
         class="shadow p-3 mb-5 bg-white rounded"
-        v-if="isPresentationListEmpty"
+        v-if="isConferenceListEmpty"
       >
+        <h1>No Conferences created</h1>
         <!-- TODO: Replace with openpeeps image -->
       </b-card>
       <div class="presentation-grid">
@@ -65,6 +67,12 @@ export default {
     },
     conferences() {
       return this.$store.state.conference.conferenceList;
+    },
+    isConferenceListEmpty() {
+      return this.$store.state.conference.conferenceList.length <= 0;
+    },
+    isLogin() {
+      return this.$store.state.userInfo.isLogin;
     }
   },
   methods: {

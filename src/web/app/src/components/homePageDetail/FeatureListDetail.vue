@@ -5,7 +5,7 @@
         <h1>Here's what you can do</h1>
         <b-row type="flex" :gutter="16" align="middle" justify="center">
           <zoom-x-transition :duration="500" :delay="600">
-            <b-col :sm="24" :md="8" :lg="8" :xl="8" v-show="show">
+            <b-col v-show="show">
               <b-card class="bcard">
                 <img src="@/assets/upload.png" />
                 <p>Upload all your conference data</p>
@@ -13,7 +13,7 @@
             </b-col>
           </zoom-x-transition>
           <zoom-x-transition :duration="500" :delay="600">
-            <b-col :sm="24" :md="8" :lg="8" :xl="8" v-show="show">
+            <b-col v-show="show">
               <b-card class="bcard">
                 <img src="@/assets/collaboration.png" />
                 <p>Create and share presentation with others</p>
@@ -21,7 +21,7 @@
             </b-col>
           </zoom-x-transition>
           <zoom-x-transition :duration="500" :delay="600">
-            <b-col :sm="24" :md="8" :lg="8" :xl="8" v-show="show">
+            <b-col v-show="show">
               <b-card class="bcard">
                 <img src="@/assets/presentation.png" />
                 <p>Generate various visualisation</p>
@@ -31,6 +31,7 @@
         </b-row>
       </div>
     </div>
+    <!--
     <div class="options-list" v-if="isLogin">
       <b-row>
         <h1>Exploring Chairvise</h1>
@@ -71,6 +72,7 @@
         </zoom-x-transition>
       </b-row>
     </div>
+    -->
   </div>
 </template>
 
