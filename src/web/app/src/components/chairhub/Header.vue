@@ -7,20 +7,20 @@
         <b-row align-h="around">
           <BannerCard
             title="public posts"
-            :figure="totalPublicPostsPastWeek.toString()"
-            subfigure="32"
+            :figure="isLoggedIn ? totalPublicPostsPastWeek : '??'"
+            :subfigure="isLoggedIn ? totalPublicPostsPerDay : '??'"
             subtitle="per day avg"
           />
           <BannerCard
             title="comments"
-            :figure="totalCommentsPastWeek.toString()"
-            subfigure="24"
+            :figure="isLoggedIn ? totalCommentsPastWeek : '??'"
+            :subfigure="isLoggedIn ? totalCommentsPerDay : '??'"
             subtitle="per day avg"
           />
           <BannerCard
             title="active users"
-            :figure="totalActiveUsersPastWeek.toString()"
-            subfigure="2123"
+            :figure="isLoggedIn ? totalActiveUsersPastWeek : '??'"
+            :subfigure="isLoggedIn ? totalActiveUsersPerDay : '??'"
             subtitle="per day avg"
           />
         </b-row>
@@ -37,14 +37,26 @@ export default {
     BannerCard
   },
   computed: {
+    isLoggedIn() {
+      return this.$store.state.userInfo.isLogin;
+    },
     totalPublicPostsPastWeek() {
       return 212;
+    },
+    totalPublicPostsPerDay() {
+      return 1;
     },
     totalCommentsPastWeek() {
       return 3219;
     },
+    totalCommentsPerDay() {
+      return 2;
+    },
     totalActiveUsersPastWeek() {
       return 21;
+    },
+    totalActiveUsersPerDay() {
+      return 1;
     }
   }
 };

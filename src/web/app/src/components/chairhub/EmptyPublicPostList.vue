@@ -9,10 +9,18 @@
             font-scale="7"
           ></b-icon>
         </div>
-        <h2 class="my-4">No public posts</h2>
-        <b-button @click="createPresentation" class="btn-create"
-          >Create a public post</b-button
-        >
+        <div v-if="!isLoggedIn">
+          <h3 class="my-4">You are not logged in to ChairVise</h3>
+          <b-button @click="login" class="btn-create">
+            <b-icon icon="arrow-right-square" class="mr-2"></b-icon>Login
+          </b-button>
+        </div>
+        <div v-else>
+          <h2 class="my-4">No public posts</h2>
+          <b-button @click="createPresentation" class="btn-create"
+            >Create a public post</b-button
+          >
+        </div>
       </section>
     </b-row>
   </b-container>
@@ -22,6 +30,14 @@ export default {
   methods: {
     createPresentation() {
       this.$router.push("/analyze/create");
+    },
+    login() {
+      window.location.href = this.$store.state.userInfo.loginUrl;
+    }
+  },
+  computed: {
+    isLoggedIn() {
+      return this.$store.state.userInfo.isLogin;
     }
   },
   mounted() {}

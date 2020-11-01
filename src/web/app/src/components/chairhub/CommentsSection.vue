@@ -10,7 +10,9 @@
         max-rows="6"
       ></b-form-textarea>
       <div class="d-flex justify-content-end py-3">
-        <b-button type="submit" :disabled="isCommentTextEmpty" variant="create">Create</b-button>
+        <b-button type="submit" :disabled="isCommentTextEmpty" variant="create"
+          >Create</b-button
+        >
       </div>
     </b-form>
     <h3 class="cs-list-heading" v-if="commentList.length > 0">Comments</h3>
