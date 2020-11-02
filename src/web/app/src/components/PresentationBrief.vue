@@ -1,7 +1,7 @@
 <template>
   <div>
     <b-breadcrumb>
-      <b-breadcrumb-item to="/analyze">My Presentations</b-breadcrumb-item>
+      <b-breadcrumb-item to="/presentation">My Presentations</b-breadcrumb-item>
       <b-breadcrumb-item active>Presentation Details</b-breadcrumb-item>
     </b-breadcrumb>
     <b-card>
@@ -248,7 +248,7 @@ export default {
           }
           // redirect to the newly added presentation
           this.$router.push({
-            name: "analyze",
+            name: "presentation",
             params: {
               id: this.$store.state.presentation.presentationForm.id
             }
@@ -271,7 +271,7 @@ export default {
           return;
         }
         this.$router.replace({
-          name: "analyze",
+          name: "presentation",
           params: {
             id: ID_NEW_PRESENTATION
           }

@@ -1,28 +1,23 @@
 <template>
-  <div class="emptySection">
-    <b-row>
-      <b-col>
-        <div class="icon">
-          <img src="@/assets/businessman.png" />
-        </div>
-      </b-col>
-    </b-row>
-    <b-row>
-      <b-col>
-        <p>
-          <i>
-            No conference found.
-          </i>
-        </p>
-        <p>
-          Let's get started by adding a new conference.
-        </p>
-        <b-button variant="primary" @click="createConference">
-          <b-icon icon="plus" font-scale="1"></b-icon>Add New
-          Conference</b-button
-        >
-      </b-col>
-    </b-row>
+  <div>
+    <div class="empty-image-container">
+      <img class="empty-image" src="@/assets/emptyguide2.svg" />
+    </div>
+    <div class="mt-2 empty-container">
+      <div class="empty-title">Create a Conference</div>
+      <div class="empty-description">
+        A conference easily allows you to manage and keep track of conference
+        data for the specified conference.
+      </div>
+
+      <b-button
+        class="empty-action responsive-btn"
+        variant="primary"
+        @click="createConference"
+      >
+        <b-icon icon="plus"></b-icon> Add New Conference
+      </b-button>
+    </div>
   </div>
 </template>
 
@@ -35,14 +30,3 @@ export default {
   }
 };
 </script>
-
-<style scoped>
-.icon {
-  margin-left: 04.5rem;
-  margin-bottom: 0.25rem;
-}
-.emptySection {
-  text-align: center;
-  vertical-align: middle;
-}
-</style>

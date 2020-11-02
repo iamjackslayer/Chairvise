@@ -1,7 +1,8 @@
 <template>
   <div>
-    <BannerDetail></BannerDetail>
-    <FeatureListDetail></FeatureListDetail>
+    <BannerDetail v-if="!isLogin"></BannerDetail>
+    <FeatureListDetail v-if="!isLogin"></FeatureListDetail>
+    <ConferenceList v-if="isLogin"></ConferenceList>
   </div>
 </template>
 
@@ -9,12 +10,19 @@
 // @ is an alias to /src
 import BannerDetail from "@/components/homePageDetail/BannerDetail.vue";
 import FeatureListDetail from "@/components/homePageDetail/FeatureListDetail.vue";
+import ConferenceList from "@/components/homePageDetail/ConferenceList.vue";
 
 export default {
   name: "home",
   components: {
     BannerDetail,
-    FeatureListDetail
+    FeatureListDetail,
+    ConferenceList
+  },
+  computed: {
+    isLogin() {
+      return this.$store.state.userInfo.isLogin;
+    }
   }
 };
 </script>

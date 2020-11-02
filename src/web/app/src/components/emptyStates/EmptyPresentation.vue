@@ -1,29 +1,23 @@
 <template>
-  <div class="emptySection">
-    <b-row>
-      <b-col>
-        <div class="icon">
-          <img src="@/assets/businessman.png" />
-        </div>
-      </b-col>
-    </b-row>
-    <b-row>
-      <b-col>
-        <p>
-          <i>
-            No presentation found. Want to generate presentation for a
-            conference?
-          </i>
-        </p>
-        <p>
-          Let's get started by adding a new presentation.
-        </p>
-        <b-button variant="primary" @click="createPresentation">
-          <b-icon icon="plus" font-scale="1"></b-icon>Add New
-          Presentation</b-button
-        >
-      </b-col>
-    </b-row>
+  <div>
+    <div class="empty-image-container">
+      <img class="empty-image" src="@/assets/emptyguide.svg" />
+    </div>
+    <div class="mt-2 empty-container">
+      <div class="empty-title">Create a Presentation</div>
+      <div class="empty-description">
+        A presentation easily allows you to create useful charts generated from
+        a conference's data and can be shared with other users.
+      </div>
+
+      <b-button
+        class="empty-action responsive-btn"
+        variant="primary"
+        @click="createPresentation"
+      >
+        <b-icon icon="plus"></b-icon> Add New Presentation
+      </b-button>
+    </div>
   </div>
 </template>
 
@@ -31,19 +25,10 @@
 export default {
   methods: {
     createPresentation() {
-      this.$router.push("/analyze/create");
+      this.$router.push("/presentation/create");
     }
   }
 };
 </script>
 
-<style scoped>
-.icon {
-  margin-left: 04.5rem;
-  margin-bottom: 0.25rem;
-}
-.emptySection {
-  text-align: center;
-  vertical-align: middle;
-}
-</style>
+<style lang="scss" scoped></style>

@@ -57,7 +57,9 @@
           />
           {{ sectionListApiErrorMsg }}
         </b-alert>
-        <b-card class="mt-4">
+
+        <EmptySection class="my-4" v-if="isSectionListEmpty" />
+        <b-card v-else class="my-4">
           <abstract-section-detail
             class="presentation-section"
             v-for="section in sectionList"
@@ -66,7 +68,6 @@
             :presentationId="presentationId"
             :conference="presentationFormConference"
           />
-          <EmptySection v-if="isSectionListEmpty" />
         </b-card>
       </div>
     </b-overlay>

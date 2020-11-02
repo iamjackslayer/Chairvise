@@ -13,13 +13,9 @@
       </b-button>
     </div>
     <div>
-      <b-card
-        class="shadow p-3 mb-5 bg-white rounded"
-        v-if="isPresentationListEmpty"
-      >
-        <!-- TODO: Replace with openpeeps image -->
-        <EmptyPresentation />
-      </b-card>
+      <!-- TODO: Replace with openpeeps image -->
+      <EmptyPresentation v-if="isPresentationListEmpty" />
+
       <div class="list-grid">
         <b-card
           class="list-card p-2 shadow-sm rounded-lg"
@@ -45,7 +41,7 @@ import { ZoomCenterTransition } from "vue2-transitions";
 import EmptyPresentation from "@/components/emptyStates/EmptyPresentation.vue";
 
 export default {
-  name: "Analyze",
+  name: "Presentation",
   props: {
     id: String
   },
@@ -98,7 +94,7 @@ export default {
   },
   methods: {
     createPresentation() {
-      this.$router.push("/analyze/create");
+      this.$router.push("/presentation/create");
     },
     loadPresentations() {
       this.show = true;
@@ -108,7 +104,7 @@ export default {
       this.count += 5;
     },
     viewPresentation(id) {
-      this.$router.push("/analyze/" + id);
+      this.$router.push("/presentation/" + id);
     }
   },
   mounted() {

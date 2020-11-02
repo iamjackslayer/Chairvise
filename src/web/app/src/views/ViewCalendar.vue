@@ -21,7 +21,7 @@ import interactionPlugin from "@fullcalendar/interaction";
 import listPlugin from "@fullcalendar/list";
 
 export default {
-  name: "ViewConferences",
+  name: "ViewCalendar",
   props: {
     id: String
   },

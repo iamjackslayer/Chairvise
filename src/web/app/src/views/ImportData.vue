@@ -272,9 +272,6 @@ export default {
         );
       };
     },
-    navigateToHomePage() {
-      this.$router.replace("/home");
-    },
     fileUploadHandler: function(file) {
       // show loading and go parsing
       this.$store.commit("setPageLoadingStatus", true);

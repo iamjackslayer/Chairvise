@@ -52,7 +52,7 @@
             <b-card class="bcard">
               <img src="@/assets/stadistics.png" />
               <br />
-              <b-button variant="primary" class="button" @click="analyze">
+              <b-button variant="primary" class="button" @click="presentation">
                 Analyse Data
               </b-button>
             </b-card>
@@ -94,8 +94,8 @@ export default {
     this.loadFeatures();
   },
   methods: {
-    analyze() {
-      this.$router.push("/analyze");
+    presentation() {
+      this.$router.push("/presentation");
     },
     importData() {
       this.$router.push("/importData");

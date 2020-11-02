@@ -12,9 +12,9 @@
     </div>
     <b-collapse v-model="visible" id="nav-collapse">
       <b-col class="d-flex flex-column p-0 h-100">
-        <b-nav class="sidebar-links" vertical>
+        <b-nav v-if="isLogin" class="sidebar-links" vertical>
           <!-- TODO: Add check for login and logout views -->
-          <b-nav-item to="/home" @click="onNavItemClicked">
+          <b-nav-item to="/conference" @click="onNavItemClicked">
             <b-icon icon="house-door-fill" class="mr-2"></b-icon>
             Conferences
           </b-nav-item>
@@ -22,11 +22,11 @@
             <b-icon icon="cloud-arrow-up-fill" class="mr-2"></b-icon>
             Import Data
           </b-nav-item>
-          <b-nav-item to="/analyze" @click="onNavItemClicked">
+          <b-nav-item to="/presentation" @click="onNavItemClicked">
             <b-icon icon="file-image-fill" class="mr-2"></b-icon>
             Presentations
           </b-nav-item>
-          <b-nav-item to="/conference" @click="onNavItemClicked">
+          <b-nav-item to="/calendar" @click="onNavItemClicked">
             <b-icon icon="calendar-week-fill" class="mr-2"></b-icon>
             Calendar
           </b-nav-item>
@@ -35,23 +35,25 @@
             Chairhub
           </b-nav-item>
         </b-nav>
+        <b-nav v-else class="sidebar-links">
+          <!-- To change to login view route -->
+          <b-nav-item v-if="!isLogin" @click="login">
+            <b-icon icon="arrow-right-square-fill" class="mr-2"></b-icon>
+            Login
+          </b-nav-item>
+        </b-nav>
         <div class="secondary-actions">
           <b-nav class="sidebar-links" vertical>
             <b-nav-item to="/userGuide" @click="onNavItemClicked">
               <b-icon icon="patch-question-fll" class="mr-2"></b-icon>
               User Guide
             </b-nav-item>
-            <!-- To change to login view route -->
-            <b-nav-item v-if="!isLogin" @click="login">
-              <b-icon icon="arrow-right-square-fill" class="mr-2"></b-icon>
-              Login
-            </b-nav-item>
             <!-- To change to logout view route -->
             <b-nav-item v-if="isLogin" @click="logout">
               <b-icon icon="arrow-down-right-square-fill" class="mr-2"></b-icon>
               Logout
             </b-nav-item>
-            <b-nav-text>
+            <b-nav-text v-if="isLogin">
               <div class="user-email">
                 <b-icon icon="person-circle" class="mr-2"></b-icon>
                 {{ $store.state.userInfo.userEmail }}
@@ -69,14 +71,15 @@ export default {
   name: "SideBar",
   data() {
     return {
-      visible: window.innerWidth >= 992,
-      isWindowLarge: false
+      innerWidth: window.innerWidth,
+      visible: this.checkWindowLarge(),
+      isWindowLarge: this.checkWindowLarge()
     };
   },
   mounted() {
     // Expands collapse when larger than lg and vice versa.
     window.addEventListener("resize", ev => {
-      let innerWidth = ev.currentTarget.innerWidth;
+      const innerWidth = ev.currentTarget.innerWidth;
       this.isWindowLarge = this.visible = innerWidth >= 992;
     });
   },
@@ -108,6 +111,9 @@ export default {
       if (!this.isWindowLarge) {
         this.toggleCollapse();
       }
+    },
+    checkWindowLarge() {
+      return window.innerWidth >= 992;
     }
   }
 };

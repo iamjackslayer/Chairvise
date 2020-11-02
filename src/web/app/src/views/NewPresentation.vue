@@ -244,7 +244,7 @@ export default {
     closeSuccess() {
       this.$store.commit("setSaveSuccess", false);
       this.$router.push({
-        name: "analyze"
+        name: "presentation"
       });
     },
     validateState(name) {

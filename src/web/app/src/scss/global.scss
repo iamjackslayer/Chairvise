@@ -207,3 +207,37 @@ body {
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+// Empty State styling
+.empty-image-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.empty-image {
+  max-height: 18rem;
+}
+
+.empty-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+}
+
+.empty-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.empty-description {
+  margin-top: 0.5rem;
+  max-width: 500px;
+  color: $gray-600;
+}
+
+.empty-action {
+  margin-top: 1rem;
+}
