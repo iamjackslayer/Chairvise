@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="p-4">
     <h2>Welcome to ChairVise</h2>
     <p>
       This project is designed to enable conference program chairpersons to

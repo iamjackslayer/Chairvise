@@ -1,6 +1,6 @@
 <template>
   <b-row>
-    <b-col>
+    <b-col xs="12" lg="6">
       <b-card>
         <!-- db fields -->
         <div class="db-tags">
@@ -55,7 +55,7 @@
       </b-card>
     </b-col>
 
-    <b-col>
+    <b-col class="mt-3 mt-lg-0" xs="12" lg="6">
       <b-card>
         <h5>Mapping</h5>
         <transition-group name="map-group" tag="div">

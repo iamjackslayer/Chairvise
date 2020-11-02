@@ -1,37 +1,15 @@
 <template>
-  <div class="emptySection">
-    <b-row>
-      <b-col>
-        <div class="icon">
-          <img src="@/assets/businessman.png" />
-        </div>
-      </b-col>
-    </b-row>
-    <b-row>
-      <b-col>
-        <p>
-          <i> No section found. Want to visualise data? </i>
-        </p>
-        <p>
-          Let's get started by adding a new section on the right side of the
-          panel.
-        </p>
-      </b-col>
-    </b-row>
+  <div>
+    <div class="empty-image-container">
+      <img class="empty-image" src="@/assets/emptyguide2.svg" />
+    </div>
+    <div class="mt-2 empty-container">
+      <div class="empty-title">Create a Section</div>
+      <div class="empty-description">
+        A section holds charts related to a chosen conference. Data that has
+        been imported for that conference is used to generate the charts in each
+        section.
+      </div>
+    </div>
   </div>
 </template>
-
-<script>
-export default {};
-</script>
-
-<style scoped>
-.icon {
-  margin-left: 4.5rem;
-  margin-bottom: 0.25rem;
-}
-.emptySection {
-  text-align: center;
-  vertical-align: middle;
-}
-</style>

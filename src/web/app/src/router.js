@@ -8,8 +8,8 @@ export default new Router({
   base: process.env.BASE_URL,
   routes: [
     {
-      path: "/home",
-      name: "home",
+      path: "/conference",
+      name: "conference",
       meta: {
         title: "Home Page"
       },
@@ -40,32 +40,32 @@ export default new Router({
         import(/* webpackChunkName: "userGuide" */ "./views/UserGuide.vue")
     },
     {
-      path: "/analyze/create",
+      path: "/presentation/create",
       meta: {
         title: "Create Presentation Page"
       },
       component: () =>
-        import(/* webpackChunkName: "analyze" */ "./views/NewPresentation.vue"),
+        import(/* webpackChunkName: "presentation" */ "./views/NewPresentation.vue"),
       props: true
     },
     {
-      path: "/analyze",
-      name: "analyze",
+      path: "/presentation",
+      name: "presentation",
       meta: {
-        title: "My Created Presentations"
+        title: "My Presentations"
       },
       component: () =>
-        import(/* webpackChunkName: "analyze" */ "./views/Analyze.vue"),
+        import(/* webpackChunkName: "presentation" */ "./views/Presentation.vue"),
       props: true
     },
     {
-      path: "/analyze/:id",
+      path: "/presentation/:id",
       name: "section",
       meta: {
         title: "Section Page"
       },
       component: () =>
-        import(/* webpackChunkName: "analyze" */ "./views/PresentationSection.vue"),
+        import(/* webpackChunkName: "presentation" */ "./views/PresentationSection.vue"),
       props: true
     },
     {
@@ -78,13 +78,13 @@ export default new Router({
       props: true
     },
     {
-      path: "/conference",
-      name: "conference",
+      path: "/calendar",
+      name: "calendar",
       meta: {
-        title: "My Conferences"
+        title: "My Calendar"
       },
       component: () =>
-        import(/* webpackChunkName: "analyze" */ "./views/ViewConferences.vue"),
+        import(/* webpackChunkName: "conference" */ "./views/ViewCalendar.vue"),
       props: true
     },
     {
@@ -94,7 +94,7 @@ export default new Router({
         title: "Conference Details Page"
       },
       component: () =>
-        import(/* webpackChunkName: "analyze" */ "./views/ConferenceSection.vue"),
+        import(/* webpackChunkName: "conference" */ "./views/ConferenceSection.vue"),
       props: true
     },
     {
@@ -107,8 +107,20 @@ export default new Router({
         import(/* webpackChunkName: "importData" */ "./views/ImportData.vue")
     },
     {
+      path: "/404",
+      name: "404",
+      meta: {
+        title: "404 Not Found"
+      },
+      component: () => import(/* webpackChunkName: "404" */ "./views/404.vue")
+    },
+    {
       path: "/",
-      redirect: "/home"
+      redirect: "/conference"
+    },
+    {
+      path: "*",
+      redirect: "/404"
     }
   ],
   scrollBehavior() {

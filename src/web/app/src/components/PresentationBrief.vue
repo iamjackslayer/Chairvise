@@ -1,13 +1,13 @@
 <template>
   <div>
     <b-breadcrumb>
-      <b-breadcrumb-item to="/analyze">My Presentations</b-breadcrumb-item>
+      <b-breadcrumb-item to="/presentation">My Presentations</b-breadcrumb-item>
       <b-breadcrumb-item active>Presentation Details</b-breadcrumb-item>
     </b-breadcrumb>
     <b-card>
       <div slot="header" class="presentation-header">
         <span> Presentation Details </span>
-        <b-button-toolbar v-if="!isInEditMode">
+        <b-button-toolbar class="presentation-toolbar" v-if="!isInEditMode">
           <b-button-group class="mr-2">
             <b-button
               title="Download PDF"
@@ -273,7 +273,7 @@ export default {
           }
           // redirect to the newly added presentation
           this.$router.push({
-            name: "analyze",
+            name: "presentation",
             params: {
               id: this.$store.state.presentation.presentationForm.id
             }
@@ -296,7 +296,7 @@ export default {
           return;
         }
         this.$router.replace({
-          name: "analyze",
+          name: "presentation",
           params: {
             id: ID_NEW_PRESENTATION
           }
@@ -385,7 +385,20 @@ export default {
 <style lang="scss" scoped>
 .presentation-header {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  flex-direction: column;
+
+  @include media-breakpoint-up(lg) {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
+
+.presentation-toolbar {
+  margin-top: 0.5rem;
+
+  @include media-breakpoint-up(lg) {
+    margin-top: 0;
+  }
 }
 </style>

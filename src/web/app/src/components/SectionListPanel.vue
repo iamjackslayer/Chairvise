@@ -40,7 +40,11 @@
                 />
               </b-form-select-option-group>
             </b-form-select>
-            <b-button class="mt-2" variant="primary" @click="addNewSection">
+            <b-button
+              class="mt-2 responsive-btn"
+              variant="primary"
+              @click="addNewSection"
+            >
               <b-icon icon="plus" />Add New Section
             </b-button>
           </b-card>
@@ -53,7 +57,9 @@
           />
           {{ sectionListApiErrorMsg }}
         </b-alert>
-        <b-card class="mt-4">
+
+        <EmptySection class="my-4" v-if="isSectionListEmpty" />
+        <b-card v-else class="my-4">
           <abstract-section-detail
             class="presentation-section"
             v-for="section in sectionList"
@@ -62,7 +68,6 @@
             :presentationId="presentationId"
             :conference="presentationFormConference"
           />
-          <EmptySection v-if="isSectionListEmpty" />
         </b-card>
       </div>
     </b-overlay>

@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="title-bar">
-      <h1 class="title">My Presentations</h1>
+      <h1 class="title">Presentations</h1>
       <b-button
         class="title-action"
         variant="primary"
@@ -13,26 +13,27 @@
       </b-button>
     </div>
     <div>
-      <b-card
-        class="shadow p-3 mb-5 bg-white rounded"
-        v-if="isPresentationListEmpty"
-      >
-        <!-- TODO: Replace with openpeeps image -->
-        <EmptyPresentation />
-      </b-card>
-      <div class="presentation-grid">
+      <!-- TODO: Replace with openpeeps image -->
+      <EmptyPresentation v-if="isPresentationListEmpty" />
+
+      <div class="list-grid">
         <b-card
-          class="presentation-card p-2 shadow-sm rounded-lg"
+          class="list-card shadow-sm rounded-lg"
           v-for="presentation in presentations"
           :key="presentation.id"
           @click="viewPresentation(presentation.id)"
         >
-          <h5 class="presentation-title">{{ presentation.name }}</h5>
-          <div class="presentation-description">
+          <h5 class="list-title">{{ presentation.name }}</h5>
+          <div class="list-description">
             {{ presentation.description || "-" }}
           </div>
           <div class="privacy-status">
-            <b-icon icon="lock" class="mr-1" />Private
+            <template v-if="presentation.isPublic">
+              <b-icon icon="people" class="mr-1" /> Public
+            </template>
+            <template v-else>
+              <b-icon icon="lock" class="mr-1" /> Private
+            </template>
           </div>
         </b-card>
       </div>
@@ -45,7 +46,7 @@ import { ZoomCenterTransition } from "vue2-transitions";
 import EmptyPresentation from "@/components/emptyStates/EmptyPresentation.vue";
 
 export default {
-  name: "Analyze",
+  name: "Presentation",
   props: {
     id: String
   },
@@ -98,7 +99,7 @@ export default {
   },
   methods: {
     createPresentation() {
-      this.$router.push("/analyze/create");
+      this.$router.push("/presentation/create");
     },
     loadPresentations() {
       this.show = true;
@@ -108,7 +109,7 @@ export default {
       this.count += 5;
     },
     viewPresentation(id) {
-      this.$router.push("/analyze/" + id);
+      this.$router.push("/presentation/" + id);
     }
   },
   mounted() {
@@ -118,51 +119,4 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
-@supports (display: grid) {
-  .presentation-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    // TODO: Change to one column for mobile
-    grid-gap: 1.5rem;
-  }
-}
-
-.presentation-card {
-  cursor: pointer;
-  height: 200px;
-}
-
-.presentation-card:hover {
-  background-color: $indigo-100;
-}
-
-.presentation-card > .card-body {
-  display: flex;
-  flex-direction: column;
-}
-
-.presentation-description {
-  font-size: 0.95rem;
-  letter-spacing: -0.025em;
-  color: $gray-600;
-  // clamp to 3 lines (restricted to webkit browsers)
-  overflow: hidden;
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-}
-
-.privacy-status {
-  margin-top: auto;
-  font-size: 0.95rem;
-  color: $indigo-600;
-  align-self: flex-end;
-}
-
-.presentation-title {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-</style>
+<style lang="scss" scoped></style>

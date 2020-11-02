@@ -37,7 +37,7 @@
       <b-collapse id="instruction2" role="tabpanel">
         <b-card-body>
           <ol>
-            <li>Click on "Analyze".</li>
+            <li>Click on "Presentation".</li>
             <li>Create a new presentation.</li>
             <li>Select the visualizations you want.</li>
             <li>Click "Add New Section"</li>
@@ -91,7 +91,7 @@
         <b-card-body>
           <p>Pre-requisites: You must have create a presentation.</p>
           <ol>
-            <li>Click on "Analyze".</li>
+            <li>Click on "Presentation".</li>
             <li>Select the presentation that you want to view.</li>
             <li>Click "PDF".</li>
             <li>And you get the presentation generated in PDF.</li>
@@ -113,7 +113,7 @@
         <b-card-body>
           <p>Pre-requisites: You must have create a presentation.</p>
           <ol>
-            <li>Click on "Analyze".</li>
+            <li>Click on "Presentation".</li>
             <li>Select the presentation that you want to view.</li>
             <li>Click "Powerpoint".</li>
             <li>

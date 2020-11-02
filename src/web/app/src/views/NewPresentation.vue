@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="title-bar">
-      <h1 class="title">Add New Presentation</h1>
+      <h1 class="title">Add Presentation</h1>
     </div>
 
     <b-alert v-if="isNewPresentation && !isLogin" show variant="danger">
@@ -47,7 +47,7 @@
               />
             </b-form-group>
 
-            <b-button type="submit" class="submit-btn" variant="primary"
+            <b-button type="submit" class="responsive-btn" variant="primary"
               >Submit</b-button
             >
           </div>
@@ -244,7 +244,7 @@ export default {
     closeSuccess() {
       this.$store.commit("setSaveSuccess", false);
       this.$router.push({
-        name: "analyze"
+        name: "presentation"
       });
     },
     validateState(name) {

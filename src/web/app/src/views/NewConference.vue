@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="title-bar">
-      <h1 class="title">Add New Conference</h1>
+      <h1 class="title">Add Conference</h1>
     </div>
     <b-alert
       v-if="isNewConference && !isLogin"
@@ -68,7 +68,7 @@
               </b-form-invalid-feedback>
             </b-form-group>
 
-            <b-button type="submit" class="submit-btn" variant="primary">
+            <b-button type="submit" class="responsive-btn" variant="primary">
               Submit
             </b-button>
           </div>

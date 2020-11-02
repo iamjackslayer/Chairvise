@@ -29,7 +29,7 @@
 export default {
   methods: {
     createPresentation() {
-      this.$router.push("/analyze/create");
+      this.$router.push("/presentation/create");
     },
     login() {
       window.location.href = this.$store.state.userInfo.loginUrl;

@@ -104,7 +104,7 @@
           </b-form-invalid-feedback>
         </b-form-group>
 
-        <b-button type="submit" variant="primary">
+        <b-button class="responsive-btn" type="submit" variant="primary">
           Submit
         </b-button>
       </b-form>
