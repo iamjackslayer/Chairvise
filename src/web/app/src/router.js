@@ -9,7 +9,7 @@ export default new Router({
   routes: [
     {
       path: "/conference",
-      name: "home",
+      name: "conference",
       meta: {
         title: "Home Page"
       },
