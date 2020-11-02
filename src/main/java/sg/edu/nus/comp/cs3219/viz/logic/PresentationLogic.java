@@ -51,7 +51,7 @@ public class PresentationLogic {
         oldPresentation.setLastUpdatedDate(currentTime);
         // TODO: Add the following when it is done in frontend.
 //        oldPresentation.setConference(newPresentation.getConference());
-//        oldPresentation.setIsPublic(newPresentation.getIsPublic());
+        oldPresentation.setIsPublic(newPresentation.getIsPublic());
         return presentationRepository.save(oldPresentation);
     }
 

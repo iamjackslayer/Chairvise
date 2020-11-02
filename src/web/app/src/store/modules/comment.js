@@ -15,7 +15,7 @@ export default {
       id: "",
       comment: "",
       createdDate: "",
-      lastUpdatedDate: "",
+      updatedDate: "",
       userIdentifier: "",
       presentationId: ""
     },
@@ -45,6 +45,32 @@ export default {
       state.commentList = payload;
     },
 
+    sortCommentList(state) {
+      function compare(a, b) {
+        if (a.createdDate < b.createdDate) {
+          return 1;
+        } else if (a.createdDate > b.createdDate) {
+          return -1;
+        }
+        return 0;
+      }
+      state.commentList.sort(compare);
+    },
+
+    editComment(state, payload) {
+      state.commentList = state.commentList.map(comment =>
+        comment.id == payload.id
+          ? { ...comment, comment: payload.editedComment }
+          : comment
+      );
+    },
+
+    removeFromCommentList(state, payload) {
+      state.commentList = state.commentList.filter(
+        comment => comment.id != payload.id
+      );
+    },
+
     setCommentFormLoading(state, payload) {
       if (payload) {
         state.commentFormStatus.isApiError = false;
@@ -71,15 +97,23 @@ export default {
 
     setSaveSuccess(state, success) {
       state.isSaveSuccess = success;
+    },
+
+    clearField(state) {
+      state.commentForm.comment = "";
     }
   },
   actions: {
+    clearCommentField({ commit }) {
+      commit("clearField");
+    },
     async getCommentListForPresentation({ commit }, presentationId) {
       commit("setCommentListLoading", true);
       axios
         .get(`/api/presentations/${presentationId}/comments`)
         .then(response => {
           commit("setCommentList", response.data);
+          commit("sortCommentList");
         })
         .catch(e => {
           commit("setCommentListApiError", e.toString());
@@ -98,6 +132,7 @@ export default {
         )
         .then(response => {
           commit("addToCommentList", deepCopy(response.data));
+          commit("sortCommentList");
           // commit("setConferenceForm", deepCopy(response.data));
           commit("setSaveSuccess", true);
         })
@@ -106,6 +141,44 @@ export default {
         })
         .finally(() => {
           commit("setCommentFormLoading", false);
+        });
+    },
+
+    async editCommentForPresentation(
+      { commit },
+      { presentationId, id, editedComment }
+    ) {
+      commit("setCommentFormLoading", true);
+      axios
+        .put(`/api/presentations/${presentationId}/comments/${id}`, {
+          id,
+          comment: editedComment
+        })
+        .then(() => {
+          commit("editComment", { id, editedComment });
+          commit("setSaveSuccess", true);
+        })
+        .catch(e => {
+          commit("setCommentFormApiError", e.toString());
+        })
+        .finally(() => {
+          commit("setCommentFormLoading", false);
+        });
+    },
+
+    async deleteCommentForPresentation({ commit }, { presentationId, id }) {
+      commit("setCommentFormLoading", true);
+      axios
+        .delete(`/api/presentations/${presentationId}/comments/${id}`)
+        .then(() => {
+          commit("removeFromCommentList", { id });
+          commit("setSaveSuccess", true);
+        })
+        .catch(e => {
+          commit("setCommentFormApiError", e.toString());
+        })
+        .finally(() => {
+          commit("setCommentFormLoading", true);
         });
     }
   }

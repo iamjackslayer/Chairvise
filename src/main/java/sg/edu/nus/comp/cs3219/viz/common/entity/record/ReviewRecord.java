@@ -99,11 +99,10 @@ public class ReviewRecord {
     @Column(name = "r_has_recommended_for_best_paper")
     private String hasRecommendedForBestPaper;
 
-    //TODO: Change version to conference
     @ManyToOne
     @JoinColumns({
-        @JoinColumn(name = "data_set", referencedColumnName = "creator_identifier"),
-        @JoinColumn(name = "version", referencedColumnName = "name"),
+        @JoinColumn(name = "creator_identifier", referencedColumnName = "creator_identifier"),
+        @JoinColumn(name = "conference_name", referencedColumnName = "name"),
     })
     private Conference conference;
 

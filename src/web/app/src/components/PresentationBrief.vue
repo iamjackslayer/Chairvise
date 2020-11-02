@@ -96,6 +96,20 @@
             v-model="presentationFormDescription"
           />
         </b-form-group>
+
+        <b-form-group label="Public" label-for="public">
+          <div v-if="!isInEditMode">
+            <b-form-checkbox v-model="presentationIsPublic" disabled switch
+              >Public</b-form-checkbox
+            >
+          </div>
+          <div v-if="isInEditMode">
+            <b-form-checkbox v-model="presentationIsPublic" switch
+              >Public</b-form-checkbox
+            >
+          </div>
+        </b-form-group>
+
         <div class="mt-4" v-if="isInEditMode">
           <b-button @click="addPresentation()" variant="primary">
             Submit
@@ -171,6 +185,17 @@ export default {
       set(value) {
         this.$store.commit("setPresentationFormField", {
           field: "name",
+          value
+        });
+      }
+    },
+    presentationIsPublic: {
+      get() {
+        return this.$store.state.presentation.presentationForm.isPublic;
+      },
+      set(value) {
+        this.$store.commit("setPresentationFormField", {
+          field: "isPublic",
           value
         });
       }

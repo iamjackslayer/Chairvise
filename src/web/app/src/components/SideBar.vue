@@ -1,7 +1,11 @@
 <template>
   <div class="col-12 col-lg-3 col-xl-2 p-2 p-lg-3 sidebar">
     <div class="logo-container">
-      <span class="logo">ChairVise</span>
+      <span v-if="isChairhubHomeRoute" class="logo d-md-none">
+        Chairhub
+        <span class="logo--small">by ChairVise</span>
+      </span>
+      <span v-else class="logo">ChairVise</span>
       <button
         @click="toggleCollapse"
         class="d-lg-none p-0 ml-3 btn mobile-nav-toggle"
@@ -19,8 +23,7 @@
             Conferences
           </b-nav-item>
           <b-nav-item to="/importData" @click="onNavItemClicked">
-            <b-icon icon="cloud-arrow-up-fill" class="mr-2"></b-icon>
-            Import Data
+            <b-icon icon="cloud-arrow-up-fill" class="mr-2"></b-icon>Import Data
           </b-nav-item>
           <b-nav-item to="/presentation" @click="onNavItemClicked">
             <b-icon icon="file-image-fill" class="mr-2"></b-icon>
@@ -31,8 +34,7 @@
             Calendar
           </b-nav-item>
           <b-nav-item to="/chairhub/home" @click="onNavItemClicked">
-            <b-icon icon="people-fill" class="mr-2"></b-icon>
-            Chairhub
+            <b-icon icon="people-fill" class="mr-2"></b-icon>Chairhub
           </b-nav-item>
         </b-nav>
         <b-nav v-else class="sidebar-links">
@@ -45,13 +47,12 @@
         <div class="secondary-actions">
           <b-nav class="sidebar-links" vertical>
             <b-nav-item to="/userGuide" @click="onNavItemClicked">
-              <b-icon icon="patch-question-fll" class="mr-2"></b-icon>
-              User Guide
+              <b-icon icon="patch-question-fll" class="mr-2"></b-icon>User Guide
             </b-nav-item>
             <!-- To change to logout view route -->
             <b-nav-item v-if="isLogin" @click="logout">
-              <b-icon icon="arrow-down-right-square-fill" class="mr-2"></b-icon>
-              Logout
+              <b-icon icon="arrow-down-right-square-fill" class="mr-2"></b-icon
+              >Logout
             </b-nav-item>
             <b-nav-text v-if="isLogin">
               <div class="user-email">
