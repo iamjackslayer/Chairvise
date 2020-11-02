@@ -171,22 +171,7 @@ export default {
   },
   data() {
     return {
-      hasSubmitted: false,
-      test: true,
-      rules: {
-        name: [
-          {
-            required: true,
-            message: "Please enter presentation name",
-            trigger: "blur"
-          },
-          {
-            min: 3,
-            message: "The length should be more than 3 character",
-            trigger: "blur"
-          }
-        ]
-      }
+      hasSubmitted: false
     };
   },
   methods: {
