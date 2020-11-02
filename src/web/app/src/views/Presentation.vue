@@ -18,7 +18,7 @@
 
       <div class="list-grid">
         <b-card
-          class="list-card p-2 shadow-sm rounded-lg"
+          class="list-card shadow-sm rounded-lg"
           v-for="presentation in presentations"
           :key="presentation.id"
           @click="viewPresentation(presentation.id)"
@@ -28,7 +28,12 @@
             {{ presentation.description || "-" }}
           </div>
           <div class="privacy-status">
-            <b-icon icon="lock" class="mr-1" />Private
+            <template v-if="presentation.isPublic">
+              <b-icon icon="people" class="mr-1" /> Public
+            </template>
+            <template v-else>
+              <b-icon icon="lock" class="mr-1" /> Private
+            </template>
           </div>
         </b-card>
       </div>

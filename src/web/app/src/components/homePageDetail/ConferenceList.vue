@@ -13,7 +13,7 @@
     <EmptyConference v-if="isConferenceListEmpty" />
     <div v-else class="list-grid">
       <b-card
-        class="list-card"
+        class="list-card shadow-sm rounded-lg"
         v-for="conference in conferences"
         :key="conference.id"
         @click="viewConference(conference.id)"
@@ -24,7 +24,8 @@
         </div>
         <div class="privacy-status">
           <!-- TODO: Change this to date with calendar icon -->
-          <b-icon icon="lock" class="mr-1" />Private
+          <b-icon icon="calendar2-event" class="mr-1" />
+          {{ dayjs(conference.date) }}
         </div>
       </b-card>
     </div>
@@ -85,13 +86,4 @@ export default {
 };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style lang="scss" scoped>
-img {
-  width: 250px;
-  height: 300px;
-  text-align: center;
-  display: block;
-  margin: 0 auto;
-}
-</style>
+<style lang="scss" scoped></style>
