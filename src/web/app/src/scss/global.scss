@@ -10,6 +10,8 @@ $theme-colors: (
 
 @import "node_modules/bootstrap/scss/bootstrap";
 @import "node_modules/bootstrap-vue/src/index";
+@import "node_modules/vue-multiselect/dist/vue-multiselect.min";
+
 
 body {
   background-color: $gray-100;

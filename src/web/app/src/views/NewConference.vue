@@ -76,7 +76,7 @@
       </b-form>
     </b-card>
 
-    <pre class="debug">{{ $v }}</pre>
+    <!-- <pre class="debug">{{ $v }}</pre> -->
     <!-- dialogs -->
     <b-modal
       title="Confirm"

@@ -75,7 +75,6 @@ export default {
           }
         }
       },
-      // TODO: Change this
       editFormInvolvedRecordsRule: { mustBeOneValue },
       editFormFiltersRule: [
         {

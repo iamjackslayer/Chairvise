@@ -1,5 +1,6 @@
 <template>
   <b-overlay :show="sectionDetail.status.isLoading">
+    <pre class="debug">{{ $v }}</pre>
     <b-form>
       <!-- :rules="editFormRule"  -->
       <div class="title mb-2" v-if="!isEditing">
@@ -97,15 +98,22 @@
           v-if="isInAdvancedMode"
           key="involvedRecords"
         >
-          <v-select
+          <el-select
+            class="w-100"
             v-model="editForm.involvedRecords"
-            taggable
             multiple
-            label="label"
-            :options="involvedRecordsOptions"
-            :create-option="option => ({ label: option, value: option })"
-            :reduce="option => option.value"
-          />
+            placeholder="Please select"
+            filterable
+            allow-create
+          >
+            <el-option
+              v-for="option in involvedRecordsOptions"
+              :key="option.value"
+              :label="option.label"
+              :value="option.value"
+            >
+            </el-option>
+          </el-select>
           <b-form-invalid-feedback
             :state="$v.editForm.involvedRecords.required"
           >
@@ -125,11 +133,28 @@
             v-for="(joiner, index) in editForm.joiners"
             :label="'Joiner ' + index"
             :key="'j' + index"
-            :prop="'joiners.' + index"
-            :rules="editFormJoinersRule"
           >
             On
-            <b-form-select
+            <el-select
+              placeholder="Left"
+              class="d-inline-block w-auto"
+              v-model="joiner.left"
+            >
+              <el-option-group
+                v-for="group in joinersFieldOptions"
+                :key="group.label"
+                :label="group.label"
+              >
+                <el-option
+                  v-for="item in group.options"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value"
+                >
+                </el-option>
+              </el-option-group>
+            </el-select>
+            <!-- <b-form-select
               placeholder="Left"
               class="d-inline-block w-auto"
               v-model="joiner.left"
@@ -147,9 +172,28 @@
                 >
                 </b-form-select-option>
               </b-form-select-option-group>
-            </b-form-select>
+            </b-form-select> -->
             Equals
-            <b-form-select
+            <el-select
+              placeholder="Right"
+              class="d-inline-block w-auto mr-2"
+              v-model="joiner.right"
+            >
+              <el-option-group
+                v-for="group in joinersFieldOptions"
+                :key="group.label"
+                :label="group.label"
+              >
+                <el-option
+                  v-for="item in group.options"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value"
+                >
+                </el-option>
+              </el-option-group>
+            </el-select>
+            <!-- <b-form-select
               placeholder="Right"
               class="d-inline-block w-auto mr-2"
               v-model="joiner.right"
@@ -167,7 +211,7 @@
                 >
                 </b-form-select-option>
               </b-form-select-option-group>
-            </b-form-select>
+            </b-form-select> -->
             <b-button variant="outline-danger" @click="removeJoiner(joiner)">
               <b-icon icon="trash-fill" aria-hidden="true" />
             </b-button>
@@ -176,19 +220,51 @@
 
         <!-- This appears in basic -->
         <!-- TODO: Add validation and remove prop, key -->
+
+        <!-- v-for="(filter, index) in editForm.filters" -->
         <b-form-group
-          v-for="(filter, index) in editForm.filters"
+          v-for="(v, index) in $v.editForm.filters.$each.$iter"
           :label="'Filter ' + index"
           :key="'f' + index"
-          :prop="'filters.' + index"
           :rules="editFormFiltersRule"
         >
           <!-- TODO: bug in inter-author collaboration and other grpahs -->
           <!-- Could append filter.field to filtersFieldOptions if none exist or if not in fieldOptions -->
           <!-- Also filter.comparator -->
+          <el-select
+            placeholder="Field"
+            class="w-auto"
+            v-model="v.field.$model"
+            filterable
+            allow-create
+          >
+            <el-option-group
+              v-for="group in filtersFieldOptions"
+              :key="group.label"
+              :label="group.label"
+            >
+              <el-option
+                v-for="item in group.options"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+              >
+              </el-option>
+            </el-option-group>
+          </el-select>
+          <el-select
+            v-model="v.comparator.$model"
+            class="mx-2"
+            style="width: 80px"
+          >
+            <el-option label=">" value=">" />
+            <el-option label="=" value="=" />
+            <el-option label="<" value="<" />
+          </el-select>
+          <!-- 
           <b-form-select
             placeholder="Field"
-            v-model="filter.field"
+            v-model="v.field.$model"
             class="w-auto"
           >
             <b-form-select-option-group
@@ -206,17 +282,17 @@
             </b-form-select-option-group>
           </b-form-select>
           <b-form-select
-            v-model="filter.comparator"
+            v-model="v.comparator.$model"
             class="mx-2"
             style="width: 80px"
           >
             <b-form-select-option label=">" value=">" />
             <b-form-select-option label="=" value="=" />
             <b-form-select-option label="<" value="<" />
-          </b-form-select>
+          </b-form-select> -->
           <b-form-input
             class="d-inline-block mr-2 align-middle"
-            v-model="filter.value"
+            v-model="v.value.$model"
             placeholder="Value"
             style="width: 200px"
           ></b-form-input>
@@ -238,13 +314,34 @@
         <!-- TODO: Add validation and remove prop, key -->
         <b-form-group
           label="Group (Aggregation)"
-          prop="groupers"
           v-if="isInAdvancedMode"
           key="groupers"
         >
           <!-- TODO: bug in inter-organisation collaboration and other graphs, unsupported group aggregation -->
           <!-- Could append editForm.groupers to groupersFieldOptions if none exist or if not in fieldOptions -->
-          <b-form-select
+          <el-select
+            placeholder="Groupers"
+            v-model="editForm.groupers"
+            style="width: 100%"
+            multiple
+            filterable
+            allow-create
+          >
+            <el-option-group
+              v-for="group in groupersFieldOptions"
+              :key="group.label"
+              :label="group.label"
+            >
+              <el-option
+                v-for="item in group.options"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+              >
+              </el-option>
+            </el-option-group>
+          </el-select>
+          <!-- <b-form-select
             placeholder="Groupers"
             v-model="editForm.groupers"
             multiple
@@ -263,7 +360,7 @@
               >
               </b-form-select-option>
             </b-form-select-option-group>
-          </b-form-select>
+          </b-form-select> -->
         </b-form-group>
 
         <!-- TODO: Add validation and remove prop, key -->
@@ -281,7 +378,7 @@
               placeholder="Field to Sort"
               style="width: 300px;"
             ></b-form-input>
-            <b-form-select
+            <!-- <b-form-select
               v-model="sorter.order"
               class="d-inline-block mr-2"
               placeholder="Order"
@@ -289,7 +386,16 @@
             >
               <b-form-select-option label="Descending" value="DESC" />
               <b-form-select-option label="Ascending" value="ASC" />
-            </b-form-select>
+            </b-form-select> -->
+            <el-select
+              v-model="sorter.order"
+              class="mr-2"
+              style="width: 150px"
+              placeholder="Order"
+            >
+              <el-option label="Descending" value="DESC" />
+              <el-option label="Ascending" value="ASC" />
+            </el-select>
             <b-button variant="outline-danger" @click="removeSorter(sorter)">
               <b-icon icon="trash-fill" aria-hidden="true" />
             </b-button>
@@ -358,7 +464,6 @@
         </b-form-group>
       </div>
     </b-form>
-    <pre class="debug">{{ $v }}</pre>
     <!-- <el-form
       status-icon
       ref="editForm"
@@ -397,6 +502,7 @@
 // import { required } from "vuelidate/lib/validators";
 import Multiselect from "vue-multiselect";
 import { deepCopy } from "@/common/utility";
+import "element-ui/lib/theme-chalk/index.css";
 
 export default {
   props: {
@@ -465,7 +571,9 @@ export default {
     this.syncDataWithProps();
     this.sendAnalysisRequest();
   },
-  components: { Multiselect },
+  components: {
+    Multiselect
+  },
   data() {
     return {
       isInAdvancedMode: false,
@@ -488,11 +596,6 @@ export default {
         involvedRecords: this.editFormInvolvedRecordsRule,
         groupers: this.editFormGroupersRule,
         extraData: this.extraFormItemsRules
-      },
-      editFormRuleTest: {
-        involvedRecords: { custom: this.editFormInvolvedRecordsRule },
-        groupers: { custom: this.editFormGroupersRule },
-        extraData: { custom: this.extraFormItemsRules }
       }
     };
   },
@@ -500,7 +603,8 @@ export default {
     return {
       editForm: {
         selections: this.editFormSelectionsRule,
-        involvedRecords: this.editFormInvolvedRecordsRule
+        involvedRecords: this.editFormInvolvedRecordsRule,
+        filters: { $each: { field: {}, comparator: {}, value: {} } }
       }
     };
   },
@@ -526,6 +630,7 @@ export default {
         )
         .map(entity => ({
           label: entity.name,
+          // options: entity.fieldMetaDataList.map(field => field.fieldName)
           options: entity.fieldMetaDataList.map(field => ({
             label: field.name,
             value: field.fieldName
@@ -544,6 +649,9 @@ export default {
   },
 
   methods: {
+    addTag(newTag) {
+      this.filtersFieldOptions.push(newTag);
+    },
     changeEditMode(isEditing) {
       this.isEditing = isEditing;
     },
@@ -719,6 +827,23 @@ export default {
   }
 };
 </script>
+
+<style lang="scss">
+// el-select specific styling
+.el-input > .el-input__inner {
+  height: calc(1.5em + 0.75rem + 2px);
+  padding: 0.375rem 1.75rem 0.375rem 0.75rem;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #4a5568;
+  vertical-align: middle;
+}
+
+.el-tag.el-tag--info {
+  overflow: hidden;
+}
+</style>
 
 <style lang="scss" scoped>
 .title {
