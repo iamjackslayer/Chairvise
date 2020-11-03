@@ -107,6 +107,7 @@
 </template>
 
 <script>
+import { required } from "vuelidate/lib/validators";
 import RadarChart from "@/components/sectionDetail/chart/RadarChart.vue";
 import BasicSectionDetail from "@/components/sectionDetail/BasicSectionDetail.vue";
 import { generateBorderColor, generateBackgroundColor } from "@/common/color";
@@ -131,22 +132,16 @@ export default {
 
   data() {
     return {
-      editFormSelectionsRule: [
-        {
-          validator: (rule, value, callback) => {
-            if (
-              value.expression.length === 0 ||
-              value.expression.rename === 0
-            ) {
-              return callback(
-                new Error("Please specify all field for the selection")
-              );
-            }
-            callback();
+      editFormSelectionsRule: {
+        $each: {
+          expression: {
+            required
           },
-          trigger: "blur"
+          rename: {
+            required
+          }
         }
-      ],
+      },
       editFormInvolvedRecordsRule: [
         {
           validator: (rule, value, callback) => {

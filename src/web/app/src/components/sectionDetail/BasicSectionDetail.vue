@@ -1,6 +1,7 @@
 <template>
   <b-overlay :show="sectionDetail.status.isLoading">
     <b-form>
+      <!-- :rules="editFormRule"  -->
       <div class="title mb-2" v-if="!isEditing">
         <span class="title-text">{{ sectionDetail.title }}</span>
         <div class="toolbar ml-lg-auto">
@@ -55,24 +56,23 @@
           </b-form-checkbox>
         </b-form-group>
 
-        <!-- TODO: Add validation and remove prop, key -->
+        <!-- TODO: Add validation and remove prop -->
         <div v-if="isInAdvancedMode">
           <b-form-group
-            v-for="(selection, index) in editForm.selections"
+            v-for="(v, index) in $v.editForm.selections.$each.$iter"
             :label="'Selection ' + index"
             :key="'s' + index"
-            :prop="'selections.' + index"
-            :rules="editFormSelectionsRule"
           >
+            <!-- :rules="editFormSelectionsRule" -->
             <b-input
               class="d-inline-block mr-2"
-              v-model="selection.expression"
+              v-model="v.expression.$model"
               placeholder="Expression"
               style="width: 300px"
             ></b-input>
             <b-input
               class="d-inline-block mr-2"
-              v-model="selection.rename"
+              v-model="v.rename.$model"
               placeholder="Rename Field"
               style="width: 200px"
             ></b-input>
@@ -82,6 +82,14 @@
             >
               <b-icon icon="trash-fill" aria-hidden="true" />
             </b-button>
+            <!-- {{ v.expression }}
+            {{ v.rename }} -->
+            <b-form-invalid-feedback
+              :state="v.expression.required && v.rename.required"
+            >
+              <!-- v-if="!v.expression.required || !v.rename.required" -->
+              Please specify all field for the selection
+            </b-form-invalid-feedback>
           </b-form-group>
         </div>
 
@@ -344,6 +352,10 @@
           </b-button>
         </b-form-group>
       </div>
+      <pre class="debug">
+EditFormRule: {{ editFormRule }}
+      </pre>
+      <pre class="debug">{{ $v }}</pre>
     </b-form>
     <!-- <el-form
       status-icon
@@ -380,6 +392,7 @@
 </template>
 
 <script>
+import { required } from "vuelidate/lib/validators";
 import { deepCopy } from "@/common/utility";
 
 export default {
@@ -400,19 +413,10 @@ export default {
       type: Boolean,
       required: true
     },
-    extraFormItemsRules: {
-      type: Object,
-      required: false
-    },
     editFormSelectionsRule: {
-      type: Array,
+      type: Object,
       required: false,
-      default: () => []
-    },
-    editFormInvolvedRecordsRule: {
-      type: Array,
-      required: false,
-      default: () => []
+      default: () => {}
     },
     editFormFiltersRule: {
       type: Array,
@@ -424,15 +428,24 @@ export default {
       required: false,
       default: () => []
     },
+    editFormSortersRule: {
+      type: Array,
+      required: false,
+      default: () => []
+    },
+    editFormInvolvedRecordsRule: {
+      type: Array,
+      required: false,
+      default: () => []
+    },
     editFormGroupersRule: {
       type: Array,
       required: false,
       default: () => []
     },
-    editFormSortersRule: {
-      type: Array,
-      required: false,
-      default: () => []
+    extraFormItemsRules: {
+      type: Object,
+      required: false
     }
   },
   watch: {
@@ -466,7 +479,7 @@ export default {
         sorters: [],
         extraData: {}
       },
-
+      // unused
       editFormRule: {
         involvedRecords: this.editFormInvolvedRecordsRule,
         groupers: this.editFormGroupersRule,
@@ -475,13 +488,23 @@ export default {
       editFormRuleTest: {
         involvedRecords: { custom: this.editFormInvolvedRecordsRule },
         groupers: { custom: this.editFormGroupersRule },
-        extraData: { custom: this.extraFormItemsRule }
+        extraData: { custom: this.extraFormItemsRules }
       }
     };
   },
   validations() {
-    return { editForm: this.editFormRuleTest };
+    return {
+      editForm: {
+        selections: this.editFormSelectionsRule,
+        involvedRecords: {
+          required
+        }
+      }
+    };
   },
+  // validations() {
+  //   return { editForm: this.editFormRuleTest };
+  // },
   computed: {
     involvedRecordsOptions() {
       return this.$store.state.dbMetaData.entities.map(entity => ({
@@ -600,37 +623,35 @@ export default {
       this.editForm.sorters.splice(index, 1);
     },
 
-    saveSectionDetail(formName) {
-      this.$refs[formName].validate(valid => {
-        if (valid) {
-          this.$store
-            .dispatch("saveSectionDetail", {
-              id: this.sectionDetail.id,
-              presentationId: this.presentationId,
-              title: this.editForm.title,
-              description: this.editForm.description,
-              dataSet: this.sectionDetail.dataSet,
-              selections: this.editForm.selections,
-              involvedRecords: deepCopy(this.editFormInvolvedRecords),
-              filters: this.editForm.filters.map(f => Object.assign({}, f)),
-              joiners: this.editForm.joiners.map(j => Object.assign({}, j)),
-              groupers: this.editForm.groupers.map(g => ({ field: g })),
-              sorters: this.editForm.sorters.map(s => Object.assign({}, s)),
-              extraData: this.editForm.extraData
-            })
-            .then(() => {
-              // only update when there is no error in saving
-              if (this.sectionDetail.status.isApiError) {
-                return;
-              }
-              this.isEditing = false;
-              this.sendAnalysisRequest();
-            });
-          return true;
-        } else {
-          return false;
-        }
-      });
+    saveSectionDetail() {
+      this.$v.editForm.$touch();
+      if (this.$v.editForm.$anyError) {
+        return;
+      }
+
+      this.$store
+        .dispatch("saveSectionDetail", {
+          id: this.sectionDetail.id,
+          presentationId: this.presentationId,
+          title: this.editForm.title,
+          description: this.editForm.description,
+          dataSet: this.sectionDetail.dataSet,
+          selections: this.editForm.selections,
+          involvedRecords: deepCopy(this.editFormInvolvedRecords),
+          filters: this.editForm.filters.map(f => Object.assign({}, f)),
+          joiners: this.editForm.joiners.map(j => Object.assign({}, j)),
+          groupers: this.editForm.groupers.map(g => ({ field: g })),
+          sorters: this.editForm.sorters.map(s => Object.assign({}, s)),
+          extraData: this.editForm.extraData
+        })
+        .then(() => {
+          // only update when there is no error in saving
+          if (this.sectionDetail.status.isApiError) {
+            return;
+          }
+          this.isEditing = false;
+          this.sendAnalysisRequest();
+        });
     },
 
     deleteSectionDetail() {

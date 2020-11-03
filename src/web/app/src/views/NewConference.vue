@@ -76,7 +76,7 @@
       </b-form>
     </b-card>
 
-    <!-- <pre class="temp">{{ $v.conferenceForm }}</pre> -->
+    <pre class="debug">{{ $v }}</pre>
     <!-- dialogs -->
     <b-modal
       title="Confirm"
@@ -138,6 +138,8 @@ export default {
           field: "name",
           value
         });
+        // TODO: Add this.$v.name.$touch()
+        // To get on touch validation
       }
     },
     conferenceFormDescription: {

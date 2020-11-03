@@ -41,6 +41,7 @@
 </template>
 
 <script>
+import { required } from "vuelidate/lib/validators";
 import WordCloud from "@/components/sectionDetail/chart/WordCloud.vue";
 import BasicSectionDetail from "@/components/sectionDetail/BasicSectionDetail.vue";
 
@@ -62,20 +63,16 @@ export default {
 
   data() {
     return {
-      editFormSelectionsRule: [
-        {
-          validator: (rule, value, callback) => {
-            if (
-              value.expression.length === 0 ||
-              value.expression.rename === 0
-            ) {
-              return callback(new Error("Please specify all fields"));
-            }
-            callback();
+      editFormSelectionsRule: {
+        $each: {
+          expression: {
+            required
           },
-          trigger: "blur"
+          rename: {
+            required
+          }
         }
-      ],
+      },
       editFormInvolvedRecordsRule: [
         {
           validator: (rule, value, callback) => {
