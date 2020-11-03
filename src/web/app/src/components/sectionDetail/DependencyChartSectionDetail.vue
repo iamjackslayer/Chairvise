@@ -4,11 +4,6 @@
     :presentation-id="presentationId"
     :has-data="hasData"
     :conference="conference"
-    :edit-form-selections-rule="editFormSelectionsRule"
-    :edit-form-involved-records-rule="editFormInvolvedRecordsRule"
-    :edit-form-filters-rule="editFormFiltersRule"
-    :edit-form-groupers-rule="editFormGroupersRule"
-    :edit-form-sorters-rule="editFormSortersRule"
     :extraFormItemsRules="extraFormItemsRules"
     @update-visualisation="updateVisualisation"
   >
@@ -24,6 +19,13 @@
             :value="selection.rename"
           ></b-form-select-option>
         </b-form-select>
+        <b-form-invalid-feedback
+          :state="
+            slotProps.vuelidate.editForm.extraData.xAxisFieldName.required
+          "
+        >
+          There should be one field to map x axis
+        </b-form-invalid-feedback>
       </b-form-group>
 
       <b-form-group
@@ -38,6 +40,13 @@
             :value="selection.rename"
           ></b-form-select-option>
         </b-form-select>
+        <b-form-invalid-feedback
+          :state="
+            slotProps.vuelidate.editForm.extraData.xAxisFieldName2.required
+          "
+        >
+          There should be one field to map x axis
+        </b-form-invalid-feedback>
       </b-form-group>
 
       <b-form-group label="yAxis Field Name" v-if="slotProps.isInAdvancedMode">
@@ -49,6 +58,13 @@
             :value="selection.rename"
           ></b-form-select-option>
         </b-form-select>
+        <b-form-invalid-feedback
+          :state="
+            slotProps.vuelidate.editForm.extraData.yAxisFieldName.required
+          "
+        >
+          There should be one field to map y axis
+        </b-form-invalid-feedback>
       </b-form-group>
 
       <b-form-group label="Legend Label Name" v-if="slotProps.isInAdvancedMode">
@@ -153,69 +169,10 @@ export default {
 
   data() {
     return {
-      editFormSelectionsRule: {
-        $each: {
-          expression: {
-            required
-          },
-          rename: {
-            required
-          }
-        }
-      },
-      editFormInvolvedRecordsRule: {
-        required
-      },
-      editFormFiltersRule: [
-        {
-          validator: (rule, value, callback) => {
-            if (
-              value.field.length === 0 ||
-              value.comparator.length === 0 ||
-              value.value.length === 0
-            ) {
-              return callback(new Error("Please specify all fields"));
-            }
-            callback();
-          },
-          trigger: "blur"
-        }
-      ],
-      editFormSortersRule: [
-        {
-          validator: (rule, value, callback) => {
-            if (value.field.length === 0 || value.order.length === 0) {
-              return callback(new Error("Please specify all fields"));
-            }
-            callback();
-          },
-          trigger: "blur"
-        }
-      ],
-      editFormGroupersRule: [],
-
       extraFormItemsRules: {
-        xAxisFieldName: [
-          {
-            required: true,
-            message: "There should be one field to map x axis",
-            trigger: "blur"
-          }
-        ],
-        xAxisFieldName2: [
-          {
-            required: true,
-            message: "There should be one field to map x axis",
-            trigger: "blur"
-          }
-        ],
-        yAxisFieldName: [
-          {
-            required: true,
-            message: "There should be one field to map y axis",
-            trigger: "blur"
-          }
-        ]
+        xAxisFieldName: { required },
+        xAxisFieldName2: { required },
+        yAxisFieldName: { required }
       },
 
       labels: [],

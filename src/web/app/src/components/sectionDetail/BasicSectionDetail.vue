@@ -1,8 +1,7 @@
 <template>
   <b-overlay :show="sectionDetail.status.isLoading">
-    <pre class="debug">{{ $v }}</pre>
+    <!-- <pre class="debug">{{ $v }}</pre> -->
     <b-form>
-      <!-- :rules="editFormRule"  -->
       <div class="title mb-2" v-if="!isEditing">
         <span class="title-text">{{ sectionDetail.title }}</span>
         <div class="toolbar ml-lg-auto">
@@ -57,23 +56,21 @@
           </b-form-checkbox>
         </b-form-group>
 
-        <!-- TODO: Add validation and remove prop -->
         <div v-if="isInAdvancedMode">
           <b-form-group
-            v-for="(v, index) in $v.editForm.selections.$each.$iter"
+            v-for="(selection, index) in editForm.selections"
             :label="'Selection ' + index"
             :key="'s' + index"
           >
-            <!-- :rules="editFormSelectionsRule" -->
             <b-input
               class="d-inline-block mr-2"
-              v-model="v.expression.$model"
+              v-model="selection.expression"
               placeholder="Expression"
               style="width: 300px"
             ></b-input>
             <b-input
               class="d-inline-block mr-2"
-              v-model="v.rename.$model"
+              v-model="selection.rename"
               placeholder="Rename Field"
               style="width: 200px"
             ></b-input>
@@ -84,17 +81,19 @@
               <b-icon icon="trash-fill" aria-hidden="true" />
             </b-button>
             <b-form-invalid-feedback
-              :state="v.expression.required && v.rename.required"
+              :state="
+                $v.editForm.selections.$each &&
+                  $v.editForm.selections.$each[index].expression.required &&
+                  $v.editForm.selections.$each[index].rename.required
+              "
             >
-              Please specify all field for the selection
+              Please specify all fields for the selection
             </b-form-invalid-feedback>
           </b-form-group>
         </div>
 
-        <!-- TODO: Add validation and remove prop, key -->
         <b-form-group
           label="Record Involved"
-          prop="involvedRecords"
           v-if="isInAdvancedMode"
           key="involvedRecords"
         >
@@ -119,7 +118,7 @@
           >
             There must be one record involved
           </b-form-invalid-feedback>
-
+          <!-- Special case for WordCloud -->
           <b-form-invalid-feedback
             :state="$v.editForm.involvedRecords.mustBeOneValue"
           >
@@ -127,7 +126,6 @@
           </b-form-invalid-feedback>
         </b-form-group>
 
-        <!-- TODO: Add validation and remove prop, key -->
         <div v-if="isInAdvancedMode">
           <b-form-group
             v-for="(joiner, index) in editForm.joiners"
@@ -154,25 +152,6 @@
                 </el-option>
               </el-option-group>
             </el-select>
-            <!-- <b-form-select
-              placeholder="Left"
-              class="d-inline-block w-auto"
-              v-model="joiner.left"
-            >
-              <b-form-select-option-group
-                v-for="group in joinersFieldOptions"
-                :key="group.label"
-                :label="group.label"
-              >
-                <b-form-select-option
-                  v-for="item in group.options"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value"
-                >
-                </b-form-select-option>
-              </b-form-select-option-group>
-            </b-form-select> -->
             Equals
             <el-select
               placeholder="Right"
@@ -193,48 +172,22 @@
                 </el-option>
               </el-option-group>
             </el-select>
-            <!-- <b-form-select
-              placeholder="Right"
-              class="d-inline-block w-auto mr-2"
-              v-model="joiner.right"
-            >
-              <b-form-select-option-group
-                v-for="group in joinersFieldOptions"
-                :key="group.label"
-                :label="group.label"
-              >
-                <b-form-select-option
-                  v-for="item in group.options"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value"
-                >
-                </b-form-select-option>
-              </b-form-select-option-group>
-            </b-form-select> -->
+
             <b-button variant="outline-danger" @click="removeJoiner(joiner)">
               <b-icon icon="trash-fill" aria-hidden="true" />
             </b-button>
           </b-form-group>
         </div>
 
-        <!-- This appears in basic -->
-        <!-- TODO: Add validation and remove prop, key -->
-
-        <!-- v-for="(filter, index) in editForm.filters" -->
         <b-form-group
-          v-for="(v, index) in $v.editForm.filters.$each.$iter"
+          v-for="(filter, index) in editForm.filters"
           :label="'Filter ' + index"
           :key="'f' + index"
-          :rules="editFormFiltersRule"
         >
-          <!-- TODO: bug in inter-author collaboration and other grpahs -->
-          <!-- Could append filter.field to filtersFieldOptions if none exist or if not in fieldOptions -->
-          <!-- Also filter.comparator -->
           <el-select
             placeholder="Field"
             class="w-auto"
-            v-model="v.field.$model"
+            v-model="filter.field"
             filterable
             allow-create
           >
@@ -253,7 +206,7 @@
             </el-option-group>
           </el-select>
           <el-select
-            v-model="v.comparator.$model"
+            v-model="filter.comparator"
             class="mx-2"
             style="width: 80px"
           >
@@ -261,47 +214,27 @@
             <el-option label="=" value="=" />
             <el-option label="<" value="<" />
           </el-select>
-          <!-- 
-          <b-form-select
-            placeholder="Field"
-            v-model="v.field.$model"
-            class="w-auto"
-          >
-            <b-form-select-option-group
-              v-for="group in filtersFieldOptions"
-              :key="group.label"
-              :label="group.label"
-            >
-              <b-form-select-option
-                v-for="item in group.options"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
-              >
-              </b-form-select-option>
-            </b-form-select-option-group>
-          </b-form-select>
-          <b-form-select
-            v-model="v.comparator.$model"
-            class="mx-2"
-            style="width: 80px"
-          >
-            <b-form-select-option label=">" value=">" />
-            <b-form-select-option label="=" value="=" />
-            <b-form-select-option label="<" value="<" />
-          </b-form-select> -->
           <b-form-input
             class="d-inline-block mr-2 align-middle"
-            v-model="v.value.$model"
+            v-model="filter.value"
             placeholder="Value"
             style="width: 200px"
           ></b-form-input>
           <b-button variant="outline-danger" @click="removeFilter(filter)">
             <b-icon icon="trash-fill" aria-hidden="true" />
           </b-button>
+          <b-form-invalid-feedback
+            :state="
+              $v.editForm.filters.$each &&
+                $v.editForm.filters.$each[index].field.required &&
+                $v.editForm.filters.$each[index].comparator.required &&
+                $v.editForm.filters.$each[index].value.required
+            "
+          >
+            Please specify all fields
+          </b-form-invalid-feedback>
         </b-form-group>
 
-        <!-- This appears in basic -->
         <b-form-group label="Description">
           <b-form-textarea
             rows="3"
@@ -311,14 +244,11 @@
           />
         </b-form-group>
 
-        <!-- TODO: Add validation and remove prop, key -->
         <b-form-group
           label="Group (Aggregation)"
           v-if="isInAdvancedMode"
           key="groupers"
         >
-          <!-- TODO: bug in inter-organisation collaboration and other graphs, unsupported group aggregation -->
-          <!-- Could append editForm.groupers to groupersFieldOptions if none exist or if not in fieldOptions -->
           <el-select
             placeholder="Groupers"
             v-model="editForm.groupers"
@@ -341,36 +271,13 @@
               </el-option>
             </el-option-group>
           </el-select>
-          <!-- <b-form-select
-            placeholder="Groupers"
-            v-model="editForm.groupers"
-            multiple
-            :select-size="5"
-          >
-            <b-form-select-option-group
-              v-for="group in groupersFieldOptions"
-              :key="group.label"
-              :label="group.label"
-            >
-              <b-form-select-option
-                v-for="item in group.options"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
-              >
-              </b-form-select-option>
-            </b-form-select-option-group>
-          </b-form-select> -->
         </b-form-group>
 
-        <!-- TODO: Add validation and remove prop, key -->
         <div v-if="isInAdvancedMode">
           <b-form-group
             v-for="(sorter, index) in editForm.sorters"
             :label="'Sorting ' + index"
             :key="'sort' + index"
-            :prop="'sorters.' + index"
-            :rules="editFormSortersRule"
           >
             <b-form-input
               v-model="sorter.field"
@@ -378,15 +285,6 @@
               placeholder="Field to Sort"
               style="width: 300px;"
             ></b-form-input>
-            <!-- <b-form-select
-              v-model="sorter.order"
-              class="d-inline-block mr-2"
-              placeholder="Order"
-              style="width: 150px"
-            >
-              <b-form-select-option label="Descending" value="DESC" />
-              <b-form-select-option label="Ascending" value="ASC" />
-            </b-form-select> -->
             <el-select
               v-model="sorter.order"
               class="mr-2"
@@ -399,15 +297,24 @@
             <b-button variant="outline-danger" @click="removeSorter(sorter)">
               <b-icon icon="trash-fill" aria-hidden="true" />
             </b-button>
+            <b-form-invalid-feedback
+              :state="
+                $v.editForm.sorters.$each &&
+                  $v.editForm.sorters.$each[index].field.required &&
+                  $v.editForm.sorters.$each[index].order.required
+              "
+            >
+              Please specify all fields
+            </b-form-invalid-feedback>
           </b-form-group>
         </div>
 
-        <!-- TODO: Review if this appears only in advanced mode  -->
         <slot
           name="extraFormItems"
           :editForm="editForm"
           :extraData="editForm.extraData"
           :isInAdvancedMode="isInAdvancedMode"
+          :vuelidate="$v"
         ></slot>
 
         <b-form-group>
@@ -440,13 +347,12 @@
           </b-button>
         </b-form-group>
 
-        <!-- TODO: Fix preview to load -->
         <b-form-group>
           <b-button
             variant="outline-primary"
             icon="el-icon-view"
             class="mr-2"
-            @click="previewAnalysisResult('editForm')"
+            @click="previewAnalysisResult"
           >
             <b-icon icon="eye-fill" /> Preview
           </b-button>
@@ -454,7 +360,7 @@
             variant="primary "
             icon="el-icon-check"
             class="mr-2"
-            @click="saveSectionDetail('editForm')"
+            @click="saveSectionDetail"
           >
             Save
           </b-button>
@@ -464,43 +370,11 @@
         </b-form-group>
       </div>
     </b-form>
-    <!-- <el-form
-      status-icon
-      ref="editForm"
-      label-position="left"
-      :model="editForm"
-      label-width="170px"
-      :rules="editFormRule"
-    >
-      <div v-if="isEditing">
-        <el-form-item>
-          <el-button
-            type="primary"
-            icon="el-icon-view"
-            @click="previewAnalysisResult('editForm')"
-            plain
-          >
-            Preview
-          </el-button>
-          <el-button
-            type="success"
-            icon="el-icon-check"
-            @click="saveSectionDetail('editForm')"
-          >
-            Save
-          </el-button>
-          <el-button icon="el-icon-close" @click="cancelEditing">
-            Cancel
-          </el-button>
-        </el-form-item>
-      </div>
-    </el-form> -->
   </b-overlay>
 </template>
 
 <script>
-// import { required } from "vuelidate/lib/validators";
-import Multiselect from "vue-multiselect";
+import { required } from "vuelidate/lib/validators";
 import { deepCopy } from "@/common/utility";
 import "element-ui/lib/theme-chalk/index.css";
 
@@ -525,37 +399,57 @@ export default {
     editFormSelectionsRule: {
       type: Object,
       required: false,
-      default: () => ({})
+      default: () => ({
+        $each: {
+          expression: {
+            required
+          },
+          rename: {
+            required
+          }
+        }
+      })
     },
     editFormInvolvedRecordsRule: {
       type: Object,
       required: false,
-      default: () => ({})
+      default: () => ({ required })
     },
     editFormFiltersRule: {
-      type: Array,
+      type: Object,
       required: false,
-      default: () => []
+      default: () => ({
+        $each: {
+          field: { required },
+          comparator: { required },
+          value: { required }
+        }
+      })
     },
     editFormJoinersRule: {
-      type: Array,
+      type: Object,
       required: false,
-      default: () => []
+      default: () => ({})
     },
     editFormSortersRule: {
-      type: Array,
+      type: Object,
       required: false,
-      default: () => []
+      default: () => ({
+        $each: {
+          field: { required },
+          order: { required }
+        }
+      })
     },
     editFormGroupersRule: {
-      type: Array,
+      type: Object,
       required: false,
-      default: () => []
+      default: () => ({})
     },
     extraFormItemsRules: {
       type: Object,
       required: false,
-      default: () => {}
+      default: () => ({})
     }
   },
   watch: {
@@ -570,9 +464,6 @@ export default {
   created() {
     this.syncDataWithProps();
     this.sendAnalysisRequest();
-  },
-  components: {
-    Multiselect
   },
   data() {
     return {
@@ -590,12 +481,6 @@ export default {
         groupers: [],
         sorters: [],
         extraData: {}
-      },
-      // unused
-      editFormRule: {
-        involvedRecords: this.editFormInvolvedRecordsRule,
-        groupers: this.editFormGroupersRule,
-        extraData: this.extraFormItemsRules
       }
     };
   },
@@ -604,7 +489,11 @@ export default {
       editForm: {
         selections: this.editFormSelectionsRule,
         involvedRecords: this.editFormInvolvedRecordsRule,
-        filters: { $each: { field: {}, comparator: {}, value: {} } }
+        filters: this.editFormFiltersRule,
+        joiners: this.editFormJoinersRule,
+        groupers: this.editFormGroupersRule,
+        sorters: this.editFormSortersRule,
+        extraData: this.extraFormItemsRules
       }
     };
   },
@@ -768,38 +657,37 @@ export default {
       });
     },
 
-    previewAnalysisResult(formName) {
-      this.$refs[formName].validate(valid => {
-        if (!valid) {
-          return false;
-        }
+    previewAnalysisResult() {
+      this.$v.editForm.$touch();
+      if (this.$v.editForm.$anyError) {
+        return;
+      }
 
-        this.$store
-          .dispatch("sendPreviewAnalysisRequest", {
-            presentationId: this.presentationId,
-            id: this.sectionDetail.id,
-            dataSet: this.sectionDetail.dataSet,
+      this.$store
+        .dispatch("sendPreviewAnalysisRequest", {
+          presentationId: this.presentationId,
+          id: this.sectionDetail.id,
+          dataSet: this.sectionDetail.dataSet,
+          selections: this.editForm.selections,
+          involvedRecords: this.editFormInvolvedRecords,
+          filters: this.editForm.filters,
+          joiners: this.editForm.joiners.map(j => Object.assign({}, j)),
+          groupers: this.editForm.groupers.map(g => ({ field: g })),
+          sorters: this.editForm.sorters.map(s => Object.assign({}, s)),
+          conferenceName: this.conference
+        })
+        .then(() => {
+          this.$emit("update-visualisation", {
             selections: this.editForm.selections,
             involvedRecords: this.editFormInvolvedRecords,
-            filters: this.editForm.filters,
+            filters: this.editForm.filters.map(f => Object.assign({}, f)),
             joiners: this.editForm.joiners.map(j => Object.assign({}, j)),
             groupers: this.editForm.groupers.map(g => ({ field: g })),
             sorters: this.editForm.sorters.map(s => Object.assign({}, s)),
-            conferenceName: this.conference
-          })
-          .then(() => {
-            this.$emit("update-visualisation", {
-              selections: this.editForm.selections,
-              involvedRecords: this.editFormInvolvedRecords,
-              filters: this.editForm.filters.map(f => Object.assign({}, f)),
-              joiners: this.editForm.joiners.map(j => Object.assign({}, j)),
-              groupers: this.editForm.groupers.map(g => ({ field: g })),
-              sorters: this.editForm.sorters.map(s => Object.assign({}, s)),
-              result: this.sectionDetail.previewResult,
-              extraData: this.editForm.extraData
-            });
+            result: this.sectionDetail.previewResult,
+            extraData: this.editForm.extraData
           });
-      });
+        });
     },
 
     sendAnalysisRequest() {

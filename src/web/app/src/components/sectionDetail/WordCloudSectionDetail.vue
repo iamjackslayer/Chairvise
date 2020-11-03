@@ -4,9 +4,7 @@
     :presentation-id="presentationId"
     :has-data="hasData"
     :conference="conference"
-    :edit-form-selections-rule="editFormSelectionsRule"
     :edit-form-involved-records-rule="editFormInvolvedRecordsRule"
-    :edit-form-filters-rule="editFormFiltersRule"
     :extraFormItemsRules="extraFormItemsRules"
     @update-visualisation="updateVisualisation"
   >
@@ -27,6 +25,11 @@
           <b-form-select-option label="\n" value="\n" />
           <b-form-select-option label="Space" value="\s" />
         </b-form-select>
+        <b-form-invalid-feedback
+          :state="slotProps.vuelidate.editForm.extraData.delimiters.required"
+        >
+          Please specify at least one delimiter
+        </b-form-invalid-feedback>
       </b-form-group>
 
       <b-form-group label="Word to Ignore">
@@ -65,47 +68,9 @@ export default {
 
   data() {
     return {
-      editFormSelectionsRule: {
-        $each: {
-          expression: {
-            required
-          },
-          rename: {
-            required
-          }
-        }
-      },
       editFormInvolvedRecordsRule: { mustBeOneValue },
-      editFormFiltersRule: [
-        {
-          validator: (rule, value, callback) => {
-            if (
-              value.field.length === 0 ||
-              value.comparator.length === 0 ||
-              value.value.length === 0
-            ) {
-              return callback(new Error("Please specify all fields"));
-            }
-            callback();
-          },
-          trigger: "blur"
-        }
-      ],
-
       extraFormItemsRules: {
-        delimiters: [
-          {
-            validator: (rule, value, callback) => {
-              if (value.length === 0) {
-                return callback(
-                  new Error("Please specify at least one delimiter")
-                );
-              }
-              callback();
-            },
-            trigger: "blur"
-          }
-        ]
+        delimiters: { required }
       },
 
       // word cloud related field

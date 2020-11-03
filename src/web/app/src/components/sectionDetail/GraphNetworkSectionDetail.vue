@@ -4,7 +4,6 @@
     :presentation-id="presentationId"
     :has-data="hasData"
     :conference="conference"
-    :extraFormItemsRules="{}"
     @update-visualisation="updateVisualisation"
   >
     <GraphNetwork

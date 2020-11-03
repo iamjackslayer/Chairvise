@@ -4,7 +4,6 @@
     :presentation-id="presentationId"
     :has-data="hasData"
     :conference="conference"
-    :extraFormItemsRules="{}"
     @update-visualisation="updateVisualisation"
   >
     <line-chart :chart-data="chartData" :options="options"></line-chart>
