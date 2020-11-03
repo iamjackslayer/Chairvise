@@ -7,20 +7,20 @@
         <b-row align-h="around">
           <BannerCard
             title="public posts"
-            :figure="isLoggedIn ? totalPublicPostsPastWeek : '??'"
-            :subfigure="isLoggedIn ? totalPublicPostsPerDay : '??'"
+            :figure="isLoggedIn ? totalPublicPostsPastWeek.toString() : '??'"
+            :subfigure="isLoggedIn ? totalPublicPostsPerDay.toString() : '??'"
             subtitle="per day avg"
           />
           <BannerCard
             title="comments"
-            :figure="isLoggedIn ? totalCommentsPastWeek : '??'"
-            :subfigure="isLoggedIn ? totalCommentsPerDay : '??'"
+            :figure="isLoggedIn ? totalCommentsPastWeek.toString() : '??'"
+            :subfigure="isLoggedIn ? totalCommentsPerDay.toString() : '??'"
             subtitle="per day avg"
           />
           <BannerCard
             title="active users"
-            :figure="isLoggedIn ? totalActiveUsersPastWeek : '??'"
-            :subfigure="isLoggedIn ? totalActiveUsersPerDay : '??'"
+            :figure="isLoggedIn ? totalActiveUsersPastWeek.toString() : '??'"
+            :subfigure="isLoggedIn ? totalActiveUsersPerDay.toString() : '??'"
             subtitle="per day avg"
           />
         </b-row>
@@ -63,10 +63,15 @@ export default {
 </script>
 <style lang="scss" scoped>
 .banner {
+  transition: all 0.5s ease-in-out;
   background-color: $gray-200;
   border: 1.7px none $gray-600;
   border-radius: 0.7rem;
   padding: 1.7rem 2rem;
+  &:hover {
+    transition: all 0.6s ease-in-out;
+    background-color: $gray-300;
+  }
 }
 .chairhub-heading {
   font-weight: bold;
