@@ -4,12 +4,11 @@
     :presentation-id="presentationId"
     :has-data="hasData"
     :conference="conference"
-    :extraFormItemsRules="{}"
     @update-visualisation="updateVisualisation"
   >
     <pie-chart :chart-data="chartData" :options="options"></pie-chart>
 
-    <!-- TODO: Replace validation. -->
+    <!-- TODO: Add validation. -->
     <template slot="extraFormItems" slot-scope="slotProps">
       <b-form-group
         label="Category Field Name"

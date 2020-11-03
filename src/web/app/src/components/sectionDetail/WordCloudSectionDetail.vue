@@ -4,9 +4,7 @@
     :presentation-id="presentationId"
     :has-data="hasData"
     :conference="conference"
-    :edit-form-selections-rule="editFormSelectionsRule"
     :edit-form-involved-records-rule="editFormInvolvedRecordsRule"
-    :edit-form-filters-rule="editFormFiltersRule"
     :extraFormItemsRules="extraFormItemsRules"
     @update-visualisation="updateVisualisation"
   >
@@ -27,6 +25,11 @@
           <b-form-select-option label="\n" value="\n" />
           <b-form-select-option label="Space" value="\s" />
         </b-form-select>
+        <b-form-invalid-feedback
+          :state="slotProps.vuelidate.editForm.extraData.delimiters.required"
+        >
+          Please specify at least one delimiter
+        </b-form-invalid-feedback>
       </b-form-group>
 
       <b-form-group label="Word to Ignore">
@@ -41,8 +44,11 @@
 </template>
 
 <script>
+import { required } from "vuelidate/lib/validators";
 import WordCloud from "@/components/sectionDetail/chart/WordCloud.vue";
 import BasicSectionDetail from "@/components/sectionDetail/BasicSectionDetail.vue";
+
+const mustBeOneValue = value => value.length == 1;
 
 export default {
   props: {
@@ -62,63 +68,9 @@ export default {
 
   data() {
     return {
-      editFormSelectionsRule: [
-        {
-          validator: (rule, value, callback) => {
-            if (
-              value.expression.length === 0 ||
-              value.expression.rename === 0
-            ) {
-              return callback(new Error("Please specify all fields"));
-            }
-            callback();
-          },
-          trigger: "blur"
-        }
-      ],
-      editFormInvolvedRecordsRule: [
-        {
-          validator: (rule, value, callback) => {
-            if (value.length >= 2 || value.length < 1) {
-              return callback(
-                new Error("There must be only one record involved")
-              );
-            }
-            return callback();
-          },
-          trigger: "change"
-        }
-      ],
-      editFormFiltersRule: [
-        {
-          validator: (rule, value, callback) => {
-            if (
-              value.field.length === 0 ||
-              value.comparator.length === 0 ||
-              value.value.length === 0
-            ) {
-              return callback(new Error("Please specify all fields"));
-            }
-            callback();
-          },
-          trigger: "blur"
-        }
-      ],
-
+      editFormInvolvedRecordsRule: { mustBeOneValue },
       extraFormItemsRules: {
-        delimiters: [
-          {
-            validator: (rule, value, callback) => {
-              if (value.length === 0) {
-                return callback(
-                  new Error("Please specify at least one delimiter")
-                );
-              }
-              callback();
-            },
-            trigger: "blur"
-          }
-        ]
+        delimiters: { required }
       },
 
       // word cloud related field

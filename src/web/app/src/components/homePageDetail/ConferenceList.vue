@@ -23,7 +23,6 @@
           {{ conference.description || "-" }}
         </div>
         <div class="privacy-status">
-          <!-- TODO: Change this to date with calendar icon -->
           <b-icon icon="calendar2-event" class="mr-1" />
           {{ dayjs(conference.date) }}
         </div>

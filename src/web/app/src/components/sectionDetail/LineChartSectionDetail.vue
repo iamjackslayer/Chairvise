@@ -4,12 +4,11 @@
     :presentation-id="presentationId"
     :has-data="hasData"
     :conference="conference"
-    :extraFormItemsRules="{}"
     @update-visualisation="updateVisualisation"
   >
     <line-chart :chart-data="chartData" :options="options"></line-chart>
 
-    <!-- TODO: Replace validation. -->
+    <!-- TODO: Add validation. -->
     <template slot="extraFormItems" slot-scope="slotProps">
       <b-form-group label="xAxis Field Name" v-if="slotProps.isInAdvancedMode">
         <b-form-select v-model="slotProps.extraData.xAxisFieldName">

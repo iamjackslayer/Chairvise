@@ -64,7 +64,7 @@ export default {
       sorters: [
         {
           field: "count(*)",
-          order: "desc"
+          order: "DESC"
         }
       ],
       extraData: {
@@ -137,7 +137,7 @@ export default {
       sorters: [
         {
           field: "count(*)",
-          order: "desc"
+          order: "DESC"
         }
       ],
       extraData: {
@@ -209,7 +209,7 @@ export default {
       sorters: [
         {
           field: "count(*)",
-          order: "desc"
+          order: "DESC"
         }
       ],
       extraData: {
@@ -281,7 +281,7 @@ export default {
       sorters: [
         {
           field: "count(*)",
-          order: "desc"
+          order: "DESC"
         }
       ],
       extraData: {
@@ -353,7 +353,7 @@ export default {
       sorters: [
         {
           field: "count(*)",
-          order: "desc"
+          order: "DESC"
         }
       ],
       extraData: {
@@ -425,7 +425,7 @@ export default {
       sorters: [
         {
           field: "count(*)",
-          order: "desc"
+          order: "DESC"
         }
       ],
       extraData: {
@@ -497,7 +497,7 @@ export default {
       sorters: [
         {
           field: "count(*)",
-          order: "desc"
+          order: "DESC"
         }
       ],
       extraData: {
@@ -573,7 +573,7 @@ export default {
       sorters: [
         {
           field: "count(*)",
-          order: "desc"
+          order: "DESC"
         }
       ],
       extraData: {
@@ -653,7 +653,7 @@ export default {
       sorters: [
         {
           field: "count(*)",
-          order: "desc"
+          order: "DESC"
         }
       ],
       extraData: {
@@ -732,7 +732,7 @@ export default {
       sorters: [
         {
           field: "count(*)",
-          order: "desc"
+          order: "DESC"
         }
       ],
       extraData: {
