@@ -45,6 +45,8 @@ import { required } from "vuelidate/lib/validators";
 import WordCloud from "@/components/sectionDetail/chart/WordCloud.vue";
 import BasicSectionDetail from "@/components/sectionDetail/BasicSectionDetail.vue";
 
+const mustBeOneValue = value => value.length == 1;
+
 export default {
   props: {
     sectionDetail: {
@@ -73,19 +75,8 @@ export default {
           }
         }
       },
-      editFormInvolvedRecordsRule: [
-        {
-          validator: (rule, value, callback) => {
-            if (value.length >= 2 || value.length < 1) {
-              return callback(
-                new Error("There must be only one record involved")
-              );
-            }
-            return callback();
-          },
-          trigger: "change"
-        }
-      ],
+      // TODO: Change this
+      editFormInvolvedRecordsRule: { mustBeOneValue },
       editFormFiltersRule: [
         {
           validator: (rule, value, callback) => {

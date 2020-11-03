@@ -82,12 +82,9 @@
             >
               <b-icon icon="trash-fill" aria-hidden="true" />
             </b-button>
-            <!-- {{ v.expression }}
-            {{ v.rename }} -->
             <b-form-invalid-feedback
               :state="v.expression.required && v.rename.required"
             >
-              <!-- v-if="!v.expression.required || !v.rename.required" -->
               Please specify all field for the selection
             </b-form-invalid-feedback>
           </b-form-group>
@@ -100,18 +97,26 @@
           v-if="isInAdvancedMode"
           key="involvedRecords"
         >
-          <b-form-select
+          <v-select
             v-model="editForm.involvedRecords"
+            taggable
             multiple
-            :select-size="3"
+            label="label"
+            :options="involvedRecordsOptions"
+            :create-option="option => ({ label: option, value: option })"
+            :reduce="option => option.value"
+          />
+          <b-form-invalid-feedback
+            :state="$v.editForm.involvedRecords.required"
           >
-            <b-form-select-option
-              v-for="option in involvedRecordsOptions"
-              :key="option.value"
-              :label="option.label"
-              :value="option.value"
-            ></b-form-select-option>
-          </b-form-select>
+            There must be one record involved
+          </b-form-invalid-feedback>
+
+          <b-form-invalid-feedback
+            :state="$v.editForm.involvedRecords.mustBeOneValue"
+          >
+            There must be only one record involved
+          </b-form-invalid-feedback>
         </b-form-group>
 
         <!-- TODO: Add validation and remove prop, key -->
@@ -352,11 +357,8 @@
           </b-button>
         </b-form-group>
       </div>
-      <pre class="debug">
-EditFormRule: {{ editFormRule }}
-      </pre>
-      <pre class="debug">{{ $v }}</pre>
     </b-form>
+    <pre class="debug">{{ $v }}</pre>
     <!-- <el-form
       status-icon
       ref="editForm"
@@ -392,7 +394,8 @@ EditFormRule: {{ editFormRule }}
 </template>
 
 <script>
-import { required } from "vuelidate/lib/validators";
+// import { required } from "vuelidate/lib/validators";
+import Multiselect from "vue-multiselect";
 import { deepCopy } from "@/common/utility";
 
 export default {
@@ -416,7 +419,12 @@ export default {
     editFormSelectionsRule: {
       type: Object,
       required: false,
-      default: () => {}
+      default: () => ({})
+    },
+    editFormInvolvedRecordsRule: {
+      type: Object,
+      required: false,
+      default: () => ({})
     },
     editFormFiltersRule: {
       type: Array,
@@ -433,11 +441,6 @@ export default {
       required: false,
       default: () => []
     },
-    editFormInvolvedRecordsRule: {
-      type: Array,
-      required: false,
-      default: () => []
-    },
     editFormGroupersRule: {
       type: Array,
       required: false,
@@ -445,7 +448,8 @@ export default {
     },
     extraFormItemsRules: {
       type: Object,
-      required: false
+      required: false,
+      default: () => {}
     }
   },
   watch: {
@@ -461,7 +465,7 @@ export default {
     this.syncDataWithProps();
     this.sendAnalysisRequest();
   },
-
+  components: { Multiselect },
   data() {
     return {
       isInAdvancedMode: false,
@@ -496,15 +500,10 @@ export default {
     return {
       editForm: {
         selections: this.editFormSelectionsRule,
-        involvedRecords: {
-          required
-        }
+        involvedRecords: this.editFormInvolvedRecordsRule
       }
     };
   },
-  // validations() {
-  //   return { editForm: this.editFormRuleTest };
-  // },
   computed: {
     involvedRecordsOptions() {
       return this.$store.state.dbMetaData.entities.map(entity => ({

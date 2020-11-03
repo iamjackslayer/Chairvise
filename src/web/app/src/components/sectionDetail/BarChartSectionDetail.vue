@@ -148,17 +148,9 @@ export default {
           }
         }
       },
-      editFormInvolvedRecordsRule: [
-        {
-          validator: (rule, value, callback) => {
-            if (value.length < 1) {
-              return callback(new Error("There must be one record involved"));
-            }
-            callback();
-          },
-          trigger: "change"
-        }
-      ],
+      editFormInvolvedRecordsRule: {
+        required
+      },
       editFormFiltersRule: [
         {
           validator: (rule, value, callback) => {

@@ -37,6 +37,7 @@
     "vue-chartjs": "^3.5.0",
     "vue-d3-network": "^0.1.28",
     "vue-router": "^3.3.4",
+    "vue-select": "^3.10.8",
     "vue2": "^1.0.0",
     "vue2-transitions": "^0.3.0",
     "vuejs-datepicker": "^1.6.2",
