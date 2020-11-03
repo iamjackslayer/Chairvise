@@ -13,7 +13,6 @@
       </b-button>
     </div>
     <div>
-      <!-- TODO: Replace with openpeeps image -->
       <EmptyPresentation v-if="isPresentationListEmpty" />
 
       <div class="list-grid">

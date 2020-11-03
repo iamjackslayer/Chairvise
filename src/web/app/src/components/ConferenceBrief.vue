@@ -213,40 +213,6 @@ export default {
       }
       this.isEditing = isEditing;
     },
-    // TODO: Remove this. This is unused
-    addConference() {
-      this.$refs["conferenceForm"].validate(valid => {
-        if (!valid) {
-          return;
-        }
-        this.$refs["conferenceForm"].clearValidate();
-        // Note: Seems like this page wants to be merged with NewConference or something
-        // Get rid of this.
-        if (this.isNewConference) {
-          // add
-          this.$store.dispatch("saveConference").then(() => {
-            if (this.isError) {
-              return;
-            }
-            // redirect to the newly added conference
-            this.$router.push({
-              name: "conference",
-              params: {
-                id: this.$store.state.conference.conferenceForm.id
-              }
-            });
-          });
-        } else {
-          // TODO Repurpose this for for updateConferenceForm?
-          this.$store.dispatch("updateConference").then(() => {
-            if (this.isError) {
-              return;
-            }
-            this.isEditing = false;
-          });
-        }
-      });
-    },
     deleteConference() {
       this.$store.dispatch("deleteConference", this.id).then(() => {
         if (this.isError) {

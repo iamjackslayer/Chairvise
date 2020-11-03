@@ -139,7 +139,7 @@ export default {
           value
         });
         // TODO: Add this.$v.name.$touch()
-        // To get on touch validation
+        // To get on touch validation for VueX
       }
     },
     conferenceFormDescription: {
