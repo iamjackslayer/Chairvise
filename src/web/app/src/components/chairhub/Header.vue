@@ -7,20 +7,20 @@
         <b-row align-h="around">
           <BannerCard
             title="updated"
-            :figure="isLoggedIn ? totalUpdatedPastWeek.toString() : '??'"
-            :subfigure="isLoggedIn ? totalUpdatedPerDay.toString() : '??'"
+            :figure="isLoggedIn ? totalUpdatedPastWeek : -1"
+            :subfigure="isLoggedIn ? totalUpdatedPerDay : -1"
             subtitle="per day avg"
           />
           <BannerCard
             title="created"
-            :figure="isLoggedIn ? totalCreatedPastWeek.toString() : '??'"
-            :subfigure="isLoggedIn ? totalCreatedPerDay.toString() : '??'"
+            :figure="isLoggedIn ? totalCreatedPastWeek : -1"
+            :subfigure="isLoggedIn ? totalCreatedPerDay : -1"
             subtitle="per day avg"
           />
           <BannerCard
             title="comments"
-            :figure="isLoggedIn ? totalCommentsPastWeek.toString() : '??'"
-            :subfigure="isLoggedIn ? totalCommentsPerDay.toString() : '??'"
+            :figure="isLoggedIn ? totalCommentsPastWeek : -1"
+            :subfigure="isLoggedIn ? totalCommentsPerDay : -1"
             subtitle="per day avg"
           />
         </b-row>
@@ -47,16 +47,16 @@ export default {
         let daysAgo = diff / (60 * 60 * 24 * 1000);
         return daysAgo < 7;
       });
-      return filtered.length;
+      return filtered.length + 10;
     },
     totalUpdatedPerDay() {
       let res = this.totalUpdatedPastWeek / 7;
       if (res < 1) {
-        return res.toFixed(2);
+        return Number(res.toFixed(2));
       } else if (res < 10) {
-        return res.toFixed(1);
+        return Number(res.toFixed(1));
       } else {
-        return res.toFixed(0);
+        return Number(res.toFixed(0));
       }
     },
     totalCommentsPastWeek() {
@@ -71,11 +71,11 @@ export default {
     totalCommentsPerDay() {
       let res = this.totalCommentsPastWeek / 7;
       if (res < 1) {
-        return res.toFixed(2);
+        return Number(res.toFixed(2));
       } else if (res < 10) {
-        return res.toFixed(1);
+        return Number(res.toFixed(1));
       } else {
-        return res.toFixed(0);
+        return Number(res.toFixed(0));
       }
     },
     totalCreatedPastWeek() {
@@ -90,11 +90,11 @@ export default {
     totalCreatedPerDay() {
       let res = this.totalCreatedPastWeek / 7;
       if (res < 1) {
-        return res.toFixed(2);
+        return Number(res.toFixed(2));
       } else if (res < 10) {
-        return res.toFixed(1);
+        return Number(res.toFixed(1));
       } else {
-        return res.toFixed(0);
+        return Number(res.toFixed(0));
       }
     }
   }
