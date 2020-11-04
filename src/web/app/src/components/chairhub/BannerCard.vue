@@ -25,10 +25,10 @@ export default {
     };
   },
   mounted() {
-    this.displayFigure = this.figure;
+    this.animateDisplayFigure();
   },
-  watch: {
-    figure: function() {
+  methods: {
+    animateDisplayFigure: function() {
       clearInterval(this.interval);
 
       if (this.figure == this.displayFigure) {
