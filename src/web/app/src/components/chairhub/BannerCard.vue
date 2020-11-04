@@ -35,10 +35,14 @@ export default {
   .card--figure {
     font-size: 1.9rem;
     font-weight: bold;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
   .card--subfigure {
     font-size: 1rem;
     color: $gray-700;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
   .card--subtitle {
     font-size: 1rem;
