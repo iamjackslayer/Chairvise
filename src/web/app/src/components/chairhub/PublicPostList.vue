@@ -118,8 +118,8 @@ export default {
       fields: [
         { key: "name", label: "Post names" },
         { key: "creatorIdentifier", label: "Created by" },
-        { key: "updated", label: "Updated", sortable: true },
-        { key: "created", label: "Created", sortable: true }
+        { key: "updated", label: "Updated" },
+        { key: "created", label: "Created" }
       ]
     };
   },
