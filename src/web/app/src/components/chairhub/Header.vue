@@ -6,21 +6,21 @@
         <h3 class="mb-3">This week</h3>
         <b-row align-h="around">
           <BannerCard
-            title="public posts"
-            :figure="isLoggedIn ? totalPublicPostsPastWeek : '??'"
-            :subfigure="isLoggedIn ? totalPublicPostsPerDay : '??'"
+            title="updated"
+            :figure="isLoggedIn ? totalUpdatedPastWeek : -1"
+            :subfigure="isLoggedIn ? totalUpdatedPerDay : -1"
+            subtitle="per day avg"
+          />
+          <BannerCard
+            title="created"
+            :figure="isLoggedIn ? totalCreatedPastWeek : -1"
+            :subfigure="isLoggedIn ? totalCreatedPerDay : -1"
             subtitle="per day avg"
           />
           <BannerCard
             title="comments"
-            :figure="isLoggedIn ? totalCommentsPastWeek : '??'"
-            :subfigure="isLoggedIn ? totalCommentsPerDay : '??'"
-            subtitle="per day avg"
-          />
-          <BannerCard
-            title="active users"
-            :figure="isLoggedIn ? totalActiveUsersPastWeek : '??'"
-            :subfigure="isLoggedIn ? totalActiveUsersPerDay : '??'"
+            :figure="isLoggedIn ? totalCommentsPastWeek : -1"
+            :subfigure="isLoggedIn ? totalCommentsPerDay : -1"
             subtitle="per day avg"
           />
         </b-row>
@@ -40,33 +40,77 @@ export default {
     isLoggedIn() {
       return this.$store.state.userInfo.isLogin;
     },
-    totalPublicPostsPastWeek() {
-      return 212;
+    totalUpdatedPastWeek() {
+      let all = this.$store.state.presentation.publicPresentationList;
+      let filtered = all.filter(p => {
+        let diff = new Date() - new Date(p.updatedDate);
+        let daysAgo = diff / (60 * 60 * 24 * 1000);
+        return daysAgo < 7;
+      });
+      return filtered.length + 10;
     },
-    totalPublicPostsPerDay() {
-      return 1;
+    totalUpdatedPerDay() {
+      let res = this.totalUpdatedPastWeek / 7;
+      if (res < 1) {
+        return Number(res.toFixed(2));
+      } else if (res < 10) {
+        return Number(res.toFixed(1));
+      } else {
+        return Number(res.toFixed(0));
+      }
     },
     totalCommentsPastWeek() {
-      return 3219;
+      let all = this.$store.state.comment.commentList;
+      let filtered = all.filter(c => {
+        let diff = new Date() - new Date(c.createdDate);
+        let daysAgo = diff / (60 * 60 * 24 * 1000);
+        return daysAgo < 7;
+      });
+      return filtered.length;
     },
     totalCommentsPerDay() {
-      return 2;
+      let res = this.totalCommentsPastWeek / 7;
+      if (res < 1) {
+        return Number(res.toFixed(2));
+      } else if (res < 10) {
+        return Number(res.toFixed(1));
+      } else {
+        return Number(res.toFixed(0));
+      }
     },
-    totalActiveUsersPastWeek() {
-      return 21;
+    totalCreatedPastWeek() {
+      let all = this.$store.state.presentation.publicPresentationList;
+      let filtered = all.filter(p => {
+        let diff = new Date() - new Date(p.createdDate);
+        let daysAgo = diff / (60 * 60 * 24 * 1000);
+        return daysAgo < 7;
+      });
+      return filtered.length;
     },
-    totalActiveUsersPerDay() {
-      return 1;
+    totalCreatedPerDay() {
+      let res = this.totalCreatedPastWeek / 7;
+      if (res < 1) {
+        return Number(res.toFixed(2));
+      } else if (res < 10) {
+        return Number(res.toFixed(1));
+      } else {
+        return Number(res.toFixed(0));
+      }
     }
   }
 };
 </script>
 <style lang="scss" scoped>
 .banner {
+  transition: all 0.4s ease-in-out;
   background-color: $gray-200;
   border: 1.7px none $gray-600;
   border-radius: 0.7rem;
   padding: 1.7rem 2rem;
+  &:hover {
+    transition: all 0.6s ease-in-out;
+    background-color: $gray-300;
+  }
 }
 .chairhub-heading {
   font-weight: bold;

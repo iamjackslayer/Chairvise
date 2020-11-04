@@ -1,8 +1,12 @@
 <template>
   <b-col fluid class="banner-card">
     <h6 class="card--title">{{ title }}</h6>
-    <h6 class="card--figure">{{ figure }}</h6>
-    <h6 class="card--subfigure my-0">{{ subfigure }}</h6>
+    <h6 class="card--figure">
+      {{ figure === -1 ? "??" : displayFigure }}
+    </h6>
+    <h6 class="card--subfigure my-0">
+      {{ subfigure === -1 ? "??" : subfigure }}
+    </h6>
     <h6 class="card--subtitle my-0">{{ subtitle }}</h6>
   </b-col>
 </template>
@@ -11,9 +15,39 @@ export default {
   name: "BannerCard",
   props: {
     title: String,
-    figure: String,
-    subfigure: String,
+    figure: Number,
+    subfigure: Number,
     subtitle: String
+  },
+  data() {
+    return {
+      displayFigure: 0
+    };
+  },
+  mounted() {
+    this.animateDisplayFigure();
+  },
+  methods: {
+    animateDisplayFigure: function() {
+      clearInterval(this.interval);
+
+      if (this.figure == this.displayFigure) {
+        return;
+      }
+
+      this.interval = window.setInterval(
+        function() {
+          if (this.displayFigure != this.figure) {
+            var change = (this.figure - this.displayFigure) / 10;
+
+            change = change >= 0 ? Math.ceil(change) : Math.floor(change);
+
+            this.displayFigure = this.displayFigure + change;
+          }
+        }.bind(this),
+        100
+      );
+    }
   }
 };
 </script>
@@ -35,10 +69,14 @@ export default {
   .card--figure {
     font-size: 1.9rem;
     font-weight: bold;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
   .card--subfigure {
     font-size: 1rem;
     color: $gray-700;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
   .card--subtitle {
     font-size: 1rem;

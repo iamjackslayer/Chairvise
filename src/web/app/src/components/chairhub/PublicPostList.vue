@@ -68,14 +68,21 @@
       :filter="filter"
       :class="'public-post-list'"
     >
-      <template v-slot:cell(post_name)="data">
+      <template v-slot:cell(name)="data">
         <p class="text-info">{{ data.value }}</p>
       </template>
-      <template v-slot:cell(created_by)="data">
+      <template v-slot:cell(creatorIdentifier)="data">
         <p class="text-primary">{{ data.value }}</p>
       </template>
-      <template v-slot:cell(created_on)="data">
-        <p class="text-secondary">{{ data.value }}</p>
+      <template v-slot:cell(updated)="data">
+        <p class="text-secondary">
+          {{ getTimeDiffUpdated(data.item.updatedDate) }}
+        </p>
+      </template>
+      <template v-slot:cell(created)="data">
+        <p class="text-secondary">
+          {{ getTimeDiffCreated(data.item.createdDate) }}
+        </p>
       </template>
     </b-table>
     <!-- pagination -->
@@ -98,33 +105,61 @@ export default {
   props: {
     postList: Array
   },
+  data() {
+    return {
+      currentTime: new Date(),
+      perPage: 10,
+      currentPage: 1,
+      pageOptions: [10, 20, 50],
+      totalRows: 1,
+      sortBy: "updated",
+      sortDesc: true,
+      filter: "",
+      fields: [
+        { key: "name", label: "Post names" },
+        { key: "creatorIdentifier", label: "Created by" },
+        { key: "updated", label: "Updated" },
+        { key: "created", label: "Created" }
+      ]
+    };
+  },
   methods: {
     onRowSelected(row) {
-      // console.log(row[0].post_name);
       this.$router.push({
         name: "section",
         params: {
           id: row[0].id
         }
       });
+    },
+    getTimeDiffCreated(createdDate) {
+      let timeElapsedCreated = this.currentTime - new Date(createdDate);
+      let output = "";
+      let timeArray = [1000 * 60 * 60 * 24, 1000 * 60 * 60, 1000 * 60, 1000];
+      let stringArray = ["days ago", "hrs ago", "mins ago", "secs ago"];
+      for (let i = 0; i < timeArray.length; i++) {
+        let timeDiff = Math.floor(timeElapsedCreated / timeArray[i]);
+        output = timeDiff + " " + stringArray[i];
+        if (timeDiff > 0) {
+          return output;
+        }
+      }
+      return "0 Seconds ago";
+    },
+    getTimeDiffUpdated(updatedDate) {
+      let timeElapsedUpdated = this.currentTime - new Date(updatedDate);
+      let output = "";
+      let timeArray = [1000 * 60 * 60 * 24, 1000 * 60 * 60, 1000 * 60, 1000];
+      let stringArray = ["days ago", "hrs ago", "mins ago", "secs ago"];
+      for (let i = 0; i < timeArray.length; i++) {
+        let timeDiff = Math.floor(timeElapsedUpdated / timeArray[i]);
+        output = timeDiff + " " + stringArray[i];
+        if (timeDiff > 0) {
+          return output;
+        }
+      }
+      return "0 Seconds ago";
     }
-  },
-  data() {
-    return {
-      perPage: 10,
-      currentPage: 1,
-      pageOptions: [10, 20, 50],
-      totalRows: 1,
-      sortBy: "created_on",
-      sortDesc: true,
-      filter: "",
-      fields: [
-        { key: "id", label: "id", sortable: true },
-        { key: "name", label: "Post names" },
-        { key: "creatorIdentifier", label: "Created by" }
-        // { key: "created_on", sortable: true }
-      ]
-    };
   },
   mounted() {
     this.totalRows = this.postList.length;

@@ -36,6 +36,19 @@ export default {
     isPresentationEditable: false
   },
   mutations: {
+    sortPublicPresentationList(state) {
+      function compare(a, b) {
+        if (a.updatedDate == null && b.updatedDate != null) return 1;
+        if (a.updatedDate != null && b.updatedDate == null) return -1;
+        if (a.updatedDate < b.updatedDate) {
+          return 1;
+        } else if (a.updatedDate > b.updatedDate) {
+          return -1;
+        }
+        return 0;
+      }
+      state.publicPresentationList.sort(compare);
+    },
     setPublicPresentationListLoading(state, payload) {
       if (payload) {
         state.publicPresentationListStatus.isApiError = false;
@@ -135,6 +148,7 @@ export default {
         .get("/api/presentations/public")
         .then(response => {
           commit("setPublicPresentationList", response.data);
+          commit("sortPublicPresentationList");
         })
         .catch(e => {
           commit("setPublicPresentationListApiError", e.toString());

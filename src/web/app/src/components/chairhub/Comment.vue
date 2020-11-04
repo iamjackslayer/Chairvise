@@ -1,5 +1,8 @@
 <template>
-  <div class="comment-container">
+  <div
+    class="comment-container"
+    v-on:dblclick="!editMode && canEdit ? enterEditMode() : null"
+  >
     <b-row class="mb-2 mx-0">
       <h6 class="comment-heading col-10" v-text="creator"></h6>
       <b-button
