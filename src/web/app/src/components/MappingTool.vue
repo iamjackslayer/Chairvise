@@ -1,125 +1,132 @@
 <template>
-  <b-row>
-    <b-col xs="12" lg="6">
-      <b-card>
-        <!-- db fields -->
-        <div class="db-tags">
-          <h5>Database fields</h5>
-          <transition-group name="tags-group" tag="div">
+  <div>
+    <b-card class="mb-3" title="Data Preview" v-if="previewData">
+      <pre
+        class="data-preview"
+      ><span v-for="(line, index) in previewData" :key="index" class="d-block">{{ line.toString() }}</span></pre>
+    </b-card>
+    <b-row>
+      <b-col xs="12" lg="6">
+        <b-card>
+          <!-- db fields -->
+          <div class="db-tags">
+            <h5>Database fields</h5>
+            <transition-group name="tags-group" tag="div">
+              <div
+                class="tag"
+                v-for="(item, idx) in dbList.fieldMetaDataList"
+                v-bind:key="idx"
+                v-bind:class="[
+                  idx === selectedDBTag ? 'active' : '',
+                  mappedDBTag.includes(idx) ? 'hidden' : ''
+                ]"
+                v-on:click="dbTagClicked(idx)"
+              >
+                {{ item.name }}
+              </div>
+            </transition-group>
+          </div>
+          <!-- end of db fields -->
+
+          <!-- imported tags -->
+          <div class="import-tags mt-4">
+            <h5>Imported data fields</h5>
+            <transition-group name="tags-group" tag="div">
+              <div
+                class="tag"
+                v-for="(item, idx) in importList"
+                v-bind:key="idx"
+                v-bind:class="[
+                  idx === selectedImportTag ? 'active' : '',
+                  mappedImportTag.includes(idx) ? 'hidden' : ''
+                ]"
+                v-on:click="importTagClicked(idx)"
+              >
+                {{ item }}
+              </div>
+            </transition-group>
+          </div>
+          <!-- end of imported tags -->
+
+          <!-- button group -->
+          <div class="mt-4">
+            <b-button @click="uploadClicked" variant="primary">
+              Submit
+            </b-button>
+            <b-button class="ml-2" @click="backClicked" variant="secondary">
+              Back
+            </b-button>
+          </div>
+          <!-- end of button group -->
+        </b-card>
+      </b-col>
+
+      <b-col class="mt-3 mt-lg-0" xs="12" lg="6">
+        <b-card>
+          <h5>Mapping</h5>
+          <transition-group name="map-group" tag="div">
             <div
-              class="tag"
-              v-for="(item, idx) in dbList.fieldMetaDataList"
-              v-bind:key="idx"
-              v-bind:class="[
-                idx === selectedDBTag ? 'active' : '',
-                mappedDBTag.includes(idx) ? 'hidden' : ''
-              ]"
-              v-on:click="dbTagClicked(idx)"
+              class="pair-tag"
+              v-for="(item, index) in mappedPairs"
+              v-bind:key="index"
             >
-              {{ item.name }}
-            </div>
-          </transition-group>
-        </div>
-        <!-- end of db fields -->
-
-        <!-- imported tags -->
-        <div class="import-tags mt-4">
-          <h5>Imported data fields</h5>
-          <transition-group name="tags-group" tag="div">
-            <div
-              class="tag"
-              v-for="(item, idx) in importList"
-              v-bind:key="idx"
-              v-bind:class="[
-                idx === selectedImportTag ? 'active' : '',
-                mappedImportTag.includes(idx) ? 'hidden' : ''
-              ]"
-              v-on:click="importTagClicked(idx)"
-            >
-              {{ item }}
-            </div>
-          </transition-group>
-        </div>
-        <!-- end of imported tags -->
-
-        <!-- button group -->
-        <div class="mt-4">
-          <b-button @click="uploadClicked" variant="primary">
-            Submit
-          </b-button>
-          <b-button class="ml-2" @click="backClicked" variant="secondary">
-            Back
-          </b-button>
-        </div>
-        <!-- end of button group -->
-      </b-card>
-    </b-col>
-
-    <b-col class="mt-3 mt-lg-0" xs="12" lg="6">
-      <b-card>
-        <h5>Mapping</h5>
-        <transition-group name="map-group" tag="div">
-          <div
-            class="pair-tag"
-            v-for="(item, index) in mappedPairs"
-            v-bind:key="index"
-          >
-            <b-badge variant="info">{{
-              dbList.fieldMetaDataList[item[0]].type
-            }}</b-badge>
-            <span class="pair-info">
-              {{ dbList.fieldMetaDataList[item[0]].name }}
+              <b-badge variant="info">{{
+                dbList.fieldMetaDataList[item[0]].type
+              }}</b-badge>
+              <span class="pair-info">
+                {{ dbList.fieldMetaDataList[item[0]].name }}
+                <b-icon
+                  icon="caret-right-square-fill"
+                  variant="primary"
+                  class="mx-2"
+                />
+                {{ importList[item[1]] }}
+              </span>
               <b-icon
-                icon="caret-right-square-fill"
-                variant="primary"
-                class="mx-2"
+                icon="x-square-fill"
+                @click="removeMapClicked(index)"
+                class="remove-mapping"
               />
-              {{ importList[item[1]] }}
-            </span>
-            <b-icon
-              icon="x-square-fill"
-              @click="removeMapClicked(index)"
-              class="remove-mapping"
-            />
-          </div>
-        </transition-group>
-        <transition name="fade" mode="out-in">
-          <div class="no-map-info" v-show="mappedPairs.length === 0">
-            No mapping has been specified.
-          </div>
-        </transition>
-      </b-card>
-    </b-col>
+            </div>
+          </transition-group>
+          <transition name="fade" mode="out-in">
+            <div class="no-map-info" v-show="mappedPairs.length === 0">
+              No mapping has been specified.
+            </div>
+          </transition>
+        </b-card>
+      </b-col>
 
-    <!-- dialogs -->
-    <b-modal
-      title="Confirm"
-      centered
-      :visible.sync="hasSubmitted"
-      @ok="submitMapping"
-      @hidden="hasSubmitted = false"
-      @cancel="hasSubmitted = false"
-    >
-      <span
-        >After submission, your will not be able to modify your mapping. Are you
-        sure that the columns are correctly mapped?</span
+      <!-- dialogs -->
+      <b-modal
+        title="Confirm"
+        centered
+        :visible.sync="hasSubmitted"
+        @ok="submitMapping"
+        @hidden="hasSubmitted = false"
+        @cancel="hasSubmitted = false"
       >
-    </b-modal>
-    <b-modal
-      title="Success"
-      centered
-      :visible.sync="uploadSuccess"
-      ok-only
-      @ok="closeSuccess"
-      @hidden="closeSuccess"
-    >
-      <span
-        >You have successfully imported data with the specified column
-        mapping.</span
+        <span
+          >After submission, your will not be able to modify your mapping. Are
+          you sure that the columns are correctly mapped?</span
+        >
+      </b-modal>
+      <b-modal
+        title="Success"
+        centered
+        :visible.sync="uploadSuccess"
+        ok-only
+        @ok="closeSuccess"
+        @hidden="closeSuccess"
       >
-    </b-modal>
-    <!-- end of dialogs -->
-  </b-row>
+        <span
+          >You have successfully imported data with the specified column
+          mapping.</span
+        >
+      </b-modal>
+      <!-- end of dialogs -->
+    </b-row>
+  </div>
 </template>
 
 <script>
@@ -165,7 +172,9 @@ export default {
         return [e, temp[i]];
       });
     },
-
+    previewData() {
+      return this.$store.state.dataMapping.data.uploadedData.slice(0, 3);
+    },
     // generates imported tags.
     // if initially no tag, just display column number
     importList: function() {
@@ -404,5 +413,15 @@ export default {
 .no-map-info {
   color: #777;
   font-weight: 300;
+}
+
+.data-preview {
+  background-color: $gray-100;
+  font-weight: 600;
+  padding: 1rem;
+}
+
+.data-preview > span:not(:first-child) {
+  margin-top: 1rem;
 }
 </style>
