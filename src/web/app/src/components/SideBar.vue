@@ -1,6 +1,9 @@
 <template>
   <div class="col-12 col-lg-3 col-xl-2 p-2 p-lg-3 sidebar">
     <div class="logo-container">
+      <span v-if="isChairhubHomeRoute" class="logo d-none d-md-block">
+        ChairVise
+      </span>
       <span v-if="isChairhubHomeRoute" class="logo d-md-none">
         Chairhub
         <span class="logo--small">by ChairVise</span>
