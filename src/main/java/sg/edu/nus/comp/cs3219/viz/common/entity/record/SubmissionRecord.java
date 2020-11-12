@@ -7,6 +7,8 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import sg.edu.nus.comp.cs3219.viz.common.util.Deserializer.SubmissionRecordDeserializer;
 
 import javax.persistence.*;
@@ -146,6 +148,7 @@ public class SubmissionRecord {
         @JoinColumn(name = "creator_identifier", referencedColumnName = "creator_identifier"),
         @JoinColumn(name = "conference_name", referencedColumnName = "name"),
     })
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Conference conference;
 
     public Long getId() {

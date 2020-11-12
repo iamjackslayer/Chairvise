@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import java.util.Date;
+import javax.persistence.CascadeType;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinColumns;
@@ -41,6 +42,7 @@ public class Presentation {
 //        @JoinColumn(name = "conference_creator_identifier", referencedColumnName = "creator_identifier"),
 //        @JoinColumn(name = "conference_name", referencedColumnName = "name")
 //    })
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "conference_id", referencedColumnName = "id")
     private Conference conference;
 
