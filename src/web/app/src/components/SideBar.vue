@@ -23,7 +23,8 @@
             Conferences
           </b-nav-item>
           <b-nav-item to="/importData" @click="onNavItemClicked">
-            <b-icon icon="cloud-arrow-up-fill" class="mr-2"></b-icon>Import Data
+            <b-icon icon="cloud-arrow-up-fill" class="mr-2"></b-icon>
+            Import Data
           </b-nav-item>
           <b-nav-item to="/presentation" @click="onNavItemClicked">
             <b-icon icon="file-image-fill" class="mr-2"></b-icon>

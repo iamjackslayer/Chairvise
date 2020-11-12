@@ -24,8 +24,9 @@
           <div class="form-description">
             <h5>Basic Information</h5>
             <p class="form-section-description">
-              Having an up-to-date email address attached to your acount is a
-              great step toward improved account security.
+              Include the necessary information to help you identify and keep
+              track of your conferences. Your conference names need to be
+              unique.
             </p>
           </div>
           <div class="form-container">

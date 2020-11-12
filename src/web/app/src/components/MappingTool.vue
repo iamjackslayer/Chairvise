@@ -1,9 +1,14 @@
 <template>
   <div>
     <b-card class="mb-3" title="Data Preview" v-if="previewData">
-      <pre
-        class="data-preview"
-      ><span v-for="(line, index) in previewData" :key="index" class="d-block">{{ line.toString() }}</span></pre>
+      <div class="data-preview">
+        <span
+          v-for="(line, index) in previewData"
+          :key="index"
+          class="d-block"
+          >{{ line.toString() }}</span
+        >
+      </div>
     </b-card>
     <b-row>
       <b-col xs="12" lg="6">
@@ -416,6 +421,7 @@ export default {
 }
 
 .data-preview {
+  font-family: "Consolas", "Lucida Console", monospace;
   background-color: $gray-100;
   font-weight: 600;
   padding: 1rem;

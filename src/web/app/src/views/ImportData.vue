@@ -19,8 +19,8 @@
           <div class="form-description">
             <h5>Record Information</h5>
             <p class="form-section-description">
-              Information about records and stuff. EasyChair and SoftConf
-              blablabla.
+              You can choose between two data formats, EasyChair or SoftConf.
+              Then choose the type of record that you would like to upload.
             </p>
           </div>
           <div class="form-container">
@@ -60,9 +60,9 @@
           <div class="form-description">
             <h5>Mapping Information</h5>
             <p class="form-section-description">
-              Mapping information and stuff. wth does has header mean? explain
-              what it means. Also what is predefined mapping come on. This is
-              also optional btw.
+              Indicate if the file you are uploading has a header or follows our
+              predefined mapping, we can automatically extract them as fields to
+              expedite the mapping process.
             </p>
           </div>
           <div class="form-container">
