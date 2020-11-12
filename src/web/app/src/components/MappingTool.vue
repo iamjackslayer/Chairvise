@@ -178,7 +178,11 @@ export default {
       });
     },
     previewData() {
-      return this.$store.state.dataMapping.data.uploadedData.slice(0, 3);
+      const uploadedData = this.$store.state.dataMapping.data.uploadedData;
+      if (uploadedData && uploadedData.length > 1) {
+        return this.$store.state.dataMapping.data.uploadedData.slice(0, 2);
+      }
+      return null;
     },
     // generates imported tags.
     // if initially no tag, just display column number
