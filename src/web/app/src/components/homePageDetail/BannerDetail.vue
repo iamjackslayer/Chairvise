@@ -1,20 +1,14 @@
 <template>
-  <div>
-    <div
-      class="jumbotron jumbotron-fluid"
-      style="background:linear-gradient(to bottom, #add8e6, #fafafa)"
-    >
-      <b-row style="text-align:center">
-        <b-col>
-          <img alt="Vue logo" src="@/assets/chair2.png" />
-        </b-col>
-        <b-col>
-          <h2>
-            ChairVisE -- The Conference Data Visualisation Management System
-          </h2>
-        </b-col>
-      </b-row>
+  <div class="banner">
+    <div class="hero-image">
+      <img alt="ChairVise Image" src="@/assets/chair2.png" />
     </div>
+    <b-jumbotron
+      class="jumbo"
+      header="ChairVisE"
+      lead="The conference data visualisation system"
+    >
+    </b-jumbotron>
   </div>
 </template>
 
@@ -80,5 +74,39 @@ img {
   text-align: center;
   display: block;
   margin: 0 auto;
+}
+
+.banner {
+  display: flex;
+  flex-direction: column;
+
+  @include media-breakpoint-up(lg) {
+    flex-direction: row;
+  }
+}
+
+.jumbotron {
+  h1 {
+    font-size: 2.5rem;
+    @include media-breakpoint-up(lg) {
+      font-size: 4.5rem;
+    }
+  }
+}
+
+.hero-image {
+  border-radius: 0.3rem;
+  padding: 2rem;
+  background-color: $indigo-100;
+  margin: 0 0 1rem 0;
+
+  @include media-breakpoint-up(lg) {
+    margin: 0 1rem 0 0;
+  }
+}
+
+.jumbo {
+  flex: 2;
+  margin: 0;
 }
 </style>

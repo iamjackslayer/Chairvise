@@ -1,148 +1,94 @@
 <template>
   <div class="page">
-    <div class="feature-list" v-if="!isLogin">
-      <div class="jumbotron">
-        <h1>Here's what you can do</h1>
-        <b-row type="flex" :gutter="16" align="middle" justify="center">
-          <zoom-x-transition :duration="500" :delay="600">
-            <b-col :sm="24" :md="8" :lg="8" :xl="8" v-show="show">
-              <b-card class="bcard">
-                <img src="@/assets/upload.png" />
-                <p>Upload all your conference data</p>
-              </b-card>
-            </b-col>
-          </zoom-x-transition>
-          <zoom-x-transition :duration="500" :delay="600">
-            <b-col :sm="24" :md="8" :lg="8" :xl="8" v-show="show">
-              <b-card class="bcard">
-                <img src="@/assets/collaboration.png" />
-                <p>Create and share presentation with others</p>
-              </b-card>
-            </b-col>
-          </zoom-x-transition>
-          <zoom-x-transition :duration="500" :delay="600">
-            <b-col :sm="24" :md="8" :lg="8" :xl="8" v-show="show">
-              <b-card class="bcard">
-                <img src="@/assets/presentation.png" />
-                <p>Generate various visualisation</p>
-              </b-card>
-            </b-col>
-          </zoom-x-transition>
-        </b-row>
-      </div>
-    </div>
-    <div class="options-list" v-if="isLogin">
-      <b-row>
-        <h1>Exploring Chairvise</h1>
-      </b-row>
-      <b-row type="flex" :gutter="16" align="middle" justify="center">
-        <zoom-x-transition :duration="500" :delay="600">
-          <b-col v-show="show">
-            <b-card class="bcard">
-              <img src="@/assets/upload.png" />
-              <br />
-              <b-button variant="primary" class="button" @click="importData">
-                Import Data
-              </b-button>
-            </b-card>
-          </b-col>
-        </zoom-x-transition>
-        <zoom-x-transition :duration="500" :delay="600">
-          <b-col v-show="show">
-            <b-card class="bcard">
-              <img src="@/assets/stadistics.png" />
-              <br />
-              <b-button variant="primary" class="button" @click="presentation">
-                Analyse Data
-              </b-button>
-            </b-card>
-          </b-col>
-        </zoom-x-transition>
-        <zoom-x-transition :duration="500" :delay="600">
-          <b-col v-show="show">
-            <b-card class="bcard">
-              <img src="@/assets/schedule.png" />
-              <br />
-              <b-button variant="primary" class="button" @click="conference">
-                Track Conference
-              </b-button>
-            </b-card>
-          </b-col>
-        </zoom-x-transition>
-      </b-row>
-    </div>
+    <h1>Features</h1>
+    <b-row class="feature-list" cols="1" cols-lg="3">
+      <b-col>
+        <b-card class="feature">
+          <b-icon
+            class="h1 rounded-circle"
+            variant="primary"
+            icon="cloud-arrow-up-fill"
+          ></b-icon>
+          <h4>Upload conference data</h4>
+          <p>
+            Easily import data in various supported formats like SoftConf and
+            EasyChair.
+          </p>
+        </b-card>
+      </b-col>
+      <b-col>
+        <b-card class="feature">
+          <b-icon
+            class="h1 rounded-circle"
+            variant="primary"
+            icon="file-image-fill"
+          ></b-icon>
+          <h4>Visualise your data</h4>
+          <p>
+            Create presentations filled with charts that make sense of the data
+            you have.
+          </p>
+        </b-card>
+      </b-col>
+      <b-col>
+        <b-card class="feature">
+          <b-icon
+            class="h1 rounded-circle"
+            variant="primary"
+            icon="people-fill"
+          ></b-icon>
+          <h4>Share data with others</h4>
+          <p>
+            Share presentations either publicly through ChairHub or privately
+            with your peers.
+          </p>
+        </b-card>
+      </b-col>
+    </b-row>
   </div>
 </template>
 
 <script>
-import { ZoomXTransition } from "vue2-transitions";
-
 export default {
   name: "FeatureListDetail",
-  data: () => ({
-    show: false
-  }),
   props: {
     msg: String
-  },
-  computed: {
-    isLogin() {
-      return this.$store.state.userInfo.isLogin;
-    }
-  },
-  mounted() {
-    this.loadFeatures();
-  },
-  methods: {
-    presentation() {
-      this.$router.push("/presentation");
-    },
-    importData() {
-      this.$router.push("/importData");
-    },
-    loadFeatures() {
-      this.show = true;
-    },
-    conference() {
-      this.$router.replace("/conference");
-    }
-  },
-  components: {
-    ZoomXTransition
   }
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-i {
-  font-size: 4rem;
-  margin-bottom: 1.5rem;
-}
-.bcard {
-  box-shadow: 1px 1px 3px grey;
-}
-.bcard:hover {
-  box-shadow: 2px 2px 4px grey;
-  -webkit-transform: scale(1.02);
-  -ms-transform: scale(1.02);
-  transform: scale(1.02);
-}
-
-.el-card {
-  margin: 0px;
-  text-align: center;
-}
-
-.el-button--text {
-  color: black;
-}
-
+<style lang="scss" scoped>
 .page {
-  padding: 20px;
+  margin-top: 3rem;
 }
 
-.options-list .el-button {
-  width: 100%;
+.col > .bcard {
+  background-color: transparent;
+  border: none;
+}
+
+.feature-list {
+  margin-top: 1rem;
+}
+
+.feature {
+  img {
+    height: 100px;
+  }
+
+  h4 {
+    margin-top: 1rem;
+  }
+
+  p {
+    color: $gray-600;
+  }
+}
+
+.card {
+  background-color: $gray-200;
+  border-radius: 0.3rem;
+  border-style: none;
 }
 </style>
