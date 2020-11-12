@@ -46,6 +46,25 @@
                 v-model="presentationFormDescription"
               />
             </b-form-group>
+          </div>
+        </div>
+        <div class="form-section">
+          <div class="form-description">
+            <h5>Privacy Setting</h5>
+            <p class="form-section-description">
+              A public presentation will be listed on ChairHub.
+            </p>
+          </div>
+          <div class="form-container">
+            <b-form-group label="Public" label-for="public">
+              <b-form-checkbox
+                id="public"
+                name="public"
+                v-model="presentationIsPublic"
+                :state="validateState('public')"
+                switch
+              />
+            </b-form-group>
 
             <b-button type="submit" class="responsive-btn" variant="primary"
               >Submit</b-button
@@ -138,6 +157,17 @@ export default {
         });
       }
     },
+    presentationIsPublic: {
+      get() {
+        return this.$store.state.presentation.presentationForm.isPublic;
+      },
+      set(value) {
+        this.$store.commit("setPresentationFormField", {
+          field: "isPublic",
+          value
+        });
+      }
+    },
 
     isNewPresentation() {
       return this.id === ID_NEW_PRESENTATION;
@@ -166,7 +196,8 @@ export default {
       },
       description: {
         alphaNum: true
-      }
+      },
+      public: {}
     }
   },
   data() {
