@@ -15,7 +15,7 @@
       <b-card
         class="list-card shadow-sm rounded-lg"
         v-for="conference in conferences"
-        :key="conference.id"
+        :key="'c' + conference.id"
         @click="viewConference(conference.id)"
       >
         <h5 class="list-title">{{ conference.name }}</h5>

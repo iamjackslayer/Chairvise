@@ -19,7 +19,7 @@
             <h5>Basic Information</h5>
             <p class="form-section-description">
               Include the necessary information to help you identify and keep
-              track of your conferences.
+              track of your presentations.
             </p>
           </div>
           <div class="form-container">

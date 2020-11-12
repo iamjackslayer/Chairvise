@@ -3,7 +3,7 @@
     <b-overlay :show="isLoadingDBMetaData || isLoadingSectionList">
       <div v-if="!isNewPresentation">
         <div v-if="isLogin">
-          <b-card v-if="isPresentationEditable" class="mt-4">
+          <b-card v-if="!isSectionListEmpty" class="mt-4">
             <div slot="header">
               <span> Select Conference </span>
             </div>
@@ -93,10 +93,7 @@ export default {
   data() {
     return {
       selectedNewSection: null,
-      presentationFormConference: null,
-      hasAuthorRecord: false,
-      hasSubmissionRecord: false,
-      hasReviewRecord: false
+      presentationFormConference: null
     };
   },
   computed: {
@@ -116,28 +113,13 @@ export default {
           continue;
         }
         let groupName = PredefinedQueries[key].group;
-
-        const groupCheck = {
-          "Co-authorship": this.hasAuthorRecord && this.hasSubmissionRecord,
-          "Submission Record": this.hasSubmissionRecord,
-          "Review Record": this.hasReviewRecord,
-          "Author Record": this.hasAuthorRecord,
-          "Author Record + Submission Record":
-            this.hasAuthorRecord && this.hasSubmissionRecord,
-          "Author Record + Review Record":
-            this.hasAuthorRecord && this.hasReviewRecord
-        };
-
-        if (groupCheck[groupName]) {
-          if (sectionOptionsGroup[groupName] === undefined) {
-            sectionOptionsGroup[groupName] = [];
-          }
-
-          sectionOptionsGroup[groupName].push({
-            value: key,
-            label: PredefinedQueries[key].name
-          });
+        if (sectionOptionsGroup[groupName] === undefined) {
+          sectionOptionsGroup[groupName] = [];
         }
+        sectionOptionsGroup[groupName].push({
+          value: key,
+          label: PredefinedQueries[key].name
+        });
       }
 
       // generate to format that element ui requires
@@ -202,14 +184,6 @@ export default {
       if (value === undefined) {
         value = this.conferences[0];
       }
-
-      const currentConference = this.$store.state.presentation.conferenceList.find(
-        conference => conference.name === value
-      );
-
-      this.hasAuthorRecord = currentConference.numAuthorRecord > 0;
-      this.hasSubmissionRecord = currentConference.numSubmissionRecord > 0;
-      this.hasReviewRecord = currentConference.numReviewRecord > 0;
       this.$store.commit("setPresentationFormField", {
         field: "conference",
         value
