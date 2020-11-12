@@ -47,7 +47,7 @@ export default {
         let daysAgo = diff / (60 * 60 * 24 * 1000);
         return daysAgo < 7;
       });
-      return filtered.length + 10;
+      return filtered.length;
     },
     totalUpdatedPerDay() {
       let res = this.totalUpdatedPastWeek / 7;
